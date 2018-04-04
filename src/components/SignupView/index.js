@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
+import { signup } from '../../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './Signup.css';
 
 class Signup extends Component {
@@ -10,10 +13,23 @@ class Signup extends Component {
     confirm: ''
   };
 
+  handleSignup = () => {
+    const { email, password, confirm } = this.state;
+    if (email && password && password === confirm) {
+      this.props.signup(email, password);
+    }
+  }
+
   render() {
     return (
       <div className="signup-container">
-        <form className="signup-form">
+        <form
+          className="signup-form"
+          onSubmit={ (e) => {
+            e.preventDefault();
+            this.handleSignup();
+          } }
+        >
           <div className="field">
             <p className="control has-icons-left has-icons-right">
               <input
@@ -74,4 +90,11 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  signup
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Signup);

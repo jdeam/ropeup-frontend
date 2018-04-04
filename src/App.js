@@ -1,8 +1,9 @@
 import React from 'react';
 // import Header from './components/Header';
-import LoginView from './components/LoginView';
-import SignupView from './components/SignupView';
 // import Footer from './components/Footer';
+import Login from './components/LoginView';
+import Signup from './components/SignupView';
+import Dashboard from './components/DashboardView';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,11 +14,12 @@ import 'bulma/css/bulma.css';
 const App = () => {
   return (
     <Router>
-      <div>
+      <div className="App">
         {/* <Header /> */}
         <Switch>
-          <Route path="/login" component={ LoginView } />
-          <Route path="/signup" component={ SignupView } />
+          <Route path="/login" component={ Login } />
+          <Route path="/signup" component={ Signup } />
+          <Route path="/dashboard" component= { Dashboard } />
         </Switch>
         {/* <Footer /> */}
       </div>
