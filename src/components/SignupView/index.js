@@ -8,15 +8,23 @@ import './Signup.css';
 
 class Signup extends Component {
   state = {
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
     confirm: ''
   };
 
   handleSignup = () => {
-    const { email, password, confirm } = this.state;
-    if (email && password && password === confirm) {
-      this.props.signup(email, password);
+    const { first_name, last_name, email, password, confirm } = this.state;
+    if (
+      first_name &&
+      last_name &&
+      email &&
+      password &&
+      password === confirm
+    ) {
+      this.props.signup(first_name, last_name, email, password);
     }
   }
 
@@ -31,7 +39,35 @@ class Signup extends Component {
           } }
         >
           <div className="field">
-            <p className="control has-icons-left has-icons-right">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="text"
+                placeholder="First name"
+                value={ this.state.first_name }
+                onChange={ (e) => this.setState({ first_name: e.target.value }) }
+              />
+              <span className="icon is-small is-left">
+                <FontAwesome name="user" />
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="text"
+                placeholder="Last name"
+                value={ this.state.last_name }
+                onChange={ (e) => this.setState({ last_name: e.target.value }) }
+              />
+              <span className="icon is-small is-left">
+                <FontAwesome name="user" />
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left">
               <input
                 className="input"
                 type="email"
@@ -74,7 +110,7 @@ class Signup extends Component {
           </div>
           <div className="field signup-buttons">
             <p className="control">
-              <button className="button is-primary">
+              <button className="button is-info">
                 Sign up
               </button>
             </p>

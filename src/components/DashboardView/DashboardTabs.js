@@ -11,20 +11,20 @@ const DashboardTabs = ({
   return (
     <div className="tabs is-boxed is-centered">
       <ul>
+        <li className={ edit ? "is-active" : "" }>
+          <a onClick={ activateEdit }>
+            <span className="icon is-small">
+              <FontAwesome name="edit" />
+            </span>
+            <span>My Info</span>
+          </a>
+        </li>
         <li className={ schedule ? "is-active" : "" }>
           <a onClick={ activateSchedule }>
             <span className="icon is-small">
               <FontAwesome name="calendar-o" />
             </span>
             <span>Schedule</span>
-          </a>
-        </li>
-        <li className={ edit ? "is-active" : "" }>
-          <a onClick={ activateEdit }>
-            <span className="icon is-small">
-              <FontAwesome name="edit" />
-            </span>
-            <span>Edit Info</span>
           </a>
         </li>
       </ul>

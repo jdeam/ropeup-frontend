@@ -22,7 +22,7 @@ const ClimberListElement = ({ climber }) => {
                 alt=""
               />
             </div>
-            <p className="is-size-7">85% Match</p>
+            <p className="is-size-7 climber-match">85% Match</p>
           </div>
           <div className="climber-box-center">
             <div className="climber-details">
@@ -39,8 +39,8 @@ const ClimberListElement = ({ climber }) => {
           </div>
           <div className="climber-box-right">
             <div className="climber-interests">
-              <span className="tag is-light">Lead</span>
-              <span className="tag is-dark">TR</span>
+              <span className="tag is-dark">Lead</span>
+              <span className="tag is-dark">Toprope</span>
             </div>
           </div>
         </div>

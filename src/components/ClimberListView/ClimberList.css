@@ -56,6 +56,10 @@
   border-radius: 50%;
 }
 
+.climber-match {
+  margin-top: 0.1rem;
+}
+
 .climber-details {
   display: flex;
   height: 2.5rem;

@@ -59,7 +59,7 @@ class Login extends Component {
           </div>
           <div className="field login-buttons">
             <p className="control">
-              <button className="button is-primary">
+              <button className="button is-info">
                 Login
               </button>
             </p>

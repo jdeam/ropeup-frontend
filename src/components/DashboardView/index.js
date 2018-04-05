@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import users from './users';
 import moment from 'moment';
 import DashboardTabs from './DashboardTabs';
+import DashboardEdit from './DashboardEdit';
+import DashboardSchedule from './DashboardSchedule';
 import './Dashboard.css';
 
 const user = users[0]
@@ -49,6 +51,9 @@ class Dashboard extends Component {
             activateSchedule={ this.activateSchedule }
             activateEdit={ this.activateEdit }
           />
+
+          <DashboardEdit isActive={ this.state.edit } />
+          <DashboardSchedule isActive={ this.state.schedule } />
         </div>
       </div>
     );

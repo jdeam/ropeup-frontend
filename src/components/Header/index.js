@@ -37,7 +37,7 @@ const Header = ({ location }) => {
     </Headroom>
   ) : (
     <div></div>
-  )
+  );
 }
 
 export default withRouter(Header);
