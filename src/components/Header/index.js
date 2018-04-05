@@ -7,7 +7,7 @@ import './Header.css';
 const Header = ({ location }) => {
   const curLoc = location.pathname;
 
-  return (
+  return (curLoc !== "/login" && curLoc !== "/signup") ? (
     <Headroom>
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>
@@ -35,7 +35,9 @@ const Header = ({ location }) => {
         </ul>
       </div>
     </Headroom>
-  );
+  ) : (
+    <div></div>
+  )
 }
 
 export default withRouter(Header);
