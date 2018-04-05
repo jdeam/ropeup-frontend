@@ -1,21 +1,41 @@
 import React from 'react';
 import Headroom from 'react-headroom';
+import FontAwesome from 'react-fontawesome';
+import { Link, withRouter } from 'react-router-dom';
+import './Header.css';
 
-const Header = () => {
+const Header = ({ location }) => {
+  const curLoc = location.pathname;
 
   return (
     <Headroom>
-      <nav className="navbar has-shadow">
-        {/* <div className="navbar-brand">
-          <h1 className="title is-1">RopeUp</h1>
-        </div>
-        <div className="navbar-menu">
-          <div className="navbar-end">
-          </div>
-        </div> */}
-      </nav>
+      <div className="tabs is-centered is-fullwidth header-tabs">
+        <ul>
+          <li
+            className={ curLoc === "/dashboard" ? "is-active" : "" }
+          >
+            <Link to="/dashboard"
+              ><FontAwesome name="user-circle" />
+            </Link>
+          </li>
+          <li
+            className={ curLoc === "/climbers" ? "is-active" : "" }
+          >
+            <Link to="/climbers">
+              <FontAwesome name="search" />
+            </Link>
+          </li>
+          <li
+            className={ curLoc === "/messages" ? "is-active" : "" }
+          >
+            <Link to="/messages">
+              <FontAwesome name="comment" />
+            </Link>
+          </li>
+        </ul>
+      </div>
     </Headroom>
   );
 }
 
-export default Header;
+export default withRouter(Header);

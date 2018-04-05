@@ -1,6 +1,5 @@
 import React from 'react';
-// import Header from './components/Header';
-// import Footer from './components/Footer';
+import Header from './components/Header';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
@@ -17,7 +16,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        {/* <Header /> */}
+        <Header />
         <Switch>
           <Route path="/login" component={ Login } />
           <Route path="/signup" component={ Signup } />
@@ -25,7 +24,6 @@ const App = () => {
           <Route path="/climbers" component={ ClimberList } />
           <Route path="/climbers/:id" component={ ClimberDetail } />
         </Switch>
-        {/* <Footer /> */}
       </div>
     </Router>
   );
