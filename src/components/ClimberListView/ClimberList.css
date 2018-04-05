@@ -1,0 +1,82 @@
+.climberlist-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.climberlist {
+  width: 98%;
+  margin: 0.2rem 0 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.climber-box-container {
+  background-color: white;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+          box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  color: #4a4a4a;
+  display: block;
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+
+.climber-box {
+  margin: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.climber-box-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.climber-box-center {
+  width: 44vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.climber-box-right {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+}
+
+.climber-img {
+  border-radius: 50%;
+}
+
+.climber-details {
+  display: flex;
+  height: 2.5rem;
+}
+
+.climber-age {
+  height: 1.25rem;
+}
+
+.climber-interests {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.climber-location {
+  display: flex;
+  align-items: center;
+}
+
+.tag {
+  margin: 0.1rem 0 0.1rem 0;
+}
