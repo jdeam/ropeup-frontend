@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './ClimberList.css';
 
-const ClimberListElement = ({ climber }) => {
+const ClimberListEl = ({ climber }) => {
   const name = `${climber.first_name} ${climber.last_name[0]}.`
   const age = moment().diff(climber.dob, 'years', false);
   const distance = zipcodes.distance(98103, climber.zip);
@@ -49,4 +49,4 @@ const ClimberListElement = ({ climber }) => {
   )
 }
 
-export default ClimberListElement;
+export default ClimberListEl;

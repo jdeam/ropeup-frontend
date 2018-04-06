@@ -41,7 +41,7 @@ class DashboardEdit extends Component {
             <div className="edit-label">My ZIP code is</div>
             <div className="zip-input">
               <input
-                className="input is-small"
+                className="input"
                 type="text"
                 placeholder="ZIP"
                 readOnly={ !this.state.is_editing }
@@ -54,7 +54,7 @@ class DashboardEdit extends Component {
             <div className="edit-label">My birthday is</div>
             <div className="birthday-input">
               <input
-                className="input is-small"
+                className="input"
                 type="date"
                 placeholder="mm/dd/yy"
                 disabled={ !this.state.is_editing }
@@ -67,7 +67,7 @@ class DashboardEdit extends Component {
             <div className="edit-label">I climb at</div>
             <div className="gym-input">
               <input
-                className="input is-small"
+                className="input"
                 type="text"
                 placeholder="gym(s)"
                 readOnly={ !this.state.is_editing }
@@ -80,7 +80,7 @@ class DashboardEdit extends Component {
             <div className="edit-label">I started climbing in</div>
             <div className="year-input">
               <input
-                className="input is-small"
+                className="input"
                 type="text"
                 placeholder="year"
                 readOnly={ !this.state.is_editing }
@@ -94,7 +94,7 @@ class DashboardEdit extends Component {
             <div className="tags">
               <span
                 className={
-                  `tag ${this.state.tr ? 'is-dark' :
+                  `tag is-medium ${this.state.tr ? 'is-dark' :
                   this.state.is_editing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.is_editing ?
@@ -104,7 +104,7 @@ class DashboardEdit extends Component {
               </span>
               <span
                 className={
-                  `tag ${this.state.lead ? 'is-dark' :
+                  `tag is-medium ${this.state.lead ? 'is-dark' :
                   this.state.is_editing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.is_editing ?
@@ -116,8 +116,8 @@ class DashboardEdit extends Component {
           </div>
           <div className="dashboard-edit-item">
             <div className="edit-label">... from</div>
-            <div className="grade-start-input">
-              <div className="select is-small">
+            <div className="grade-select">
+              <div className="select">
                 <select
                   disabled={ !this.state.is_editing }
                   value={ this.state.grade_low }
@@ -142,8 +142,8 @@ class DashboardEdit extends Component {
               </div>
             </div>
             <div className="edit-label-mid">to</div>
-            <div className="grade-end-input">
-              <div className="select is-small">
+            <div className="grade-select">
+              <div className="select">
                 <select
                   disabled={ !this.state.is_editing }
                   value={ this.state.grade_high }

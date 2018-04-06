@@ -1,5 +1,5 @@
 import React from 'react';
-import ClimberListElement from './ClimberListElement';
+import ClimberListEl from './ClimberListEl';
 import './ClimberList.css';
 
 import users from './users';
@@ -8,7 +8,7 @@ const climbers = users.slice(0, 10);
 const ClimberList = () => {
 
   const climberEls = climbers.map((climber, i) => {
-    return <ClimberListElement key={ i } climber={ climber } />
+    return <ClimberListEl key={ i } climber={ climber } />
   });
 
   return (

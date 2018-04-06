@@ -56,31 +56,35 @@
   text-align: center;
 }
 
-.zip-input {
-  width: 4.2rem;
-}
-
 .edit-label {
   margin-right: 0.4rem;
   font-weight: 500;
 }
 
-.year-input {
-  width: 3.6rem;
+.zip-input {
+  width: 4.3rem;
 }
 
 .birthday-input {
-  width: 9.5rem;
+  width: 9rem;
 }
 
 .gym-input {
   width: 13rem;
 }
 
+.year-input {
+  width: 3.6rem;
+}
+
 .edit-label-mid {
   margin-left: 0.4rem;
   margin-right: 0.4rem;
   font-weight: 500;
+}
+
+.grade-select {
+  width: 5.6rem;
 }
 
 .edit-buttons {
