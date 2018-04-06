@@ -1,33 +1,62 @@
 import React from 'react';
+import DashboardEdit from './DashboardEdit';
+import DashboardSchedule from './DashboardSchedule';
+import DashboardSettings from './DashboardSettings';
 import FontAwesome from 'react-fontawesome';
+import './Dashboard.css';
 
 const DashboardTabs = ({
-  schedule,
   edit,
+  schedule,
+  settings,
+  activateEdit,
   activateSchedule,
-  activateEdit
+  activateSettings,
+  user
 }) => {
 
   return (
-    <div className="tabs is-boxed is-centered">
-      <ul>
-        <li className={ edit ? "is-active" : "" }>
-          <a onClick={ activateEdit }>
-            <span className="icon is-small">
-              <FontAwesome name="edit" />
-            </span>
-            <span>My Info</span>
-          </a>
-        </li>
-        <li className={ schedule ? "is-active" : "" }>
-          <a onClick={ activateSchedule }>
-            <span className="icon is-small">
-              <FontAwesome name="calendar-o" />
-            </span>
-            <span>Schedule</span>
-          </a>
-        </li>
-      </ul>
+    <div>
+      <div className="tabs is-boxed is-centered">
+        <ul>
+          <li className={ edit ? "is-active" : "" }>
+            <a onClick={ activateEdit }>
+              <span className="icon is-small">
+                <FontAwesome name="edit" />
+              </span>
+              <span><small>My Info</small></span>
+            </a>
+          </li>
+          <li className={ schedule ? "is-active" : "" }>
+            <a onClick={ activateSchedule }>
+              <span className="icon is-small">
+                <FontAwesome name="calendar-o" />
+              </span>
+              <span><small>Sched.</small></span>
+            </a>
+          </li>
+          <li className={ settings ? "is-active" : "" }>
+            <a onClick={ activateSettings }>
+              <span className="icon is-small">
+                <FontAwesome name="cog" />
+              </span>
+              <span><small>Settings</small></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <DashboardEdit
+        isActive={ edit }
+        user={ user }
+      />
+      <DashboardSchedule
+        isActive={ schedule }
+        user={ user }
+      />
+      <DashboardSettings
+        isActive={ settings }
+        user={ user }
+      />
     </div>
   );
 }

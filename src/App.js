@@ -12,6 +12,9 @@ import {
 } from 'react-router-dom';
 import 'bulma/css/bulma.css';
 
+import users from './components/DashboardView/users';
+const user = users[0];
+
 const App = () => {
   return (
     <Router>
@@ -20,7 +23,8 @@ const App = () => {
         <Switch>
           <Route path="/login" component={ Login } />
           <Route path="/signup" component={ Signup } />
-          <Route path="/dashboard" component={ Dashboard } />
+          {/* <Route path="/dashboard" component={ Dashboard } /> */}
+          <Route path="/dashboard" render={ () => <Dashboard user={ user } /> } />
           <Route path="/climbers" component={ ClimberList } />
           <Route path="/climbers/:id" component={ ClimberDetail } />
         </Switch>

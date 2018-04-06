@@ -1,10 +1,10 @@
 import React from 'react';
 import './Dashboard.css';
 
-const DashboardSchedule = ({ isActive }) => {
+const DashboardSchedule = ({ isActive, user }) => {
 
   return isActive ? (
-    <div>
+    <div className="dashboard-schedule-container">
       Schedule
     </div>
   ) : (

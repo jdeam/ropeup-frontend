@@ -28,3 +28,81 @@
 .dashboard-name {
   margin-top: 0.25rem;
 }
+
+.tabs:not(:last-child) {
+  margin-bottom: 1.1rem !important;
+}
+
+.dashboard-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-edit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-edit-item {
+  margin: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  text-align: center;
+}
+
+.zip-input {
+  width: 4.2rem;
+}
+
+.edit-label {
+  margin-right: 0.4rem;
+  font-weight: 500;
+}
+
+.year-input {
+  width: 3.6rem;
+}
+
+.birthday-input {
+  width: 9.5rem;
+}
+
+.gym-input {
+  width: 13rem;
+}
+
+.edit-label-mid {
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+  font-weight: 500;
+}
+
+.edit-buttons {
+  width: 50%;
+  margin: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.edit-info-button {
+  width: 50%;
+  margin: 0.25rem;
+}
+
+.is-white {
+  border: 1px solid lightgray;
+}
+
+.is-light {
+  border: 1px solid #FFFFFF;
+}
+
+.is-info {
+  border: 1px solid #439DE8;
+}

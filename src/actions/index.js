@@ -22,3 +22,12 @@ export function signup(email, password) {
     localStorage.setItem('token', JSON.stringify(token));
   }
 }
+
+export const USER_INFO_RECEIVED = 'USER_INFO_RECEIVED';
+export function fetchUserInfo(id) {
+  return async (dispatch) => {
+    const response = await axios.get(`${BaseURL}/users/${id}`);
+    const user_info = response.data.user;
+    dispatch({ type: USER_INFO_RECEIVED, user_info });
+  }
+}

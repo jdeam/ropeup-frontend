@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
-import { USER_LOGGED_IN } from '../actions';
+import {
+  USER_LOGGED_IN,
+  USER_INFO_RECEIVED
+} from '../actions';
 
 function user_id(state = null, action) {
   switch (action.type) {
@@ -11,6 +14,17 @@ function user_id(state = null, action) {
   }
 }
 
+function user_info(state = null, action) {
+  switch (action.type) {
+    case USER_INFO_RECEIVED: {
+      return action.user_info;
+    }
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-  user_id
+  user_id,
+  user_info
 });
