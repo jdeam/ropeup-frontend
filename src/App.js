@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './components/Header';
+import Navbar from './components/Navbar';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
@@ -18,14 +18,14 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Header />
+        <Navbar />
         <Switch>
           <Route path="/signup" component={ Signup } />
           <Route path="/dashboard" component={ Dashboard } />
           <Route path="/climbers" component={ ClimberList } />
           <Route path="/climbers/:id" component={ ClimberDetail } />
-          <Route path="/chats" componenent={ ChatList } />
-          <Route path="/chats/:id" component={ ChatDetail } />
+          <Route path="/chat" componenent={ ChatList } />
+          <Route path="/chat/:id" component={ ChatDetail } />
           <Route path="/" component={ Login } />
         </Switch>
       </div>

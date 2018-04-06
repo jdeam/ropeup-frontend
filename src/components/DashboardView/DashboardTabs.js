@@ -20,7 +20,10 @@ const DashboardTabs = ({
       <div className="tabs is-boxed is-centered">
         <ul>
           <li className={ edit ? "is-active" : "" }>
-            <a onClick={ activateEdit }>
+            <a
+              className="dashboard-tab"
+              onClick={ activateEdit }
+            >
               <span className="icon is-small">
                 <FontAwesome name="edit" />
               </span>
@@ -28,7 +31,10 @@ const DashboardTabs = ({
             </a>
           </li>
           <li className={ schedule ? "is-active" : "" }>
-            <a onClick={ activateSchedule }>
+            <a
+              onClick={ activateSchedule }
+              className="dashboard-tab"
+            >
               <span className="icon is-small">
                 <FontAwesome name="calendar-o" />
               </span>
@@ -36,11 +42,14 @@ const DashboardTabs = ({
             </a>
           </li>
           <li className={ settings ? "is-active" : "" }>
-            <a onClick={ activateSettings }>
+            <a
+              onClick={ activateSettings }
+              className="dashboard-tab"
+            >
               <span className="icon is-small">
                 <FontAwesome name="cog" />
               </span>
-              <span><small>Match</small></span>
+              <span><small>Settings</small></span>
             </a>
           </li>
         </ul>

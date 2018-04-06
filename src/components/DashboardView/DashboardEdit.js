@@ -37,8 +37,8 @@ class DashboardEdit extends Component {
 
   render() {
     return this.props.isActive ? (
-      <div className="dashboard-edit-container">
-        <div className="dashboard-edit">
+      <div className="dashboard-form-container">
+        <div className="dashboard-form">
           <div className="dashboard-edit-item">
             <div className="edit-label">My ZIP code is</div>
             <div className="zip-input">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { login } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,13 +9,21 @@ import './Login.css';
 class Login extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    is_logging_in: false
   };
+
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('token'))) {
+      this.props.history.push('/dashboard');
+    }
+  }
 
   handleLogin = () => {
     const { email, password } = this.state;
     if (email && password) {
-      this.props.login(email, password);
+      this.setState({ is_logging_in: true });
+      this.props.login(email, password, this.props.history);
     }
   }
 
@@ -58,11 +66,21 @@ class Login extends Component {
             </p>
           </div>
           <div className="field login-buttons">
-            <p className="control">
-              <button className="button is-info">
-                Login
-              </button>
-            </p>
+            {
+              this.state.is_logging_in ? (
+                <p className="control">
+                  <button className="button is-info is-loading">
+                    Loading
+                  </button>
+                </p>
+              ) : (
+              <p className="control">
+                <button className="button is-info">
+                  Login
+                </button>
+              </p>
+            )
+            }
             <p className="control">
               <Link to="/signup" className="button is-text">
               Create an account
@@ -75,10 +93,15 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  user_id: state.user_id
+})
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   login
 }, dispatch);
 
-export default connect(
-  null, mapDispatchToProps
-)(Login);
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login));

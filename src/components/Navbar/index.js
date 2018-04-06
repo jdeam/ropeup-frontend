@@ -2,12 +2,12 @@ import React from 'react';
 import Headroom from 'react-headroom';
 import FontAwesome from 'react-fontawesome';
 import { Link, withRouter } from 'react-router-dom';
-import './Header.css';
+import './Navbar.css';
 
-const Header = ({ location }) => {
+const Navbar = ({ location }) => {
   const curLoc = location.pathname;
 
-  return (curLoc !== "/login" && curLoc !== "/signup") ? (
+  return (curLoc !== "/" && curLoc !== "/signup") ? (
     <Headroom>
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>
@@ -26,9 +26,9 @@ const Header = ({ location }) => {
             </Link>
           </li>
           <li
-            className={ curLoc === "/messages" ? "is-active" : "" }
+            className={ curLoc === "/chat" ? "is-active" : "" }
           >
-            <Link to="/messages">
+            <Link to="/chat">
               <FontAwesome name="comment" />
             </Link>
           </li>
@@ -40,4 +40,4 @@ const Header = ({ location }) => {
   );
 }
 
-export default withRouter(Header);
+export default withRouter(Navbar);

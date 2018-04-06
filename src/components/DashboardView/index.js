@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import DashboardTabs from './DashboardTabs';
+import { fetchUserInfo } from '../../actions';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import './Dashboard.css';
 
@@ -10,6 +13,12 @@ class Dashboard extends Component {
     schedule: false,
     settings: false
   };
+
+  componentDidMount() {
+    if (!this.props.user) {
+      this.props.fetchUserInfo(this.props.history);
+    }
+  }
 
   activateEdit = () => {
     this.setState({
@@ -73,9 +82,15 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user_id: state.user_id,
   user: state.user_info
 });
 
-export default connect(
-  mapStateToProps
-)(Dashboard);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchUserInfo
+}, dispatch);
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard));

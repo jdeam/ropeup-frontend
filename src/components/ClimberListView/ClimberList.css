@@ -76,6 +76,14 @@
   align-items: flex-end;
 }
 
+.tr-tag {
+  margin-top: 0.1rem;
+}
+
+.lead-tag {
+  margin-bottom: 0.1rem;
+}
+
 .climber-location {
   display: flex;
   align-items: center;

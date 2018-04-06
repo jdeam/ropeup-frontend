@@ -2,7 +2,7 @@ import axios from 'axios';
 const BaseURL = 'http://localhost:8080';
 
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
-export function login(email, password) {
+export function login(email, password, history) {
   return async (dispatch) => {
     const loginBody = { email, password };
     const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
@@ -10,6 +10,7 @@ export function login(email, password) {
     const { user_id } = response.data.claim;
     if (user_id) dispatch({ type: USER_LOGGED_IN, user_id });
     localStorage.setItem('token', JSON.stringify(token));
+    history.push('/dashboard');
   }
 }
 export function signup(email, password) {
@@ -23,12 +24,21 @@ export function signup(email, password) {
   }
 }
 
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('token');
+    dispatch({ type: USER_LOGGED_OUT });
+  }
+}
+
 export const USER_INFO_RECEIVED = 'USER_INFO_RECEIVED';
-export function fetchUserInfo(id) {
+export function fetchUserInfo(history) {
   return async (dispatch) => {
     const token = JSON.parse(localStorage.getItem('token'));
+    if (!token) return history.push('/');
     const response = await axios.get(
-      `${BaseURL}/users/${id}`,
+      `${BaseURL}/users/`,
       { headers: { token } }
     );
     const user_info = response.data.user;
