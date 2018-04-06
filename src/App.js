@@ -5,6 +5,8 @@ import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
 import ClimberList from './components/ClimberListView';
 import ClimberDetail from './components/ClimberDetailView';
+import ChatList from './components/ChatListView';
+import ChatDetail from './components/ChatDetailView';
 import {
   BrowserRouter as Router,
   Route,
@@ -18,11 +20,13 @@ const App = () => {
       <div>
         <Header />
         <Switch>
-          <Route path="/login" component={ Login } />
           <Route path="/signup" component={ Signup } />
           <Route path="/dashboard" component={ Dashboard } />
           <Route path="/climbers" component={ ClimberList } />
           <Route path="/climbers/:id" component={ ClimberDetail } />
+          <Route path="/chats" componenent={ ChatList } />
+          <Route path="/chats/:id" component={ ChatDetail } />
+          <Route path="/" component={ Login } />
         </Switch>
       </div>
     </Router>

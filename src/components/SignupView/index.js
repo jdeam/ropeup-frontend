@@ -115,8 +115,8 @@ class Signup extends Component {
               </button>
             </p>
             <p className="control">
-              <Link to="/login" className="button is-text is-size-7">
-              Already signed up? Login
+              <Link to="/" className="button is-text is-size-7">
+                Already signed up? Login
               </Link>
             </p>
           </div>

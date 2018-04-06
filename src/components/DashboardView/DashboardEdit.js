@@ -11,7 +11,8 @@ class DashboardEdit extends Component {
     tr: false,
     lead: false,
     grade_low: '',
-    grade_high: ''
+    grade_high: '',
+    about: ''
   };
 
   componentDidMount() {
@@ -28,7 +29,8 @@ class DashboardEdit extends Component {
         tr: this.props.user.tr || false,
         lead: this.props.user.lead || false,
         grade_low: this.props.user.grade_low || '',
-        grade_high: this.props.user.grade_high || ''
+        grade_high: this.props.user.grade_high || '',
+        about: this.props.user.about || ''
       });
     }
   };
@@ -173,7 +175,11 @@ class DashboardEdit extends Component {
               <textarea
                 className="textarea is-small"
                 type="text"
-                placeholder="About me (optional)" />
+                placeholder="About me (optional)"
+                readOnly={ !this.state.is_editing }
+                value={ this.state.about }
+                onChange={ (e) => this.setState({ about: e.target.value }) }
+              />
             </div>
           </div>
           {

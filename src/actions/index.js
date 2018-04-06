@@ -26,7 +26,11 @@ export function signup(email, password) {
 export const USER_INFO_RECEIVED = 'USER_INFO_RECEIVED';
 export function fetchUserInfo(id) {
   return async (dispatch) => {
-    const response = await axios.get(`${BaseURL}/users/${id}`);
+    const token = JSON.parse(localStorage.getItem('token'));
+    const response = await axios.get(
+      `${BaseURL}/users/${id}`,
+      { headers: { token } }
+    );
     const user_info = response.data.user;
     dispatch({ type: USER_INFO_RECEIVED, user_info });
   }
