@@ -76,8 +76,6 @@ const mapStateToProps = (state) => ({
   user: state.user_info
 });
 
-// export default connect(
-//   mapStateToProps
-// )(Dashboard);
-
-export default Dashboard;
+export default connect(
+  mapStateToProps
+)(Dashboard);

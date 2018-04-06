@@ -39,8 +39,8 @@ const ClimberListElement = ({ climber }) => {
           </div>
           <div className="climber-box-right">
             <div className="climber-interests">
-              <span className="tag is-info">Lead</span>
-              <span className="tag is-info">Toprope</span>
+              { climber.lead ? <span className="tag is-dark">Lead</span> : <span></span> }
+              { climber.tr ? <span className="tag is-dark">Toprope</span> : <span></span> }
             </div>
           </div>
         </div>

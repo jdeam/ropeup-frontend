@@ -40,7 +40,7 @@ const DashboardTabs = ({
               <span className="icon is-small">
                 <FontAwesome name="cog" />
               </span>
-              <span><small>Settings</small></span>
+              <span><small>Match</small></span>
             </a>
           </li>
         </ul>

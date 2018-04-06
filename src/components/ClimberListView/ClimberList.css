@@ -39,7 +39,7 @@
 }
 
 .climber-box-center {
-  width: 44vw;
+  width: 41vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,6 +81,6 @@
   align-items: center;
 }
 
-.tag {
-  margin: 0.1rem 0 0.1rem 0;
+.about-input {
+  width: 80vw;
 }

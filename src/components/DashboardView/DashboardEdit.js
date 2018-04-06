@@ -22,7 +22,7 @@ class DashboardEdit extends Component {
     if (this.props.user) {
       this.setState({
         zip: this.props.user.zip || '',
-        // dob: this.props.user.dob || '',
+        dob: this.props.user.dob || '',
         start_year: this.props.user.start_year || '',
         gyms: this.props.user.gyms || '',
         tr: this.props.user.tr || false,
@@ -71,6 +71,8 @@ class DashboardEdit extends Component {
                 type="text"
                 placeholder="gym(s)"
                 readOnly={ !this.state.is_editing }
+                value={ this.state.gyms }
+                onChange={ (e) => this.setState({ gyms: e.target.value }) }
               />
             </div>
           </div>
@@ -92,7 +94,8 @@ class DashboardEdit extends Component {
             <div className="tags">
               <span
                 className={
-                  `tag ${this.state.tr ? 'is-info' : 'is-white'}`
+                  `tag ${this.state.tr ? 'is-dark' :
+                  this.state.is_editing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.is_editing ?
                   this.setState({ tr: !this.state.tr }) : null
@@ -101,7 +104,8 @@ class DashboardEdit extends Component {
               </span>
               <span
                 className={
-                  `tag ${this.state.lead ? 'is-info' : 'is-white'}`
+                  `tag ${this.state.lead ? 'is-dark' :
+                  this.state.is_editing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.is_editing ?
                   this.setState({ lead: !this.state.lead }) : null
@@ -113,7 +117,7 @@ class DashboardEdit extends Component {
           <div className="dashboard-edit-item">
             <div className="edit-label">... from</div>
             <div className="grade-start-input">
-              <div class="select is-small">
+              <div className="select is-small">
                 <select
                   disabled={ !this.state.is_editing }
                   value={ this.state.grade_low }
@@ -139,7 +143,7 @@ class DashboardEdit extends Component {
             </div>
             <div className="edit-label-mid">to</div>
             <div className="grade-end-input">
-              <div class="select is-small">
+              <div className="select is-small">
                 <select
                   disabled={ !this.state.is_editing }
                   value={ this.state.grade_high }
@@ -162,6 +166,14 @@ class DashboardEdit extends Component {
                   <option>5.12d</option>
                 </select>
               </div>
+            </div>
+          </div>
+          <div className="dashboard-edit-item">
+            <div className="about-input">
+              <textarea
+                className="textarea is-small"
+                type="text"
+                placeholder="About me (optional)" />
             </div>
           </div>
           {
