@@ -16,7 +16,9 @@ class Dashboard extends Component {
 
   componentDidMount() {
     if (!this.props.user) {
-      this.props.fetchUserInfo(this.props.history);
+      const token = JSON.parse(localStorage.getItem('token'));
+      if (!token) return this.props.history.push('/')
+      this.props.fetchUserInfo(token);
     }
   }
 

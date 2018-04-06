@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
-import { signup } from '../../actions';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Link, withRouter } from 'react-router-dom';
+import axios from 'axios';
+import BaseURL from '../../BaseURL';
 import './Signup.css';
 
 class Signup extends Component {
@@ -12,10 +11,17 @@ class Signup extends Component {
     last_name: '',
     email: '',
     password: '',
-    confirm: ''
+    confirm: '',
+    is_signing_up: false
   };
 
-  handleSignup = () => {
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('token'))) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  signup = async () => {
     const { first_name, last_name, email, password, confirm } = this.state;
     if (
       first_name &&
@@ -24,7 +30,14 @@ class Signup extends Component {
       password &&
       password === confirm
     ) {
-      this.props.signup(first_name, last_name, email, password);
+      const signupBody = { first_name, last_name, email, password };
+      this.setState({ is_signing_up: true });
+      const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
+      if (response.status === 200) {
+        const token = response.headers.auth.split(' ')[1];
+        localStorage.setItem('token', JSON.stringify(token));
+        this.props.history.push('/dashboard');
+      }
     }
   }
 
@@ -35,7 +48,7 @@ class Signup extends Component {
           className="signup-form"
           onSubmit={ (e) => {
             e.preventDefault();
-            this.handleSignup();
+            this.signup();
           } }
         >
           <div className="field">
@@ -109,11 +122,21 @@ class Signup extends Component {
             </p>
           </div>
           <div className="field signup-buttons">
-            <p className="control">
-              <button className="button is-info">
-                Sign up
-              </button>
-            </p>
+            {
+              this.state.is_logging_in ? (
+                <p className="control">
+                  <button className="button is-info is-loading">
+                    Loading
+                  </button>
+                </p>
+              ) : (
+                <p className="control">
+                  <button className="button is-info">
+                    Sign up
+                  </button>
+                </p>
+              )
+            }
             <p className="control">
               <Link to="/" className="button is-text is-size-7">
                 Already signed up? Login
@@ -126,11 +149,4 @@ class Signup extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  signup
-}, dispatch);
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Signup);
+export default withRouter(Signup);

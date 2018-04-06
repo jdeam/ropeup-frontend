@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 import {
-  USER_LOGGED_IN,
-  USER_LOGGED_OUT,
-  USER_INFO_RECEIVED
+  USER_INFO_RECEIVED,
+  USER_INFO_CLEARED,
+  CLIMBERS_RECEIVED
 } from '../actions';
 
-function user_id(state = null, action) {
+function user_info(state = null, action) {
   switch (action.type) {
-    case USER_LOGGED_IN: {
-      return action.user_id;
+    case USER_INFO_RECEIVED: {
+      return action.user_info;
     }
-    case USER_LOGGED_OUT: {
+    case USER_INFO_CLEARED: {
       return null;
     }
     default:
@@ -18,13 +18,10 @@ function user_id(state = null, action) {
   }
 }
 
-function user_info(state = null, action) {
+function climbers(state = [], action) {
   switch (action.type) {
-    case USER_INFO_RECEIVED: {
-      return action.user_info;
-    }
-    case USER_LOGGED_OUT: {
-      return null;
+    case CLIMBERS_RECEIVED: {
+      return action.climbers;
     }
     default:
       return state;
@@ -32,6 +29,5 @@ function user_info(state = null, action) {
 }
 
 export default combineReducers({
-  user_id,
   user_info
 });

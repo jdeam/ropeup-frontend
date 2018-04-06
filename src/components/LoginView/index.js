@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link, withRouter } from 'react-router-dom';
-import { login } from '../../actions';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import axios from 'axios';
+import BaseURL from '../../BaseURL';
 import './Login.css';
 
 class Login extends Component {
@@ -13,17 +13,23 @@ class Login extends Component {
     is_logging_in: false
   };
 
-  componentDidMount() {
-    if (JSON.parse(localStorage.getItem('token'))) {
-      this.props.history.push('/dashboard');
+  login = async () => {
+    const { email, password } = this.state;
+    if (email && password) {
+      const loginBody = { email, password };
+      this.setState({ is_logging_in: true });
+      const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
+      if (response.status === 200) {
+        const token = response.headers.auth.split(' ')[1];
+        localStorage.setItem('token', JSON.stringify(token));
+        this.props.history.push('/dashboard');
+      }
     }
   }
 
-  handleLogin = () => {
-    const { email, password } = this.state;
-    if (email && password) {
-      this.setState({ is_logging_in: true });
-      this.props.login(email, password, this.props.history);
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('token'))) {
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -34,7 +40,7 @@ class Login extends Component {
           className="login-form"
           onSubmit={ (e) => {
             e.preventDefault();
-            this.handleLogin();
+            this.login();
           } }
         >
           <div className="field">
@@ -74,12 +80,12 @@ class Login extends Component {
                   </button>
                 </p>
               ) : (
-              <p className="control">
-                <button className="button is-info">
-                  Login
-                </button>
-              </p>
-            )
+                <p className="control">
+                  <button className="button is-info">
+                    Login
+                  </button>
+                </p>
+              )
             }
             <p className="control">
               <Link to="/signup" className="button is-text">
@@ -97,11 +103,6 @@ const mapStateToProps = (state) => ({
   user_id: state.user_id
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login
-}, dispatch);
-
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Login));
