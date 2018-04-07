@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DashboardTabs from './DashboardTabs';
-import { fetchUserInfo } from '../../actions';
+import { fetchUser } from '../../actions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +18,7 @@ class Dashboard extends Component {
     if (!this.props.user) {
       const token = JSON.parse(localStorage.getItem('token'));
       if (!token) return this.props.history.push('/')
-      this.props.fetchUserInfo(token);
+      this.props.fetchUser(token);
     }
   }
 
@@ -84,12 +84,11 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user_id: state.user_id,
-  user: state.user_info
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUserInfo
+  fetchUser
 }, dispatch);
 
 export default withRouter(connect(

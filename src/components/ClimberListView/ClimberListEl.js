@@ -5,13 +5,13 @@ import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './ClimberList.css';
 
-const ClimberListEl = ({ climber }) => {
+const ClimberListEl = ({ user, climber }) => {
   const name = `${climber.first_name} ${climber.last_name[0]}.`
   const age = moment().diff(climber.dob, 'years', false);
-  const distance = zipcodes.distance(98103, climber.zip);
+  const distance = zipcodes.distance(user.zip, climber.zip);
 
   return (
-    <Link to={ `/climbers` }>
+    <Link to={ `/climbers/${climber.id}` }>
       <div className="climber-box-container">
         <div className="climber-box">
           <div className="climber-box-left">

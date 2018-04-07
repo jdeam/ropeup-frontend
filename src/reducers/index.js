@@ -1,16 +1,17 @@
 import { combineReducers } from 'redux';
 import {
-  USER_INFO_RECEIVED,
-  USER_INFO_CLEARED,
-  CLIMBERS_RECEIVED
+  USER_RECEIVED,
+  USER_CLEARED,
+  CLIMBERS_RECEIVED,
+  CLIMBERS_CLEARED
 } from '../actions';
 
-function user_info(state = null, action) {
+function user(state = null, action) {
   switch (action.type) {
-    case USER_INFO_RECEIVED: {
-      return action.user_info;
+    case USER_RECEIVED: {
+      return action.user;
     }
-    case USER_INFO_CLEARED: {
+    case USER_CLEARED: {
       return null;
     }
     default:
@@ -23,11 +24,15 @@ function climbers(state = [], action) {
     case CLIMBERS_RECEIVED: {
       return action.climbers;
     }
+    case CLIMBERS_CLEARED: {
+      return [];
+    }
     default:
       return state;
   }
 }
 
 export default combineReducers({
-  user_info
+  user,
+  climbers
 });
