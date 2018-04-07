@@ -22,10 +22,10 @@ const App = () => {
         <Switch>
           <Route path="/signup" component={ Signup } />
           <Route path="/dashboard" component={ Dashboard } />
-          <Route path="/climbers" component={ ClimberList } />
           <Route path="/climbers/:id" component={ ClimberDetail } />
-          <Route path="/chat" componenent={ ChatList } />
+          <Route path="/climbers" component={ ClimberList } />
           <Route path="/chat/:id" component={ ChatDetail } />
+          <Route path="/chat" componenent={ ChatList } />
           <Route path="/" component={ Login } />
         </Switch>
       </div>

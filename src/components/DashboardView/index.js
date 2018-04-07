@@ -73,7 +73,6 @@ class Dashboard extends Component {
             activateEdit={ this.activateEdit }
             activateSchedule={ this.activateSchedule }
             activateSettings={ this.activateSettings }
-            user={ this.props.user }
           />
         </div>
       </div>

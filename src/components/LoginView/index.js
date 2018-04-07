@@ -72,21 +72,15 @@ class Login extends Component {
             </p>
           </div>
           <div className="field login-buttons">
-            {
-              this.state.is_logging_in ? (
-                <p className="control">
-                  <button className="button is-info is-loading">
-                    Loading
-                  </button>
-                </p>
-              ) : (
-                <p className="control">
-                  <button className="button is-info">
-                    Login
-                  </button>
-                </p>
-              )
-            }
+            <p className="control">
+              <button
+                className={ `button is-info${
+                  this.state.is_logging_in ? ' is-loading' : ''
+                }`}
+              >
+                Login
+              </button>
+            </p>
             <p className="control">
               <Link to="/signup" className="button is-text">
               Create an account

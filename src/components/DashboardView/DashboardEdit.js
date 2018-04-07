@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { fetchUser } from '../../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import axios from 'axios';
+import BaseURL from '../../BaseURL';
 import './Dashboard.css';
 
 class DashboardEdit extends Component {
   state = {
     is_editing: false,
+    is_submitting: false,
     zip: '',
     dob: '',
     start_year: '',
@@ -31,6 +37,24 @@ class DashboardEdit extends Component {
         grade_low: this.props.user.grade_low || '',
         grade_high: this.props.user.grade_high || '',
         about: this.props.user.about || ''
+      });
+    }
+  };
+
+  submitEdits = async () => {
+    const { is_editing, is_submitting, ...editBody } = this.state;
+    const token = JSON.parse(localStorage.getItem('token'));
+    this.setState({ is_submitting: true });
+    const response = await axios.patch(
+      `${BaseURL}/users/${this.props.user.id}`,
+      editBody,
+      { headers: { token } }
+    );
+    if (response.status === 200) {
+      this.props.fetchUser(token);
+      this.setState({
+        is_editing: false,
+        is_submitting: false
       });
     }
   };
@@ -194,7 +218,12 @@ class DashboardEdit extends Component {
                 >
                   Cancel
                 </div>
-                <div className="button is-info edit-submit-button">
+                <div
+                  className={`button is-info edit-submit-button${
+                    this.state.is_submitting ? ' is-loading' : ''
+                  }`}
+                  onClick={ () => this.submitEdits() }
+                >
                   Submit
                 </div>
               </div>
@@ -215,4 +244,15 @@ class DashboardEdit extends Component {
   }
 }
 
-export default DashboardEdit;
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchUser
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardEdit);

@@ -56,15 +56,12 @@ const DashboardTabs = ({
       </div>
       <DashboardEdit
         isActive={ edit }
-        user={ user }
       />
       <DashboardSchedule
         isActive={ schedule }
-        user={ user }
       />
       <DashboardSettings
         isActive={ settings }
-        user={ user }
       />
     </div>
   );
