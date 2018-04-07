@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
+import DashboardImage from './DashboardImage';
 import DashboardTabs from './DashboardTabs';
 import { fetchUser } from '../../actions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
 import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
-    edit: true,
-    schedule: false,
+    edit: false,
+    schedule: true,
     settings: false
   };
 
@@ -46,26 +46,11 @@ class Dashboard extends Component {
     });
   }
 
-  getAge = () => {
-    return moment().diff(this.props.user.dob, 'years', false);
-  }
-
   render() {
     return (this.props.user) ? (
       <div className="dashboard-container">
         <div className="dashboard">
-          <div className="dashboard-img-container">
-            <div className="image is-128x128">
-              <img
-                src={ this.props.user.img_url }
-                className="dashboard-img"
-                alt=""
-              />
-            </div>
-            <div className="title is-4 dashboard-name">
-              { `${this.props.user.first_name}, ${this.getAge()}` }
-            </div>
-          </div>
+          <DashboardImage user={ this.props.user } />
           <DashboardTabs
             edit={ this.state.edit }
             schedule={ this.state.schedule }

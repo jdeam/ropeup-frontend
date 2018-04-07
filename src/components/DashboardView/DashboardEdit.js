@@ -63,21 +63,25 @@ class DashboardEdit extends Component {
     return this.props.isActive ? (
       <div className="dashboard-form-container">
         <div className="dashboard-form">
-          <div className="dashboard-edit-item">
-            <div className="edit-label">My ZIP code is</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              My ZIP code is
+            </div>
             <div className="zip-input">
               <input
                 className="input"
                 type="text"
                 placeholder="ZIP"
-                readOnly={ !this.state.is_editing }
+                disabled={ !this.state.is_editing }
                 value={ this.state.zip }
                 onChange={ (e) => this.setState({ zip: e.target.value }) }
               />
             </div>
           </div>
-          <div className="dashboard-edit-item">
-            <div className="edit-label">My birthday is</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              My birthday is
+            </div>
             <div className="birthday-input">
               <input
                 className="input"
@@ -89,34 +93,40 @@ class DashboardEdit extends Component {
               />
             </div>
           </div>
-          <div className="dashboard-edit-item">
-            <div className="edit-label">I climb at</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              I climb at
+            </div>
             <div className="gym-input">
               <input
                 className="input"
                 type="text"
                 placeholder="gym(s)"
-                readOnly={ !this.state.is_editing }
+                disabled={ !this.state.is_editing }
                 value={ this.state.gyms }
                 onChange={ (e) => this.setState({ gyms: e.target.value }) }
               />
             </div>
           </div>
-          <div className="dashboard-edit-item">
-            <div className="edit-label">I started climbing in</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              I started climbing in
+            </div>
             <div className="year-input">
               <input
                 className="input"
                 type="text"
                 placeholder="year"
-                readOnly={ !this.state.is_editing }
+                disabled={ !this.state.is_editing }
                 value={ this.state.start_year }
                 onChange={ (e) => this.setState({ start_year: e.target.value }) }
               />
             </div>
           </div>
-          <div className="dashboard-edit-item">
-            <div className="edit-label">I like to</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              I like to
+            </div>
             <div className="tags">
               <span
                 className={
@@ -126,7 +136,8 @@ class DashboardEdit extends Component {
                 onClick={ () => this.state.is_editing ?
                   this.setState({ tr: !this.state.tr }) : null
                 }
-              >Toprope
+              >
+                Toprope
               </span>
               <span
                 className={
@@ -136,12 +147,15 @@ class DashboardEdit extends Component {
                 onClick={ () => this.state.is_editing ?
                   this.setState({ lead: !this.state.lead }) : null
                 }
-              >Lead
+              >
+                Lead
               </span>
             </div>
           </div>
-          <div className="dashboard-edit-item">
-            <div className="edit-label">... from</div>
+          <div className="dashboard-form-item">
+            <div className="form-label">
+              ... from
+            </div>
             <div className="grade-select">
               <div className="select">
                 <select
@@ -167,7 +181,9 @@ class DashboardEdit extends Component {
                 </select>
               </div>
             </div>
-            <div className="edit-label-mid">to</div>
+            <div className="form-label-mid">
+              to
+            </div>
             <div className="grade-select">
               <div className="select">
                 <select
@@ -194,13 +210,13 @@ class DashboardEdit extends Component {
               </div>
             </div>
           </div>
-          <div className="dashboard-edit-item">
+          <div className="dashboard-form-item">
             <div className="about-input">
               <textarea
                 className="textarea is-small"
                 type="text"
                 placeholder="About me (optional)"
-                readOnly={ !this.state.is_editing }
+                disabled={ !this.state.is_editing }
                 value={ this.state.about }
                 onChange={ (e) => this.setState({ about: e.target.value }) }
               />
