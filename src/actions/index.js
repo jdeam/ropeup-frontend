@@ -19,7 +19,7 @@ export function fetchUser(token) {
       `${BaseURL}/users/`,
       { headers: { token } }
     );
-    const user = response.data.user;
+    const { user } = response.data;
     dispatch({ type: USER_RECEIVED, user });
     return user;
   }
@@ -27,15 +27,12 @@ export function fetchUser(token) {
 
 export const CLIMBERS_RECEIVED = 'CLIMBERS_RECEIVED';
 export function fetchClimbers(token, zip) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const response = await axios.get(
       `${BaseURL}/users?zip=${zip}`,
       { headers: { token } }
     );
-    const { user } = getState();
-    const climbers = response.data.climbers.filter(climber => {
-      return climber.id !== user.id;
-    });
+    const { climbers } = response.data;
     dispatch({ type: CLIMBERS_RECEIVED, climbers });
   }
 }
@@ -47,7 +44,7 @@ export function fetchSchedule(token, id) {
       `${BaseURL}/users/${id}/schedule`,
       { headers: { token } }
     );
-    const schedule = response.data.schedule;
+    const { schedule } = response.data;
     dispatch({ type: SCHEDULE_RECEIVED, schedule });
   }
 }

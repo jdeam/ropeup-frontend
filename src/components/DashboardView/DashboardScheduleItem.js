@@ -7,7 +7,7 @@ import axios from 'axios';
 import BaseURL from '../../BaseURL';
 import './Dashboard.css';
 
-const DashboardScheduleItem = ({ user, item }) => {
+const DashboardScheduleItem = ({ user, item, fetchSchedule }) => {
   const day = scheduleMap.day[item.day];
   const start = scheduleMap.start[item.start];
   const end = scheduleMap.end[item.end];
