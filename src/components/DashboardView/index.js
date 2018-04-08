@@ -27,7 +27,7 @@ class Dashboard extends Component {
       fetchUser(token)
         .then(user => {
           fetchSchedule(token, user.id);
-          fetchClimbers(token, user.zip);
+          if (user.zip) fetchClimbers(token, user.zip);
         })
         .catch(err => {
           console.log(err);

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSchedule } from '../../actions';
 import ScheduleList from './DashboardScheduleList';
+import axios from 'axios';
+import BaseURL from '../../BaseURL';
 import './Dashboard.css';
 
 class DashboardSchedule extends Component {
@@ -13,11 +15,23 @@ class DashboardSchedule extends Component {
     isAdding: false,
   }
 
+  addScheduleItem = async () => {
+    const token = JSON.parse(localStorage.getItem('token'));
+    const { user, fetchSchedule } = this.props;
+    const { isAdding, ...newItem } = this.state;
+    const response = await axios.post(
+      `${BaseURL}/users/${user.id}/schedule/`,
+      newItem,
+      { headers: { token } }
+    );
+    if (response.status === 200) fetchSchedule(token, user.id);
+  }
+
   render() {
     return this.props.isActive ? (
       <div className="dashboard-form">
         <ScheduleList
-          user={ this.props.user } 
+          user={ this.props.user }
           schedule={ this.props.schedule }
         />
         <div className="dashboard-divider"></div>
@@ -106,7 +120,7 @@ class DashboardSchedule extends Component {
         </div>
         <div
           className="button is-info add-to-schedule-button"
-          onClick={ this.addToSchedule }
+          onClick={ this.addScheduleItem }
         >
           Add to schedule
         </div>
