@@ -3,7 +3,9 @@ import {
   USER_RECEIVED,
   USER_CLEARED,
   CLIMBERS_RECEIVED,
-  CLIMBERS_CLEARED
+  CLIMBERS_CLEARED,
+  SCHEDULE_RECEIVED,
+  SCHEDULE_CLEARED
 } from '../actions';
 
 function user(state = null, action) {
@@ -32,7 +34,21 @@ function climbers(state = [], action) {
   }
 }
 
+function schedule(state = [], action) {
+  switch (action.type) {
+    case SCHEDULE_RECEIVED: {
+      return action.schedule;
+    }
+    case SCHEDULE_CLEARED: {
+      return [];
+    }
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   user,
-  climbers
+  climbers,
+  schedule
 });

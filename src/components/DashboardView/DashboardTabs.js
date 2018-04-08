@@ -14,7 +14,6 @@ const DashboardTabs = ({
   activateSettings,
   user
 }) => {
-
   return (
     <div>
       <div className="tabs is-boxed is-centered">
@@ -65,6 +64,6 @@ const DashboardTabs = ({
       />
     </div>
   );
-}
+};
 
 export default DashboardTabs;

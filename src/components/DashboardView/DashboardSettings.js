@@ -25,7 +25,7 @@ const DashboardSettings = ({ isActive, user, logout }) => {
   ) : (
     <div></div>
   );
-}
+};
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   logout

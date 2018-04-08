@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseURL from '../../BaseURL';
 import './Signup.css';
@@ -12,7 +12,7 @@ class Signup extends Component {
     email: '',
     password: '',
     confirm: '',
-    is_signing_up: false
+    isSigningUp: false
   };
 
   componentDidMount() {
@@ -31,7 +31,7 @@ class Signup extends Component {
       password === confirm
     ) {
       const signupBody = { first_name, last_name, email, password };
-      this.setState({ is_signing_up: true });
+      this.setState({ isSigningUp: true });
       const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
       if (response.status === 200) {
         const token = response.headers.auth.split(' ')[1];
@@ -149,4 +149,4 @@ class Signup extends Component {
   }
 }
 
-export default withRouter(Signup);
+export default Signup;

@@ -5,28 +5,28 @@ import { Link, withRouter } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = ({ location }) => {
-  const curLoc = location.pathname;
+  const path = location.pathname;
 
-  return (curLoc !== "/" && curLoc !== "/signup") ? (
+  return (path !== "/" && path !== "/signup") ? (
     <Headroom>
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>
           <li
-            className={ curLoc === "/dashboard" ? "is-active" : "" }
+            className={ path === "/dashboard" ? "is-active" : "" }
           >
             <Link to="/dashboard"
               ><FontAwesome name="user-circle" />
             </Link>
           </li>
           <li
-            className={ curLoc === "/climbers" ? "is-active" : "" }
+            className={ path === "/climbers" ? "is-active" : "" }
           >
             <Link to="/climbers">
               <FontAwesome name="search" />
             </Link>
           </li>
           <li
-            className={ curLoc === "/chat" ? "is-active" : "" }
+            className={ path === "/chat" ? "is-active" : "" }
           >
             <Link to="/chat">
               <FontAwesome name="comment" />
@@ -38,6 +38,6 @@ const Navbar = ({ location }) => {
   ) : (
     <div></div>
   );
-}
+};
 
 export default withRouter(Navbar);

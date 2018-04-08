@@ -8,8 +8,8 @@ import './Dashboard.css';
 
 class DashboardEdit extends Component {
   state = {
-    is_editing: false,
-    is_submitting: false,
+    isEditing: false,
+    isSubmitting: false,
     zip: '',
     dob: '',
     start_year: '',
@@ -42,9 +42,9 @@ class DashboardEdit extends Component {
   };
 
   submitEdits = async () => {
-    const { is_editing, is_submitting, ...editBody } = this.state;
+    const { isEditing, isSubmitting, ...editBody } = this.state;
     const token = JSON.parse(localStorage.getItem('token'));
-    this.setState({ is_submitting: true });
+    this.setState({ isSubmitting: true });
     const response = await axios.patch(
       `${BaseURL}/users/${this.props.user.id}`,
       editBody,
@@ -53,8 +53,8 @@ class DashboardEdit extends Component {
     if (response.status === 200) {
       this.props.fetchUser(token);
       this.setState({
-        is_editing: false,
-        is_submitting: false
+        isEditing: false,
+        isSubmitting: false
       });
     }
   };
@@ -72,7 +72,7 @@ class DashboardEdit extends Component {
                 className="input"
                 type="text"
                 placeholder="ZIP"
-                disabled={ !this.state.is_editing }
+                disabled={ !this.state.isEditing }
                 value={ this.state.zip }
                 onChange={ (e) => this.setState({ zip: e.target.value }) }
               />
@@ -87,7 +87,7 @@ class DashboardEdit extends Component {
                 className="input"
                 type="date"
                 placeholder="mm/dd/yy"
-                disabled={ !this.state.is_editing }
+                disabled={ !this.state.isEditing }
                 value={ this.state.dob }
                 onChange={ (e) => this.setState({ dob: e.target.value }) }
               />
@@ -102,7 +102,7 @@ class DashboardEdit extends Component {
                 className="input"
                 type="text"
                 placeholder="gym(s)"
-                disabled={ !this.state.is_editing }
+                disabled={ !this.state.isEditing }
                 value={ this.state.gyms }
                 onChange={ (e) => this.setState({ gyms: e.target.value }) }
               />
@@ -117,7 +117,7 @@ class DashboardEdit extends Component {
                 className="input"
                 type="text"
                 placeholder="year"
-                disabled={ !this.state.is_editing }
+                disabled={ !this.state.isEditing }
                 value={ this.state.start_year }
                 onChange={ (e) => this.setState({ start_year: e.target.value }) }
               />
@@ -131,9 +131,9 @@ class DashboardEdit extends Component {
               <span
                 className={
                   `tag is-medium ${this.state.tr ? 'is-dark' :
-                  this.state.is_editing ? 'is-white' : 'is-light'}`
+                  this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
-                onClick={ () => this.state.is_editing ?
+                onClick={ () => this.state.isEditing ?
                   this.setState({ tr: !this.state.tr }) : null
                 }
               >
@@ -142,9 +142,9 @@ class DashboardEdit extends Component {
               <span
                 className={
                   `tag is-medium ${this.state.lead ? 'is-dark' :
-                  this.state.is_editing ? 'is-white' : 'is-light'}`
+                  this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
-                onClick={ () => this.state.is_editing ?
+                onClick={ () => this.state.isEditing ?
                   this.setState({ lead: !this.state.lead }) : null
                 }
               >
@@ -159,7 +159,7 @@ class DashboardEdit extends Component {
             <div className="grade-select">
               <div className="select">
                 <select
-                  disabled={ !this.state.is_editing }
+                  disabled={ !this.state.isEditing }
                   value={ this.state.grade_low }
                   onChange={ (e) => this.setState({ grade_low: e.target.value }) }
                 >
@@ -187,7 +187,7 @@ class DashboardEdit extends Component {
             <div className="grade-select">
               <div className="select">
                 <select
-                  disabled={ !this.state.is_editing }
+                  disabled={ !this.state.isEditing }
                   value={ this.state.grade_high }
                   onChange={ (e) => this.setState({ grade_high: e.target.value }) }
                 >
@@ -216,19 +216,19 @@ class DashboardEdit extends Component {
                 className="textarea is-small"
                 type="text"
                 placeholder="About me (optional)"
-                disabled={ !this.state.is_editing }
+                disabled={ !this.state.isEditing }
                 value={ this.state.about }
                 onChange={ (e) => this.setState({ about: e.target.value }) }
               />
             </div>
           </div>
           {
-            this.state.is_editing ? (
+            this.state.isEditing ? (
               <div className="edit-buttons">
                 <div
                   className="button is-text edit-cancel-button"
                   onClick={ () => {
-                    this.setState({ is_editing: false});
+                    this.setState({ isEditing: false});
                     this.populateForm();
                   } }
                 >
@@ -236,7 +236,7 @@ class DashboardEdit extends Component {
                 </div>
                 <div
                   className={`button is-info edit-submit-button${
-                    this.state.is_submitting ? ' is-loading' : ''
+                    this.state.isSubmitting ? ' is-loading' : ''
                   }`}
                   onClick={ () => this.submitEdits() }
                 >
@@ -246,7 +246,7 @@ class DashboardEdit extends Component {
             ) : (
               <div
                 className="button is-info edit-info-button"
-                onClick={ () => this.setState({ is_editing: true }) }
+                onClick={ () => this.setState({ isEditing: true }) }
               >
                 Edit info
               </div>

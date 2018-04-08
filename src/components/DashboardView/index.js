@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import DashboardImage from './DashboardImage';
 import DashboardTabs from './DashboardTabs';
-import { fetchUser } from '../../actions';
-import { withRouter } from 'react-router-dom';
+import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './Dashboard.css';
@@ -15,10 +14,24 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.user) {
-      const token = JSON.parse(localStorage.getItem('token'));
-      if (!token) return this.props.history.push('/')
-      this.props.fetchUser(token);
+    const token = JSON.parse(localStorage.getItem('token'));
+    const {
+      user,
+      history,
+      fetchUser,
+      fetchSchedule,
+      fetchClimbers
+    } = this.props;
+    if (!user) {
+      if (!token) return history.push('/')
+      fetchUser(token)
+        .then(user => {
+          fetchSchedule(token, user.id);
+          fetchClimbers(token, user.zip);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 
@@ -68,14 +81,18 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  climbers: state.climbers,
+  schedule: state.schedule
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser
+  fetchUser,
+  fetchSchedule,
+  fetchClimbers
 }, dispatch);
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard));
+)(Dashboard);

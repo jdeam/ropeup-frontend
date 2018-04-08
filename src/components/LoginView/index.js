@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import BaseURL from '../../BaseURL';
@@ -10,26 +10,26 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    is_logging_in: false
+    isLoggingIn: false
   };
+
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('token'))) {
+      this.props.history.push('/dashboard');
+    }
+  }
 
   login = async () => {
     const { email, password } = this.state;
     if (email && password) {
       const loginBody = { email, password };
-      this.setState({ is_logging_in: true });
+      this.setState({ isLoggingIn: true });
       const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
       if (response.status === 200) {
         const token = response.headers.auth.split(' ')[1];
         localStorage.setItem('token', JSON.stringify(token));
         this.props.history.push('/dashboard');
       }
-    }
-  }
-
-  componentDidMount() {
-    if (JSON.parse(localStorage.getItem('token'))) {
-      this.props.history.push('/dashboard');
     }
   }
 
@@ -50,7 +50,9 @@ class Login extends Component {
                 type="email"
                 placeholder="Email"
                 value={ this.state.email }
-                onChange={ (e) => this.setState({ email: e.target.value }) }
+                onChange={
+                  (e) => this.setState({ email: e.target.value })
+                }
               />
               <span className="icon is-small is-left">
                 <FontAwesome name="envelope" />
@@ -64,7 +66,9 @@ class Login extends Component {
                 type="password"
                 placeholder="Password"
                 value={ this.state.password }
-                onChange={ (e) => this.setState({ password: e.target.value }) }
+                onChange={
+                  (e) => this.setState({ password: e.target.value })
+                }
               />
               <span className="icon is-small is-left">
                 <FontAwesome name="lock" />
@@ -75,7 +79,7 @@ class Login extends Component {
             <p className="control">
               <button
                 className={ `button is-info${
-                  this.state.is_logging_in ? ' is-loading' : ''
+                  this.state.isLoggingIn ? ' is-loading' : ''
                 }`}
               >
                 Login
@@ -83,7 +87,7 @@ class Login extends Component {
             </p>
             <p className="control">
               <Link to="/signup" className="button is-text">
-              Create an account
+                Create an account
               </Link>
             </p>
           </div>
@@ -95,8 +99,8 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   user_id: state.user_id
-})
+});
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
-)(Login));
+)(Login);

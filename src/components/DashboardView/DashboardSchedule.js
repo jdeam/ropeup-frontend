@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchSchedule } from '../../actions';
 import ScheduleList from './DashboardScheduleList';
 import './Dashboard.css';
 
 class DashboardSchedule extends Component {
-
   state = {
     day: 0,
     start: 0,
     end: 0,
-    is_adding: false,
-    schedule: []
+    isAdding: false,
   }
-
-  addToSchedule = () => {
-    const { is_adding, schedule, ...newItem } = this.state;
-    this.setState({
-      schedule: [ ...this.state.schedule, newItem ]
-    });
-  };
 
   render() {
     return this.props.isActive ? (
       <div className="dashboard-form">
-        <ScheduleList schedule={ this.state.schedule } />
+        <ScheduleList
+          user={ this.props.user } 
+          schedule={ this.props.schedule }
+        />
         <div className="dashboard-divider"></div>
         <div className="dashboard-form-item">
           <div className="form-label">
@@ -120,4 +117,16 @@ class DashboardSchedule extends Component {
   }
 }
 
-export default DashboardSchedule;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  schedule: state.schedule
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchSchedule
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardSchedule);
