@@ -11,8 +11,7 @@ const DashboardTabs = ({
   settings,
   activateEdit,
   activateSchedule,
-  activateSettings,
-  user
+  activateSettings
 }) => {
   return (
     <div>

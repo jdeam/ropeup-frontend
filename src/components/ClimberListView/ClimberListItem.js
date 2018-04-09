@@ -6,10 +6,10 @@ import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './ClimberList.css';
 
-const ClimberListEl = ({ user, climber }) => {
-  const name = `${climber.first_name} ${climber.last_name[0]}.`
+const ClimberListItem = ({ climber, zip }) => {
+  const name = `${climber.first_name} ${climber.last_name[0]}.`;
   const age = moment().diff(climber.dob, 'years', false);
-  const distance = zipcodes.distance(user.zip, climber.zip);
+  const distance = zipcodes.distance(zip, climber.zip);
   const match = `${(climber.match * 100).toFixed(0)}% Match`;
   const gradeRange = `${grades[climber.grade_low]}-${grades[climber.grade_high]}`;
 
@@ -42,8 +42,20 @@ const ClimberListEl = ({ user, climber }) => {
           </div>
           <div className="climber-box-right">
             <div className="climber-interests">
-              { climber.lead ? <span className="tag lead-tag is-dark">Lead</span> : <span></span> }
-              { climber.tr ? <span className="tag tr-tag is-dark">Toprope</span> : <span></span> }
+              {
+                climber.lead ?
+                <span className="tag lead-tag is-info is-rounded">
+                  Lead
+                </span> :
+                <span></span>
+              }
+              {
+                climber.tr ?
+                <span className="tag tr-tag is-info is-rounded">
+                  Toprope
+                </span> :
+                <span></span>
+              }
             </div>
             <div className="climber-grade-range">
               { gradeRange }
@@ -55,4 +67,4 @@ const ClimberListEl = ({ user, climber }) => {
   )
 }
 
-export default ClimberListEl;
+export default ClimberListItem;

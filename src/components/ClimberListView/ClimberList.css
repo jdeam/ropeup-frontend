@@ -58,6 +58,7 @@
 
 .climber-match {
   margin-top: 0.1rem;
+  font-weight: 500;
 }
 
 .climber-details {
@@ -88,6 +89,7 @@
 .climber-location {
   display: flex;
   align-items: center;
+  font-weight: 400;
 }
 
 .about-input {
@@ -95,9 +97,8 @@
 }
 
 .climber-grade-range {
-  margin-right: 0.1rem;
-  color: gray;
+  margin-right: 0.3rem;
   font-size: 0.7rem;
-  font-style: italic;
+  font-weight: 300;
   text-align: right;
 }

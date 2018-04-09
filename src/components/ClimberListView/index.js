@@ -1,18 +1,17 @@
 import React from 'react';
-import ClimberListEl from './ClimberListEl';
+import ClimberListItem from './ClimberListItem';
 import { connect } from 'react-redux';
 import './ClimberList.css';
 
-const ClimberList = ({ history, user, schedule, climbers }) => {
+const ClimberList = ({ history, user, climbers }) => {
   const token = JSON.parse(localStorage.getItem('token'));
   if (!token) history.push('/');
   if (!user) history.push('/dashboard');
 
   const climberEls = climbers.map((climber, i) => {
-    return <ClimberListEl
+    return <ClimberListItem
       key={ i }
-      user={ user }
-      schedule={ schedule }
+      zip={ user.zip }
       climber={ climber }
     />
   });
@@ -30,7 +29,6 @@ const ClimberList = ({ history, user, schedule, climbers }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  schedule: state.schedule,
   climbers: state.climbers
 });
 
