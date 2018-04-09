@@ -34,6 +34,23 @@ function climbers(state = [], action) {
   }
 }
 
+function climbersById(state = {}, action) {
+  switch (action.type) {
+    case CLIMBERS_RECEIVED: {
+      return action.climbers.reduce((byId, climber) => {
+        const { id, ...climberWithoutId } = climber;
+        byId[id] = climberWithoutId;
+        return byId;
+      }, {});
+    }
+    case CLIMBERS_CLEARED: {
+      return {};
+    }
+    default:
+      return state;
+  }
+}
+
 function schedule(state = [], action) {
   switch (action.type) {
     case SCHEDULE_RECEIVED: {
@@ -50,5 +67,6 @@ function schedule(state = [], action) {
 export default combineReducers({
   user,
   climbers,
+  climbersById,
   schedule
 });

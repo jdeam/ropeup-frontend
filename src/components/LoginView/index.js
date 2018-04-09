@@ -14,9 +14,8 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    if (JSON.parse(localStorage.getItem('token'))) {
-      this.props.history.push('/dashboard');
-    }
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (token) this.props.history.push('/dashboard');
   }
 
   login = async () => {

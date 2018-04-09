@@ -10,7 +10,8 @@ class Dashboard extends Component {
   state = {
     edit: true,
     schedule: false,
-    settings: false
+    settings: false,
+    isLoading: false
   };
 
   componentDidMount() {
@@ -23,11 +24,13 @@ class Dashboard extends Component {
     const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
     if (!token) return history.push('/')
     if (!this.props.user) {
+      this.setState({ isLoading: true });
       return fetchUser(token)
         .then(user => {
           return fetchSchedule(token, user.id);
         })
         .then(schedule => {
+          this.setState({ isLoading: false });
           const { zip } = this.props.user;
           if (schedule.length && zip) {
             return fetchClimbers(token, zip, schedule);
