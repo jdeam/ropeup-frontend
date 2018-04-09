@@ -42,8 +42,8 @@ const ClimberListEl = ({ user, climber }) => {
           </div>
           <div className="climber-box-right">
             <div className="climber-interests">
-              { climber.lead ? <span className="tag lead-tag is-light">Lead</span> : <span></span> }
-              { climber.tr ? <span className="tag tr-tag is-light">Toprope</span> : <span></span> }
+              { climber.lead ? <span className="tag lead-tag is-dark">Lead</span> : <span></span> }
+              { climber.tr ? <span className="tag tr-tag is-dark">Toprope</span> : <span></span> }
             </div>
             <div className="climber-grade-range">
               { gradeRange }
