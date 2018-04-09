@@ -1,3 +1,31 @@
+export function createEmptySchedule() {
+  const week = [];
+  for (let i=0; i<7; i++) {
+    const day = [];
+    for (let j=0; j<18; j++) {
+      day.push('0');
+    }
+    week.push(day);
+  }
+  return week;
+}
+
+export function scheduleItemsToWeek(scheduleArr) {
+  return scheduleArr.reduce((arr, item) => {
+    const { day, start, end } = item;
+    for (let i=start; i<end; i++) {
+      arr[day][i] = '1';
+    }
+    return arr;
+  }, createEmptySchedule());
+}
+
+function schedArrToStr(scheduleArr) {
+  return scheduleItemsToWeek(scheduleArr)
+    .map(day => day.join(''))
+    .join('');
+}
+
 export function compareSchedules(userSched, climberSched) {
   const userSchedStr = schedArrToStr(userSched);
   const climberSchedStr = schedArrToStr(climberSched);
@@ -46,29 +74,3 @@ export const scheduleMap = {
     '12pm'
   ]
 };
-
-function createEmptySchedule() {
-  const week = [];
-  for (let i=0; i<7; i++) {
-    const day = [];
-    for (let j=0; j<18; j++) {
-      day.push('0');
-    }
-    week.push(day);
-  }
-  return week;
-}
-
-function schedArrToStr(scheduleArr) {
-  return scheduleArr.reduce((arr, item) => {
-    const { day, start, end } = item;
-    for (let i=start; i<end; i++) {
-      arr[day][i] = '1';
-    }
-    return arr;
-  }, createEmptySchedule())
-    .map(day => {
-      return day.join('');
-    })
-    .join('');
-}

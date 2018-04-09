@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import ClimberImage from './ClimberImage';
+import ClimberNavButtons from './ClimberNavButtons';
+import ClimberSchedule from './ClimberSchedule';
 import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -40,21 +43,34 @@ class ClimberDetail extends Component {
   };
 
   render() {
-    const { climbers, match } = this.props;
+    const { climbers, match, user, schedule } = this.props;
     const { id } = match.params;
     const climber = climbers[id];
+
     return climber ? (
-      <div>
+      <div className="climberdetail-container">
+        <div className="climberdetail">
+          <ClimberImage
+            climber={ climber }
+            zip={ user.zip }
+          />
+          <ClimberNavButtons climber={ climber } />
+          <ClimberSchedule
+            userSched={ schedule }
+            climberSched={ climber.schedule }
+          />
+        </div>
       </div>
     ) : (
-      <div></div>
+      <div>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  schedule: state.schedule,
+  schedule: state.scheduleByDay,
   climbers: state.climbersById
 });
 

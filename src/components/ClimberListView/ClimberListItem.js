@@ -36,8 +36,10 @@ const ClimberListItem = ({ climber, zip }) => {
               </div>
             </div>
             <div className="climber-location">
-              <FontAwesome name="location-arrow" />
-              <small>&nbsp;{ `${distance} mi. away` }</small>
+              <small>
+                <FontAwesome name="map-marker" />&nbsp;
+                { distance ? `${distance} mi. away` : '<1 mi. away' }
+              </small>
             </div>
           </div>
           <div className="climber-box-right">

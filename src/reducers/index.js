@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { createEmptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
   USER_RECEIVED,
   USER_CLEARED,
@@ -64,9 +65,23 @@ function schedule(state = [], action) {
   }
 }
 
+function scheduleByDay(state = createEmptySchedule(), action) {
+  switch (action.type) {
+    case SCHEDULE_RECEIVED : {
+      return scheduleItemsToWeek(action.schedule);
+    }
+    case SCHEDULE_CLEARED: {
+      return createEmptySchedule();
+    }
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   user,
   climbers,
   climbersById,
-  schedule
+  schedule,
+  scheduleByDay
 });
