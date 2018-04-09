@@ -15,6 +15,10 @@ class Dashboard extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.fetchUserInfo();
+  }
+
+  fetchUserInfo = () => {
     const token = JSON.parse(localStorage.getItem('token'));
     const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
     if (!token) return history.push('/')
@@ -33,7 +37,7 @@ class Dashboard extends Component {
           console.log(err);
         });
     }
-  }
+  };
 
   activateEdit = () => {
     this.setState({
@@ -41,7 +45,7 @@ class Dashboard extends Component {
       schedule: false,
       settings: false
     });
-  }
+  };
 
   activateSchedule = () => {
     this.setState({
@@ -49,7 +53,7 @@ class Dashboard extends Component {
       schedule: true,
       settings: false
     });
-  }
+  };
 
   activateSettings = () => {
     this.setState({
@@ -57,7 +61,7 @@ class Dashboard extends Component {
       schedule: false,
       settings: true
     });
-  }
+  };
 
   render() {
     return (this.props.user) ? (

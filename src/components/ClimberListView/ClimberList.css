@@ -48,7 +48,7 @@
 
 .climber-box-right {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   justify-content: flex-start;
 }
 
@@ -78,6 +78,7 @@
 
 .tr-tag {
   margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
 }
 
 .lead-tag {
@@ -91,4 +92,12 @@
 
 .about-input {
   width: 80vw;
+}
+
+.climber-grade-range {
+  margin-right: 0.1rem;
+  color: gray;
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: right;
 }
