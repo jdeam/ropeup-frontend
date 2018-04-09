@@ -8,26 +8,26 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
-    edit: false,
-    schedule: true,
+    edit: true,
+    schedule: false,
     settings: false
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     const token = JSON.parse(localStorage.getItem('token'));
-    const {
-      user,
-      history,
-      fetchUser,
-      fetchSchedule,
-      fetchClimbers
-    } = this.props;
-    if (!user) {
-      if (!token) return history.push('/')
-      fetchUser(token)
+    const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
+    if (!token) return history.push('/')
+    if (!this.props.user) {
+      return fetchUser(token)
         .then(user => {
-          fetchSchedule(token, user.id);
-          if (user.zip) fetchClimbers(token, user.zip);
+          return fetchSchedule(token, user.id);
+        })
+        .then(schedule => {
+          const { zip } = this.props.user;
+          if (schedule.length && zip) {
+            return fetchClimbers(token, zip, schedule);
+          }
         })
         .catch(err => {
           console.log(err);

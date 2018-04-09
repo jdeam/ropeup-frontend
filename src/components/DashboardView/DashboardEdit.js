@@ -16,8 +16,8 @@ class DashboardEdit extends Component {
     gyms: '',
     tr: false,
     lead: false,
-    grade_low: '',
-    grade_high: '',
+    grade_low: 0,
+    grade_high: 0,
     about: ''
   };
 
@@ -161,23 +161,23 @@ class DashboardEdit extends Component {
                 <select
                   disabled={ !this.state.isEditing }
                   value={ this.state.grade_low }
-                  onChange={ (e) => this.setState({ grade_low: e.target.value }) }
+                  onChange={ (e) => this.setState({ grade_low: parseInt(e.target.value, 10) }) }
                 >
-                  <option>5.7</option>
-                  <option>5.8</option>
-                  <option>5.9</option>
-                  <option>5.10a</option>
-                  <option>5.10b</option>
-                  <option>5.10c</option>
-                  <option>5.10d</option>
-                  <option>5.11a</option>
-                  <option>5.11b</option>
-                  <option>5.11c</option>
-                  <option>5.11d</option>
-                  <option>5.12a</option>
-                  <option>5.12b</option>
-                  <option>5.12c</option>
-                  <option>5.12d</option>
+                  <option value={0}>5.7</option>
+                  <option value={1}>5.8</option>
+                  <option value={2}>5.9</option>
+                  <option value={3}>5.10a</option>
+                  <option value={4}>5.10b</option>
+                  <option value={5}>5.10c</option>
+                  <option value={6}>5.10d</option>
+                  <option value={7}>5.11a</option>
+                  <option value={8}>5.11b</option>
+                  <option value={9}>5.11c</option>
+                  <option value={10}>5.11d</option>
+                  <option value={11}>5.12a</option>
+                  <option value={12}>5.12b</option>
+                  <option value={13}>5.12c</option>
+                  <option value={14}>5.12d</option>
                 </select>
               </div>
             </div>
@@ -189,23 +189,23 @@ class DashboardEdit extends Component {
                 <select
                   disabled={ !this.state.isEditing }
                   value={ this.state.grade_high }
-                  onChange={ (e) => this.setState({ grade_high: e.target.value }) }
+                  onChange={ (e) => this.setState({ grade_high: parseInt(e.target.value, 10) }) }
                 >
-                  <option>5.7</option>
-                  <option>5.8</option>
-                  <option>5.9</option>
-                  <option>5.10a</option>
-                  <option>5.10b</option>
-                  <option>5.10c</option>
-                  <option>5.10d</option>
-                  <option>5.11a</option>
-                  <option>5.11b</option>
-                  <option>5.11c</option>
-                  <option>5.11d</option>
-                  <option>5.12a</option>
-                  <option>5.12b</option>
-                  <option>5.12c</option>
-                  <option>5.12d</option>
+                  <option value={0}>5.7</option>
+                  <option value={1}>5.8</option>
+                  <option value={2}>5.9</option>
+                  <option value={3}>5.10a</option>
+                  <option value={4}>5.10b</option>
+                  <option value={5}>5.10c</option>
+                  <option value={6}>5.10d</option>
+                  <option value={7}>5.11a</option>
+                  <option value={8}>5.11b</option>
+                  <option value={9}>5.11c</option>
+                  <option value={10}>5.11d</option>
+                  <option value={11}>5.12a</option>
+                  <option value={12}>5.12b</option>
+                  <option value={13}>5.12c</option>
+                  <option value={14}>5.12d</option>
                 </select>
               </div>
             </div>

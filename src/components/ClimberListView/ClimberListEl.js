@@ -9,6 +9,7 @@ const ClimberListEl = ({ user, climber }) => {
   const name = `${climber.first_name} ${climber.last_name[0]}.`
   const age = moment().diff(climber.dob, 'years', false);
   const distance = zipcodes.distance(user.zip, climber.zip);
+  const match = `${(climber.match * 100).toFixed(0)}% Match`;
 
   return (
     <Link to={ `/climbers/${climber.id}` }>
@@ -22,7 +23,7 @@ const ClimberListEl = ({ user, climber }) => {
                 alt=""
               />
             </div>
-            <p className="is-size-7 climber-match">85% Match</p>
+            <p className="is-size-7 climber-match">{ match }</p>
           </div>
           <div className="climber-box-center">
             <div className="climber-details">

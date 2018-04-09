@@ -1,5 +1,5 @@
 import React from 'react';
-import scheduleMap from './scheduleMap';
+import { scheduleMap } from '../../util/schedules';
 import { fetchSchedule } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,8 +9,8 @@ import './Dashboard.css';
 
 const DashboardScheduleItem = ({ user, item, fetchSchedule }) => {
   const day = scheduleMap.day[item.day];
-  const start = scheduleMap.start[item.start];
-  const end = scheduleMap.end[item.end];
+  const start = scheduleMap.time[item.start];
+  const end = scheduleMap.time[item.end];
   const times = start.slice(-2) === end.slice(-2) ?
     `${start.slice(0, -2)}-${end}` : `${start}-${end}`;
 
