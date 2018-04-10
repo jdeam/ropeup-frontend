@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import ClimberImage from './ClimberImage';
-import ClimberNavButtons from './ClimberNavButtons';
-import ClimberSchedule from './ClimberSchedule';
-import ClimberContent from './ClimberContent';
-import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
+import MatchImage from './MatchImage';
+import MatchNavButtons from './MatchNavButtons';
+import MatchSchedule from './MatchSchedule';
+import MatchContent from './MatchContent';
+import { fetchUser, fetchSchedule, fetchMatches } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import './ClimberDetail.css';
+import './MatchDetail.css';
 
-class ClimberDetail extends Component {
+class MatchDetail extends Component {
   state = {
     isLoading: false
   };
@@ -19,8 +19,13 @@ class ClimberDetail extends Component {
   }
 
   fetchUserInfo = () => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
+    const {
+      token,
+      history,
+      fetchUser,
+      fetchSchedule,
+      fetchMatches
+    } = this.props;
     if (!token) return history.push('/')
     if (!this.props.user) {
       this.setState({ isLoading: true });
@@ -31,7 +36,7 @@ class ClimberDetail extends Component {
         .then(schedule => {
           const { zip } = this.props.user;
           if (schedule.length && zip) {
-            return fetchClimbers(token, zip, schedule);
+            return fetchMatches(token, zip, schedule);
           }
         })
         .then(() => {
@@ -44,26 +49,25 @@ class ClimberDetail extends Component {
   };
 
   render() {
-    const { climbers, match, user, schedule } = this.props;
+    const { matches, match, user, schedule } = this.props;
     const { id } = match.params;
-    const climber = climbers[id];
+    const matchingUser = matches[id];
 
-    return climber ? (
-      <div className="climberdetail-container">
-        <div className="climberdetail">
-          <ClimberImage
-            climber={ climber }
+    return matchingUser ? (
+      <div className="matchdetail-container">
+        <div className="matchdetail">
+          <MatchImage
+            match={ matchingUser }
             zip={ user.zip }
           />
-          <ClimberNavButtons climber={ climber } />
-          <div className="climberdetail-divider"></div>
-          <ClimberSchedule
+          <MatchNavButtons match={ matchingUser } />
+          <div className="matchdetail-divider"></div>
+          <MatchSchedule
             userSched={ schedule }
-            climberSched={ climber.schedule }
-            gyms={ climber.gyms }
+            matchSched={ matchingUser.schedule }
           />
-          <div className="climberdetail-divider"></div>
-          <ClimberContent climber={ climber } />
+          <div className="matchdetail-divider"></div>
+          <MatchContent match={ matchingUser } />
         </div>
       </div>
     ) : (
@@ -74,18 +78,19 @@ class ClimberDetail extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  token: state.token,
   user: state.user,
   schedule: state.scheduleByDay,
-  climbers: state.climbersById
+  matches: state.matchesById
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
   fetchSchedule,
-  fetchClimbers
+  fetchMatches
 }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClimberDetail);
+)(MatchDetail);

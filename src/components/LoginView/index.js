@@ -14,19 +14,18 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    const token = JSON.parse(localStorage.getItem('token'));
-    if (token) this.props.history.push('/dashboard');
+    const { token, history } = this.props;
+    if (token) history.push('/dashboard');
   }
 
   login = async () => {
-    const { email, password } = this.state;
-    if (email && password) {
-      const loginBody = { email, password };
+    const { isLoggingIn, ...loginBody } = this.state;
+    if (loginBody.email && loginBody.password) {
       this.setState({ isLoggingIn: true });
       const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
       if (response.status === 200) {
         const token = response.headers.auth.split(' ')[1];
-        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('token', token);
         this.props.history.push('/dashboard');
       }
     }
@@ -97,7 +96,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user_id: state.user_id
+  token: state.token
 });
 
 export default connect(

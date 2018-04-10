@@ -64,10 +64,10 @@ class DashboardEdit extends Component {
       <div className="dashboard-form-container">
         <div className="dashboard-form">
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               My ZIP code is
             </div>
-            <div className="zip-input">
+            <div className="dashboard-zip-input">
               <input
                 className="input"
                 type="text"
@@ -79,10 +79,10 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               My birthday is
             </div>
-            <div className="birthday-input">
+            <div className="dashboard-birthday-input">
               <input
                 className="input"
                 type="date"
@@ -94,10 +94,10 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               I climb at
             </div>
-            <div className="gym-input">
+            <div className="dashboard-gym-input">
               <input
                 className="input"
                 type="text"
@@ -109,10 +109,10 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               I started climbing in
             </div>
-            <div className="year-input">
+            <div className="dashboard-year-input">
               <input
                 className="input"
                 type="text"
@@ -124,7 +124,7 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               I like to
             </div>
             <div className="tags">
@@ -153,10 +153,10 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="form-label">
+            <div className="dashboard-form-label">
               ... from
             </div>
-            <div className="grade-select">
+            <div className="dashboard-grade-select">
               <div className="select">
                 <select
                   disabled={ !this.state.isEditing }
@@ -181,10 +181,10 @@ class DashboardEdit extends Component {
                 </select>
               </div>
             </div>
-            <div className="form-label-mid">
+            <div className="dashboard-form-label-mid">
               to
             </div>
-            <div className="grade-select">
+            <div className="dashboard-grade-select">
               <div className="select">
                 <select
                   disabled={ !this.state.isEditing }
@@ -211,11 +211,11 @@ class DashboardEdit extends Component {
             </div>
           </div>
           <div className="dashboard-form-item">
-            <div className="about-input">
+            <div className="dashboard-about-input">
               <textarea
                 className="textarea is-small"
                 type="text"
-                placeholder="About me (optional)"
+                placeholder="About me"
                 disabled={ !this.state.isEditing }
                 value={ this.state.about }
                 onChange={ (e) => this.setState({ about: e.target.value }) }
@@ -224,9 +224,9 @@ class DashboardEdit extends Component {
           </div>
           {
             this.state.isEditing ? (
-              <div className="edit-buttons">
+              <div className="dashboard-edit-buttons">
                 <div
-                  className="button is-text edit-cancel-button"
+                  className="button is-text"
                   onClick={ () => {
                     this.setState({ isEditing: false});
                     this.populateForm();
@@ -235,7 +235,7 @@ class DashboardEdit extends Component {
                   Cancel
                 </div>
                 <div
-                  className={`button is-info edit-submit-button${
+                  className={`button is-info${
                     this.state.isSubmitting ? ' is-loading' : ''
                   }`}
                   onClick={ () => this.submitEdits() }
@@ -245,7 +245,7 @@ class DashboardEdit extends Component {
               </div>
             ) : (
               <div
-                className="button is-info edit-info-button"
+                className="button is-info dashboard-edit-info-button"
                 onClick={ () => this.setState({ isEditing: true }) }
               >
                 Edit info

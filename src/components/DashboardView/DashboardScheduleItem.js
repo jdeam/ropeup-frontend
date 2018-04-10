@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import BaseURL from '../../BaseURL';
-import './Dashboard.css';
 
 const DashboardScheduleItem = ({ user, item, fetchSchedule }) => {
   const day = scheduleMap.day[item.day];

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DashboardImage from './DashboardImage';
 import DashboardTabs from './DashboardTabs';
-import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
+import { fetchUser, fetchSchedule, fetchMatches } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './Dashboard.css';
@@ -20,8 +20,13 @@ class Dashboard extends Component {
   }
 
   fetchUserInfo = () => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
+    const {
+      token,
+      history,
+      fetchUser,
+      fetchSchedule,
+      fetchMatches
+    } = this.props;
     if (!token) return history.push('/')
     if (!this.props.user) {
       this.setState({ isLoading: true });
@@ -33,7 +38,7 @@ class Dashboard extends Component {
           this.setState({ isLoading: false });
           const { zip } = this.props.user;
           if (schedule.length && zip) {
-            return fetchClimbers(token, zip, schedule);
+            return fetchMatches(token, zip, schedule);
           }
         })
         .catch(err => {
@@ -67,14 +72,15 @@ class Dashboard extends Component {
   };
 
   render() {
+    const { edit, schedule, settings } = this.state;
     return (this.props.user) ? (
       <div className="dashboard-container">
         <div className="dashboard">
           <DashboardImage user={ this.props.user } />
           <DashboardTabs
-            edit={ this.state.edit }
-            schedule={ this.state.schedule }
-            settings={ this.state.settings }
+            edit={ edit }
+            schedule={ schedule }
+            settings={ settings }
             activateEdit={ this.activateEdit }
             activateSchedule={ this.activateSchedule }
             activateSettings={ this.activateSettings }
@@ -88,15 +94,16 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  token: state.token,
   user: state.user,
-  climbers: state.climbers,
-  schedule: state.schedule
+  schedule: state.schedule,
+  matches: state.matches
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
   fetchSchedule,
-  fetchClimbers
+  fetchMatches
 }, dispatch);
 
 export default connect(

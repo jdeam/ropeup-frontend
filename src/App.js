@@ -3,8 +3,8 @@ import Navbar from './components/Navbar';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
-import ClimberList from './components/ClimberListView';
-import ClimberDetail from './components/ClimberDetailView';
+import MatchList from './components/MatchListView';
+import MatchDetail from './components/MatchDetailView';
 import ChatList from './components/ChatListView';
 import ChatDetail from './components/ChatDetailView';
 import {
@@ -22,8 +22,8 @@ const App = () => {
         <Switch>
           <Route path="/signup" component={ Signup } />
           <Route path="/dashboard" component={ Dashboard } />
-          <Route path="/climbers/:id" component={ ClimberDetail } />
-          <Route path="/climbers" component={ ClimberList } />
+          <Route path="/matches/:id" component={ MatchDetail } />
+          <Route path="/matches" component={ MatchList } />
           <Route path="/chat/:id" component={ ChatDetail } />
           <Route path="/chat" componenent={ ChatList } />
           <Route path="/" component={ Login } />

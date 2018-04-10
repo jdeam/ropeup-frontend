@@ -12,11 +12,8 @@ const DashboardSettings = ({ isActive, user, logout }) => {
       <div className="dashboard-form">
         <Link
           to="/"
-          className="button logout-button"
-          onClick={ () => {
-            logout();
-            localStorage.removeItem('token');
-          } }
+          className="button"
+          onClick={ logout }
         >
           Logout
         </Link>

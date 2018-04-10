@@ -1,9 +1,9 @@
 import React from 'react';
-import ClimberScheduleItem from './ClimberScheduleItem';
-import './ClimberDetail.css';
+import MatchScheduleItem from './MatchScheduleItem';
+import './MatchDetail.css';
 
-const ClimberSchedule = ({ userSched, climberSched, gyms }) => {
-  const scheduleItemEls = climberSched.filter(item => {
+const MatchSchedule = ({ userSched, matchSched }) => {
+  const scheduleItemEls = matchSched.filter(item => {
     for (let time=item.start; time<item.end; time++) {
       if (parseInt(userSched[item.day][time], 10)) return true;
     }
@@ -12,15 +12,15 @@ const ClimberSchedule = ({ userSched, climberSched, gyms }) => {
     let { day, start, end } = item;
     while (!parseInt(userSched[day][start], 10)) start++;
     while (!parseInt(userSched[day][end-1], 10)) end--;
-    return <ClimberScheduleItem
+    return <MatchScheduleItem
       key={ i }
       item={ { day, start, end} }
     />
   });
 
   return (
-    <div className="climberdetail-schedule">
-      <div className="climberdetail-match-message">
+    <div className="matchdetail-schedule">
+      <div className="matchdetail-schedule-header">
         Matches your schedule on ...
       </div>
       <div className="tags is-centered">
@@ -30,4 +30,4 @@ const ClimberSchedule = ({ userSched, climberSched, gyms }) => {
   );
 }
 
-export default ClimberSchedule;
+export default MatchSchedule;

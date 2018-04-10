@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import BaseURL from '../../BaseURL';
 import './Signup.css';
@@ -16,9 +17,8 @@ class Signup extends Component {
   };
 
   componentDidMount() {
-    if (JSON.parse(localStorage.getItem('token'))) {
-      this.props.history.push('/dashboard');
-    }
+    const { token, history } = this.props;
+    if (token) history.push('/dashboard');
   }
 
   signup = async () => {
@@ -149,4 +149,10 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => ({
+  token: state.token
+});
+
+export default connect(
+  mapStateToProps
+)(Signup);

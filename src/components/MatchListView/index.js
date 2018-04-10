@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ClimberListItem from './ClimberListItem';
-import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
+import MatchListItem from './MatchListItem';
+import { fetchUser, fetchSchedule, fetchMatches } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import './ClimberList.css';
+import './MatchList.css';
 
-class ClimberList extends Component {
+class MatchList extends Component {
   state = {
     isLoading: false
   };
@@ -16,8 +16,13 @@ class ClimberList extends Component {
   }
 
   fetchUserInfo = () => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const { history, fetchUser, fetchSchedule, fetchClimbers } = this.props;
+    const {
+      token,
+      history,
+      fetchUser,
+      fetchSchedule,
+      fetchMatches
+    } = this.props;
     if (!token) return history.push('/')
     if (!this.props.user) {
       this.setState({ isLoading: true });
@@ -28,7 +33,7 @@ class ClimberList extends Component {
         .then(schedule => {
           const { zip } = this.props.user;
           if (schedule.length && zip) {
-            return fetchClimbers(token, zip, schedule);
+            return fetchMatches(token, zip, schedule);
           }
         })
         .then(() => {
@@ -40,22 +45,22 @@ class ClimberList extends Component {
     }
   };
 
-  createClimberEls = () => {
-    const { user, climbers } = this.props;
-    return climbers.map((climber, i) => {
-      return <ClimberListItem
+  createMatchEls = () => {
+    const { user, matches } = this.props;
+    return matches.map((match, i) => {
+      return <MatchListItem
         key={ i }
         zip={ user.zip }
-        climber={ climber }
+        match={ match }
       />
     });
   };
 
   render() {
-    return this.props.climbers.length ? (
-      <div className="climberlist-container">
-        <div className="climberlist">
-          { this.createClimberEls() }
+    return this.props.matches.length ? (
+      <div className="matchlist-container">
+        <div className="matchlist">
+          { this.createMatchEls() }
         </div>
       </div>
     ) : (
@@ -65,17 +70,18 @@ class ClimberList extends Component {
 };
 
 const mapStateToProps = (state) => ({
+  token: state.token,
   user: state.user,
-  climbers: state.climbers
+  matches: state.matches
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
   fetchSchedule,
-  fetchClimbers
+  fetchMatches
 }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClimberList);
+)(MatchList);

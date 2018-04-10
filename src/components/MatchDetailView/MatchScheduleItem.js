@@ -1,8 +1,7 @@
 import React from 'react';
 import { scheduleMap } from '../../util/schedules';
-import './ClimberDetail.css';
 
-const ClimberScheduleItem = ({ item }) => {
+const MatchScheduleItem = ({ item }) => {
   const day = scheduleMap.day[item.day];
   const start = scheduleMap.time[item.start];
   const end = scheduleMap.time[item.end];
@@ -16,4 +15,4 @@ const ClimberScheduleItem = ({ item }) => {
   );
 }
 
-export default ClimberScheduleItem;
+export default MatchScheduleItem;

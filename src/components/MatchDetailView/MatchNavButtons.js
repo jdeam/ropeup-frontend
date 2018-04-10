@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
-const ClimberNavButtons = ({ climber }) => {
+const MatchNavButtons = ({ match }) => {
 
   return (
-    <div className="climberdetail-nav-container">
-      <div className="climberdetail-nav">
+    <div className="matchdetail-nav-container">
+      <div className="matchdetail-nav">
         <Link
-          to="/climbers"
+          to="/matches"
           className="button is-small climberdetail-button"
         >
          <span className="icon">
@@ -16,8 +16,8 @@ const ClimberNavButtons = ({ climber }) => {
          </span>
          <span>Back to matches</span>
        </Link>
-        <a className="button is-small is-info climberdetail-button">
-         <span>{ `Message ${climber.first_name}` }</span>
+        <a className="button is-small is-info matchdetail-button">
+         <span>{ `Message ${match.first_name}` }</span>
          <span className="icon">
            <FontAwesome name="comment" />
          </span>
@@ -27,4 +27,4 @@ const ClimberNavButtons = ({ climber }) => {
   );
 }
 
-export default ClimberNavButtons;
+export default MatchNavButtons;

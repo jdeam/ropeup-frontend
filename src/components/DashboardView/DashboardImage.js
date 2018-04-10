@@ -4,31 +4,30 @@ import './Dashboard.css';
 
 class DashboardImage extends Component {
 
-  getAge = () => {
+  getUserAge = () => {
     if (!this.props.user.dob) return '';
     return `, ${moment().diff(this.props.user.dob, 'years', false)}`;
   }
 
   render() {
     return (
-      <div className="dashboard-img-container">
+      <div className="dashboard-image-container">
         {
           this.props.user.img_url ? (
             <div className="image is-128x128">
               <img
                 src={ this.props.user.img_url }
-                className="dashboard-img"
+                className="dashboard-image"
                 alt=""
               />
             </div>
           ) : (
-            <div className="image is-128x128 is-empty">
-
+            <div className="image is-128x128 dashboard-image-is-empty">
             </div>
           )
         }
-        <div className="title is-4 dashboard-name">
-          { `${this.props.user.first_name}${this.getAge()}` }
+        <div className="title is-4 dashboard-image-name">
+          { `${this.props.user.first_name}${this.getUserAge()}` }
         </div>
       </div>
     );

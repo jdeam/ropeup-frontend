@@ -36,10 +36,10 @@ class DashboardSchedule extends Component {
         />
         <div className="dashboard-divider"></div>
         <div className="dashboard-form-item">
-          <div className="form-label">
+          <div className="dashboard-form-label">
             I want to climb
           </div>
-          <div className="day-select">
+          <div className="dashboard-day-select">
             <div className="select">
               <select
                 value={ this.state.day }
@@ -57,10 +57,10 @@ class DashboardSchedule extends Component {
           </div>
         </div>
         <div className="dashboard-form-item">
-          <div className="form-label">
+          <div className="dashboard-form-label">
             ... from
           </div>
-          <div className="time-select">
+          <div className="dashboard-time-select">
             <div className="select">
               <select
                 value={ this.state.start }
@@ -87,10 +87,10 @@ class DashboardSchedule extends Component {
               </select>
             </div>
           </div>
-          <div className="form-label-mid">
+          <div className="dashboard-form-label-mid">
             to
           </div>
-          <div className="time-select">
+          <div className="dashboard-time-select">
             <div className="select">
               <select
                 value={ this.state.end }
@@ -119,7 +119,7 @@ class DashboardSchedule extends Component {
           </div>
         </div>
         <div
-          className="button is-info add-to-schedule-button"
+          className="button is-info dashboard-add-button"
           onClick={ this.addScheduleItem }
         >
           Add to schedule

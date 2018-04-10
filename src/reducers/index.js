@@ -1,13 +1,28 @@
 import { combineReducers } from 'redux';
 import { createEmptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
+  TOKEN_RECEIVED,
+  TOKEN_CLEARED,
   USER_RECEIVED,
   USER_CLEARED,
-  CLIMBERS_RECEIVED,
-  CLIMBERS_CLEARED,
+  MATCHES_RECEIVED,
+  MATCHES_CLEARED,
   SCHEDULE_RECEIVED,
   SCHEDULE_CLEARED
 } from '../actions';
+
+function token(state = '', action) {
+  switch (action.type) {
+    case TOKEN_RECEIVED: {
+      return action.token;
+    }
+    case TOKEN_CLEARED: {
+      return '';
+    }
+    default:
+      return state;
+  }
+}
 
 function user(state = null, action) {
   switch (action.type) {
@@ -16,36 +31,6 @@ function user(state = null, action) {
     }
     case USER_CLEARED: {
       return null;
-    }
-    default:
-      return state;
-  }
-}
-
-function climbers(state = [], action) {
-  switch (action.type) {
-    case CLIMBERS_RECEIVED: {
-      return action.climbers;
-    }
-    case CLIMBERS_CLEARED: {
-      return [];
-    }
-    default:
-      return state;
-  }
-}
-
-function climbersById(state = {}, action) {
-  switch (action.type) {
-    case CLIMBERS_RECEIVED: {
-      return action.climbers.reduce((byId, climber) => {
-        const { id, ...climberWithoutId } = climber;
-        byId[id] = climberWithoutId;
-        return byId;
-      }, {});
-    }
-    case CLIMBERS_CLEARED: {
-      return {};
     }
     default:
       return state;
@@ -78,10 +63,41 @@ function scheduleByDay(state = createEmptySchedule(), action) {
   }
 }
 
+function matches(state = [], action) {
+  switch (action.type) {
+    case MATCHES_RECEIVED: {
+      return action.matches;
+    }
+    case MATCHES_CLEARED: {
+      return [];
+    }
+    default:
+      return state;
+  }
+}
+
+function matchesById(state = {}, action) {
+  switch (action.type) {
+    case MATCHES_RECEIVED: {
+      return action.matches.reduce((byId, match) => {
+        const { id, ...matchWithoutId } = match;
+        byId[id] = matchWithoutId;
+        return byId;
+      }, {});
+    }
+    case MATCHES_CLEARED: {
+      return {};
+    }
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
+  token,
   user,
-  climbers,
-  climbersById,
   schedule,
-  scheduleByDay
+  scheduleByDay,
+  matches,
+  matchesById
 });

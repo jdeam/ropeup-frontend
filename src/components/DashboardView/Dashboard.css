@@ -13,7 +13,7 @@
   justify-content: center;
 }
 
-.dashboard-img-container {
+.dashboard-image-container {
   height: 35vh;
   display: flex;
   flex-direction: column;
@@ -21,17 +21,17 @@
   align-items: center;
 }
 
-.is-empty {
+.dashboard-image {
+  border-radius: 50%;
+}
+
+.dashboard-image-name {
+  margin-top: 0.25rem;
+}
+
+.dashboard-image-is-empty {
   border-radius: 50%;
   border: 1px solid lightgray;
-}
-
-.dashboard-img {
-  border-radius: 50%;
-}
-
-.dashboard-name {
-  margin-top: 0.25rem;
 }
 
 .tabs:not(:last-child) {
@@ -65,55 +65,31 @@
   text-align: center;
 }
 
-.form-label {
+.dashboard-form-label {
   margin-right: 0.4rem;
   font-weight: 500;
 }
 
-.zip-input {
+.dashboard-zip-input {
   width: 4.3rem;
 }
 
-.birthday-input {
+.dashboard-birthday-input {
   width: 9.4rem;
 }
 
-.gym-input {
+.dashboard-gym-input {
   width: 13rem;
 }
 
-.year-input {
+.dashboard-year-input {
   width: 3.7rem;
 }
 
-.form-label-mid {
+.dashboard-form-label-mid {
   margin-left: 0.4rem;
   margin-right: 0.4rem;
   font-weight: 500;
-}
-
-.grade-select {
-  width: 5.6rem;
-}
-
-.day-select {
-  width: 9rem;
-}
-
-.time-select {
-  width: 5.6rem;
-}
-
-.edit-buttons {
-  width: 50%;
-  margin: 0.25rem;
-  display: flex;
-  align-items: center;
-}
-
-.edit-info-button {
-  width: 50%;
-  margin: 0.25rem;
 }
 
 .is-white {
@@ -128,24 +104,24 @@
   border: 1px solid #363636;
 }
 
-.add-to-schedule-button {
-  margin: 0.25rem;
-  width: 12rem;
+.dashboard-grade-select {
+  width: 5.6rem;
 }
 
-.empty-container {
-  margin: 0.5rem 0.3rem 0.1rem 0.3rem;
+.dashboard-about-input {
+  width: 80vw;
+}
+
+.dashboard-edit-buttons {
+  width: 50%;
+  margin: 0.25rem;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-.empty-schedule {
-  font-size: 1.5rem;
-  margin: 0.5rem 0 1rem 0;
-  color: #DBDBDB;
-  font-style: italic;
-  font-weight: 300;
+.dashboard-edit-info-button {
+  width: 50%;
+  margin: 0.25rem;
 }
 
 .dashboard-divider {
@@ -155,6 +131,34 @@
   margin-bottom: 0.5rem;
 }
 
-.schedule-items {
+.dashboard-schedule-items {
   min-height: 4.25rem;
+}
+
+.dashboard-empty-schedule-container {
+  margin: 0.5rem 0.3rem 0.1rem 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-empty-schedule {
+  font-size: 1.5rem;
+  margin: 0.5rem 0 1rem 0;
+  color: #DBDBDB;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.dashboard-day-select {
+  width: 9rem;
+}
+
+.dashboard-time-select {
+  width: 5.6rem;
+}
+
+.dashboard-add-button {
+  margin: 0.25rem;
+  width: 12rem;
 }
