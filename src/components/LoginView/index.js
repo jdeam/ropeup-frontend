@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchAllUserInfo } from '../../actions';
 import axios from 'axios';
 import './Login.css';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -26,7 +28,9 @@ class Login extends Component {
       if (response.status === 200) {
         const token = response.headers.auth.split(' ')[1];
         localStorage.setItem('token', token);
-        this.props.history.push('/dashboard');
+        const { fetchAllUserInfo, history } = this.props;
+        await fetchAllUserInfo();
+        history.push('/dashboard');
       }
     }
   }
@@ -99,6 +103,11 @@ const mapStateToProps = (state) => ({
   token: state.token
 });
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchAllUserInfo
+}, dispatch);
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Login);

@@ -3,15 +3,16 @@ import DashboardEdit from './DashboardEdit';
 import DashboardSchedule from './DashboardSchedule';
 import DashboardSettings from './DashboardSettings';
 import FontAwesome from 'react-fontawesome';
+import { switchDashboardTab } from '../../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './Dashboard.css';
 
 const DashboardTabs = ({
   edit,
   schedule,
   settings,
-  activateEdit,
-  activateSchedule,
-  activateSettings
+  switchDashboardTab
 }) => {
   return (
     <div>
@@ -20,7 +21,7 @@ const DashboardTabs = ({
           <li className={ edit ? "is-active" : "" }>
             <a
               className="dashboard-tab"
-              onClick={ activateEdit }
+              onClick={ () => switchDashboardTab('edit') }
             >
               <span className="icon is-small">
                 <FontAwesome name="edit" />
@@ -30,8 +31,8 @@ const DashboardTabs = ({
           </li>
           <li className={ schedule ? "is-active" : "" }>
             <a
-              onClick={ activateSchedule }
               className="dashboard-tab"
+              onClick={ () => switchDashboardTab('schedule') }
             >
               <span className="icon is-small">
                 <FontAwesome name="calendar-o" />
@@ -41,8 +42,8 @@ const DashboardTabs = ({
           </li>
           <li className={ settings ? "is-active" : "" }>
             <a
-              onClick={ activateSettings }
               className="dashboard-tab"
+              onClick={ () => switchDashboardTab('settings') }
             >
               <span className="icon is-small">
                 <FontAwesome name="cog" />
@@ -65,4 +66,11 @@ const DashboardTabs = ({
   );
 };
 
-export default DashboardTabs;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  switchDashboardTab
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(DashboardTabs);

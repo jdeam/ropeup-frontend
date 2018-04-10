@@ -5,18 +5,20 @@ import './Dashboard.css';
 class DashboardImage extends Component {
 
   getUserAge = () => {
-    if (!this.props.user.dob) return '';
-    return `, ${moment().diff(this.props.user.dob, 'years', false)}`;
-  }
+    const { user } = this.props;
+    if (!user.dob) return '';
+    return `, ${moment().diff(user.dob, 'years', false)}`;
+  };
 
   render() {
+    const { user } = this.props;
     return (
       <div className="dashboard-image-container">
         {
-          this.props.user.img_url ? (
+          user.img_url ? (
             <div className="image is-128x128">
               <img
-                src={ this.props.user.img_url }
+                src={ user.img_url }
                 className="dashboard-image"
                 alt=""
               />
@@ -27,7 +29,7 @@ class DashboardImage extends Component {
           )
         }
         <div className="title is-4 dashboard-image-name">
-          { `${this.props.user.first_name}${this.getUserAge()}` }
+          { `${user.first_name}${this.getUserAge()}` }
         </div>
       </div>
     );

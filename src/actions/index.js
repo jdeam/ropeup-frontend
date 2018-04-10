@@ -2,9 +2,19 @@ import axios from 'axios';
 import { compareSchedules } from '../util/schedules';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
+export const DASHBOARD_TAB_SWITCHED = 'DASHBOARD_TAB_SWITCHED';
+export function switchDashboardTab(tab) {
+  return (dispatch, getState) => {
+    const { dashboardTabInView } = getState();
+    if (dashboardTabInView !== tab) {
+      dispatch({ type: DASHBOARD_TAB_SWITCHED, tab });
+    }
+  };
+}
+
 export const TOKEN_RECEIVED = 'TOKEN_RECEIVED';
 export function fetchToken() {
-  return async (dispatch) => {
+  return (dispatch) => {
     const token = localStorage.getItem('token');
     if (token) dispatch({ type: TOKEN_RECEIVED, token });
     return token;
@@ -80,5 +90,14 @@ export function logout() {
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
     localStorage.removeItem('token');
+  }
+}
+
+export function fetchAllUserInfo() {
+  return async (dispatch) => {
+    dispatch(fetchToken());
+    await dispatch(fetchUser());
+    await dispatch(fetchSchedule());
+    await dispatch(fetchMatches());
   }
 }

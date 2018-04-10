@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { createEmptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
+  DASHBOARD_TAB_SWITCHED,
   TOKEN_RECEIVED,
   TOKEN_CLEARED,
   FETCHING_USER,
@@ -13,6 +14,16 @@ import {
   MATCHES_RECEIVED,
   MATCHES_CLEARED
 } from '../actions';
+
+function dashboardTabInView(state = 'edit', action) {
+  switch (action.type) {
+    case DASHBOARD_TAB_SWITCHED: {
+      return action.tab;
+    }
+    default:
+      return state;
+  }
+}
 
 function token(state = '', action) {
   switch (action.type) {
@@ -136,6 +147,7 @@ function matchesById(state = {}, action) {
 }
 
 export default combineReducers({
+  dashboardTabInView,
   token,
   fetchingUser,
   user,
