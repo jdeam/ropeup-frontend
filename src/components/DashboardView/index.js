@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import DashboardImage from './DashboardImage';
 import DashboardTabs from './DashboardTabs';
-import { fetchUser, fetchSchedule, fetchMatches } from '../../actions';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -68,17 +66,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
-  schedule: state.schedule,
-  matches: state.matches
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser,
-  fetchSchedule,
-  fetchMatches
-}, dispatch);
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Dashboard);

@@ -3,8 +3,8 @@ import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import BaseURL from '../../BaseURL';
 import './Login.css';
+const BaseURL = process.env.REACT_APP_BASE_URL;
 
 class Login extends Component {
   state = {

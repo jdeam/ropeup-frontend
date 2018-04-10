@@ -1,6 +1,6 @@
 import axios from 'axios';
-import BaseURL from '../BaseURL';
 import { compareSchedules } from '../util/schedules';
+const BaseURL = process.env.REACT_APP_BASE_URL;
 
 export const TOKEN_RECEIVED = 'TOKEN_RECEIVED';
 export function fetchToken() {
@@ -8,14 +8,16 @@ export function fetchToken() {
     const token = localStorage.getItem('token');
     if (token) dispatch({ type: TOKEN_RECEIVED, token });
     return token;
-  }
+  };
 }
 
+export const FETCHING_USER = 'FETCHING_USER';
 export const USER_RECEIVED = 'USER_RECEIVED';
 export function fetchUser() {
   return async (dispatch, getState) => {
     const { token } = getState();
     if (!token) return;
+    dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`,
       { headers: { token } }
@@ -23,14 +25,16 @@ export function fetchUser() {
     const { user } = response.data;
     dispatch({ type: USER_RECEIVED, user });
     return user;
-  }
+  };
 }
 
+export const FETCHING_SCHEDULE = 'FETCHING_SCHEDULE';
 export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
     const { token, user } = getState();
     if (!token || !user) return;
+    dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`,
       { headers: { token } }
@@ -38,14 +42,16 @@ export function fetchSchedule() {
     const { schedule } = response.data;
     dispatch({ type: SCHEDULE_RECEIVED, schedule });
     return schedule;
-  }
+  };
 }
 
+export const FETCHING_MATCHES = 'FETCHING_MATCHES';
 export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
     const { token, user, schedule } = getState();
     if (!token || !user || !schedule) return;
+    dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`,
       { headers: { token } }
@@ -60,7 +66,7 @@ export function fetchMatches() {
         return userB.match - userA.match;
       });
     dispatch({ type: MATCHES_RECEIVED, matches: usersWithMatch });
-  }
+  };
 }
 
 export const TOKEN_CLEARED = 'TOKEN_CLEARED';

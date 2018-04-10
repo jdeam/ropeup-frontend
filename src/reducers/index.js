@@ -3,12 +3,15 @@ import { createEmptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
   TOKEN_RECEIVED,
   TOKEN_CLEARED,
+  FETCHING_USER,
   USER_RECEIVED,
   USER_CLEARED,
-  MATCHES_RECEIVED,
-  MATCHES_CLEARED,
+  FETCHING_SCHEDULE,
   SCHEDULE_RECEIVED,
-  SCHEDULE_CLEARED
+  SCHEDULE_CLEARED,
+  FETCHING_MATCHES,
+  MATCHES_RECEIVED,
+  MATCHES_CLEARED
 } from '../actions';
 
 function token(state = '', action) {
@@ -24,6 +27,19 @@ function token(state = '', action) {
   }
 }
 
+function fetchingUser(state = false, action) {
+  switch(action.type) {
+    case FETCHING_USER: {
+      return true;
+    }
+    case USER_RECEIVED: {
+      return false;
+    }
+    default:
+      return state;
+  }
+}
+
 function user(state = null, action) {
   switch (action.type) {
     case USER_RECEIVED: {
@@ -31,6 +47,19 @@ function user(state = null, action) {
     }
     case USER_CLEARED: {
       return null;
+    }
+    default:
+      return state;
+  }
+}
+
+function fetchingSchedule(state = false, action) {
+  switch (action.type) {
+    case FETCHING_SCHEDULE: {
+      return true;
+    }
+    case SCHEDULE_RECEIVED: {
+      return false;
     }
     default:
       return state;
@@ -57,6 +86,19 @@ function scheduleByDay(state = createEmptySchedule(), action) {
     }
     case SCHEDULE_CLEARED: {
       return createEmptySchedule();
+    }
+    default:
+      return state;
+  }
+}
+
+function fetchingMatches(state = false, action) {
+  switch (action.type) {
+    case FETCHING_MATCHES: {
+      return true;
+    }
+    case MATCHES_RECEIVED: {
+      return false;
     }
     default:
       return state;
@@ -95,9 +137,12 @@ function matchesById(state = {}, action) {
 
 export default combineReducers({
   token,
+  fetchingUser,
   user,
+  fetchingSchedule,
   schedule,
   scheduleByDay,
+  fetchingMatches,
   matches,
   matchesById
 });

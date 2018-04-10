@@ -3,8 +3,8 @@ import { fetchUser } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
-import BaseURL from '../../BaseURL';
 import './Dashboard.css';
+const BaseURL = process.env.REACT_APP_BASE_URL;
 
 class DashboardEdit extends Component {
   state = {

@@ -5,28 +5,28 @@ import { Link, withRouter } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = ({ location }) => {
-  const path = location.pathname;
+  const { pathname } = location;
 
-  return (path !== "/" && path !== "/signup") ? (
+  return (pathname !== "/" && pathname !== "/signup") ? (
     <Headroom>
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>
           <li
-            className={ path === "/dashboard" ? "is-active" : "" }
+            className={ pathname === "/dashboard" ? "is-active" : "" }
           >
             <Link to="/dashboard"
               ><FontAwesome name="user-circle" />
             </Link>
           </li>
           <li
-            className={ path.includes("/matches") ? "is-active" : "" }
+            className={ pathname.includes("/matches") ? "is-active" : "" }
           >
             <Link to="/matches">
               <FontAwesome name="search" />
             </Link>
           </li>
           <li
-            className={ path === "/chat" ? "is-active" : "" }
+            className={ pathname === "/chat" ? "is-active" : "" }
           >
             <Link to="/chat">
               <FontAwesome name="comments" />

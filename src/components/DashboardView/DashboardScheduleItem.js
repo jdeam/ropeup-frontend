@@ -4,7 +4,7 @@ import { fetchSchedule } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
-import BaseURL from '../../BaseURL';
+const BaseURL = process.env.REACT_APP_BASE_URL;
 
 const DashboardScheduleItem = ({ user, item, fetchSchedule }) => {
   const day = scheduleMap.day[item.day];
