@@ -19,9 +19,9 @@ const Navbar = ({ location }) => {
             </Link>
           </li>
           <li
-            className={ path.includes("/climbers") ? "is-active" : "" }
+            className={ path.includes("/matches") ? "is-active" : "" }
           >
-            <Link to="/climbers">
+            <Link to="/matches">
               <FontAwesome name="search" />
             </Link>
           </li>

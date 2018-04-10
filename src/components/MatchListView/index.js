@@ -11,39 +11,10 @@ class MatchList extends Component {
   };
 
   componentDidMount() {
+    const { token, history } = this.props;
+    if (!token) return history.push('/');
     window.scrollTo(0, 0);
-    this.fetchUserInfo();
   }
-
-  fetchUserInfo = () => {
-    const {
-      token,
-      history,
-      fetchUser,
-      fetchSchedule,
-      fetchMatches
-    } = this.props;
-    if (!token) return history.push('/')
-    if (!this.props.user) {
-      this.setState({ isLoading: true });
-      return fetchUser(token)
-        .then(user => {
-          return fetchSchedule(token, user.id);
-        })
-        .then(schedule => {
-          const { zip } = this.props.user;
-          if (schedule.length && zip) {
-            return fetchMatches(token, zip, schedule);
-          }
-        })
-        .then(() => {
-          this.setState({ isLoading: false });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  };
 
   createMatchEls = () => {
     const { user, matches } = this.props;
