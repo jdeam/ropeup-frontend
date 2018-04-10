@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ClimberImage from './ClimberImage';
 import ClimberNavButtons from './ClimberNavButtons';
 import ClimberSchedule from './ClimberSchedule';
+import ClimberContent from './ClimberContent';
 import { fetchUser, fetchSchedule, fetchClimbers } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -55,10 +56,14 @@ class ClimberDetail extends Component {
             zip={ user.zip }
           />
           <ClimberNavButtons climber={ climber } />
+          <div className="climberdetail-divider"></div>
           <ClimberSchedule
             userSched={ schedule }
             climberSched={ climber.schedule }
+            gyms={ climber.gyms }
           />
+          <div className="climberdetail-divider"></div>
+          <ClimberContent climber={ climber } />
         </div>
       </div>
     ) : (
