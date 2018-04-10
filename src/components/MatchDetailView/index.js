@@ -15,10 +15,9 @@ const MatchDetail = ({
   match
 }) => {
   if (!token) history.push('/');
-  window.scrollTo(0, 0);
-
   const { id } = match.params;
   const matchingUser = matches[id];
+  if (!matchingUser) history.push('/matches');
 
   return matchingUser ? (
     <div className="matchdetail-container">

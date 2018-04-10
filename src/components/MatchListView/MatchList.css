@@ -91,3 +91,26 @@
   font-weight: 300;
   text-align: right;
 }
+
+.matchlist-empty-container {
+  height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.matchlist-empty-message {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+
+.matchlist-empty-links {
+  text-align: center;
+  font-size: 0.8rem;
+  width: 50%;
+  font-weight: 300;
+  font-style: italic;
+}

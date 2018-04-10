@@ -6,7 +6,6 @@ import './Dashboard.css';
 
 const Dashboard = ({ token, user, tab, history }) => {
   if (!token) history.push('/');
-  window.scrollTo(0, 0);
 
   return (user) ? (
     <div className="dashboard-container">

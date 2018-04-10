@@ -17,7 +17,6 @@ export function fetchToken() {
   return (dispatch) => {
     const token = localStorage.getItem('token');
     if (token) dispatch({ type: TOKEN_RECEIVED, token });
-    return token;
   };
 }
 
@@ -34,7 +33,6 @@ export function fetchUser() {
     );
     const { user } = response.data;
     dispatch({ type: USER_RECEIVED, user });
-    return user;
   };
 }
 
@@ -43,7 +41,7 @@ export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
     const { token, user } = getState();
-    if (!token || !user) return;
+    if (!token || !user.id) return;
     dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`,
@@ -51,7 +49,6 @@ export function fetchSchedule() {
     );
     const { schedule } = response.data;
     dispatch({ type: SCHEDULE_RECEIVED, schedule });
-    return schedule;
   };
 }
 
@@ -60,7 +57,7 @@ export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
     const { token, user, schedule } = getState();
-    if (!token || !user || !schedule) return;
+    if (!token || !user.zip || !schedule) return;
     dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`,
@@ -91,6 +88,12 @@ export function logout() {
     dispatch({ type: MATCHES_CLEARED });
     localStorage.removeItem('token');
   }
+}
+
+export function clearMatches() {
+  return (dispatch) => {
+    dispatch({ type: MATCHES_CLEARED });
+  };
 }
 
 export function fetchAllUserInfo() {

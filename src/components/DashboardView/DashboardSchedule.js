@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSchedule } from '../../actions';
+import { fetchSchedule, fetchMatches } from '../../actions';
 import ScheduleList from './DashboardScheduleList';
 import axios from 'axios';
 import './Dashboard.css';
@@ -16,23 +16,27 @@ class DashboardSchedule extends Component {
   }
 
   addScheduleItem = async () => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const { user, fetchSchedule } = this.props;
+    const { token, user, fetchSchedule, fetchMatches } = this.props;
     const { isAdding, ...newItem } = this.state;
+    this.setState({ isAdding: true });
     const response = await axios.post(
       `${BaseURL}/users/${user.id}/schedule/`,
       newItem,
       { headers: { token } }
     );
-    if (response.status === 200) fetchSchedule(token, user.id);
+    if (response.status === 200) {
+      this.setState({ isAdding: false });
+      await fetchSchedule();
+      fetchMatches();
+    }
   }
 
   render() {
-    return this.props.isActive ? (
+    const { isActive, schedule } = this.props;
+    return isActive ? (
       <div className="dashboard-form">
         <ScheduleList
-          user={ this.props.user }
-          schedule={ this.props.schedule }
+          schedule={ schedule }
         />
         <div className="dashboard-divider"></div>
         <div className="dashboard-form-item">
@@ -119,7 +123,9 @@ class DashboardSchedule extends Component {
           </div>
         </div>
         <div
-          className="button is-info dashboard-add-button"
+          className={ `button is-info dashboard-add-button${
+            this.state.isAdding ? ' is-loading' : ''
+          }` }
           onClick={ this.addScheduleItem }
         >
           Add to schedule
@@ -132,12 +138,14 @@ class DashboardSchedule extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  token: state.token,
   user: state.user,
   schedule: state.schedule
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchSchedule
+  fetchSchedule,
+  fetchMatches
 }, dispatch);
 
 export default connect(

@@ -2,10 +2,10 @@ import React from 'react';
 import ScheduleItem from './DashboardScheduleItem';
 import './Dashboard.css';
 
-const DashboardScheduleList = ({ user, schedule }) => {
+const DashboardScheduleList = ({ schedule }) => {
 
   const itemEls = schedule.map((item, i) => {
-    return <ScheduleItem key={ i } user={ user } item={ item } />
+    return <ScheduleItem key={ i } item={ item } />
   });
 
   return schedule.length ? (

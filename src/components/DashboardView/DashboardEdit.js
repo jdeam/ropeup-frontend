@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchUser } from '../../actions';
+import { fetchUser, fetchMatches, clearMatches } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
@@ -34,8 +34,8 @@ class DashboardEdit extends Component {
         gyms: this.props.user.gyms || '',
         tr: this.props.user.tr || false,
         lead: this.props.user.lead || false,
-        grade_low: this.props.user.grade_low || '',
-        grade_high: this.props.user.grade_high || '',
+        grade_low: this.props.user.grade_low || 0,
+        grade_high: this.props.user.grade_high || 0,
         about: this.props.user.about || ''
       });
     }
@@ -43,19 +43,28 @@ class DashboardEdit extends Component {
 
   submitEdits = async () => {
     const { isEditing, isSubmitting, ...editBody } = this.state;
-    const token = JSON.parse(localStorage.getItem('token'));
+    const {
+      token,
+      user,
+      matches,
+      fetchUser,
+      fetchMatches,
+      clearMatches
+    } = this.props;
     this.setState({ isSubmitting: true });
+    if (matches.length && !editBody.zip) clearMatches();
     const response = await axios.patch(
-      `${BaseURL}/users/${this.props.user.id}`,
+      `${BaseURL}/users/${user.id}`,
       editBody,
       { headers: { token } }
     );
     if (response.status === 200) {
-      this.props.fetchUser(token);
       this.setState({
         isEditing: false,
         isSubmitting: false
       });
+      await fetchUser();
+      fetchMatches();
     }
   };
 
@@ -261,11 +270,15 @@ class DashboardEdit extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  token: state.token,
+  user: state.user,
+  matches: state.matches
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser
+  fetchUser,
+  fetchMatches,
+  clearMatches
 }, dispatch);
 
 export default connect(
