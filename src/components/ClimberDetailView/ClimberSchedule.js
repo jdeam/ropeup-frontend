@@ -9,7 +9,13 @@ const ClimberSchedule = ({ userSched, climberSched, gyms }) => {
     }
     return false;
   }).map((item, i) => {
-    return <ClimberScheduleItem key={ i } item={ item } />
+    let { day, start, end } = item;
+    while (!parseInt(userSched[day][start], 10)) start++;
+    while (!parseInt(userSched[day][end-1], 10)) end--;
+    return <ClimberScheduleItem
+      key={ i }
+      item={ { day, start, end} }
+    />
   });
 
   return (

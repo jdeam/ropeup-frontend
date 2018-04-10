@@ -12,23 +12,18 @@ export function createEmptySchedule() {
 
 export function scheduleItemsToWeek(scheduleArr) {
   return scheduleArr.reduce((arr, item) => {
-    const { day, start, end } = item;
-    for (let i=start; i<end; i++) {
-      arr[day][i] = '1';
-    }
-    return arr;
-  }, createEmptySchedule());
-}
-
-function schedArrToStr(scheduleArr) {
-  return scheduleItemsToWeek(scheduleArr)
-    .map(day => day.join(''))
-    .join('');
+      const { day, start, end } = item;
+      for (let i=start; i<end; i++) {
+        arr[day][i] = '1';
+      }
+      return arr;
+    }, createEmptySchedule())
+    .map(day => day.join(''));
 }
 
 export function compareSchedules(userSched, climberSched) {
-  const userSchedStr = schedArrToStr(userSched);
-  const climberSchedStr = schedArrToStr(climberSched);
+  const userSchedStr = scheduleItemsToWeek(userSched).join('');
+  const climberSchedStr = scheduleItemsToWeek(climberSched).join('');
 
   let userCount = 0;
   let climberCount = 0;

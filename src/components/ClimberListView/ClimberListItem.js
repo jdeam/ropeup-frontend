@@ -11,6 +11,10 @@ const ClimberListItem = ({ climber, zip }) => {
   const age = moment().diff(climber.dob, 'years', false);
   const distance = zipcodes.distance(zip, climber.zip);
   const match = `${(climber.match * 100).toFixed(0)}% Match`;
+  const interests = <span className="tag is-rounded is-dark">{
+    climber.tr && climber.lead ? 'TR & Lead' :
+    climber.tr ? 'TR only' : 'Lead only'
+  }</span>;
   const gradeRange = `${grades[climber.grade_low]}-${grades[climber.grade_high]}`;
 
   return (
@@ -44,20 +48,7 @@ const ClimberListItem = ({ climber, zip }) => {
           </div>
           <div className="climber-box-right">
             <div className="climber-interests">
-              {
-                climber.lead ?
-                <span className="tag lead-tag is-info is-rounded">
-                  Lead
-                </span> :
-                <span></span>
-              }
-              {
-                climber.tr ?
-                <span className="tag tr-tag is-info is-rounded">
-                  Toprope
-                </span> :
-                <span></span>
-              }
+              { interests }
             </div>
             <div className="climber-grade-range">
               { gradeRange }

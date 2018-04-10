@@ -56,14 +56,9 @@
 
 .climberdetail-match-message {
   font-size: 0.8rem;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 0.5rem;
   font-style: italic;
-}
-
-.climberdetail-gyms {
-  font-style: normal;
-  font-weight: 500;
 }
 
 .climberdetail-schedule {
@@ -77,4 +72,60 @@
   border-top: 1px solid #DBDBDB;
   margin-top: 0.8rem;
   margin-bottom: 0.6rem;
+}
+
+.climberdetail-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.climberdetail-content {
+  width: 94%;
+}
+
+.climberdetail-about-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.climberdetail-about-content {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  line-height: 135%;
+}
+
+.climberdetail-year {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.climberdetail-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.climberdetail-climbs-at {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.climberdetail-gyms {
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.climberdetail-interests {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.climberdetail-grades {
+  font-weight: 400;
 }

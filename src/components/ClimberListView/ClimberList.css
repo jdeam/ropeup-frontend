@@ -75,14 +75,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
-}
-
-.tr-tag {
-  margin-top: 0.1rem;
-  margin-bottom: 0.1rem;
-}
-
-.lead-tag {
   margin-bottom: 0.1rem;
 }
 
@@ -97,6 +89,7 @@
 }
 
 .climber-grade-range {
+  margin-top: 0.1rem;
   margin-right: 0.3rem;
   font-size: 0.7rem;
   font-weight: 300;

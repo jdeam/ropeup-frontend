@@ -130,7 +130,7 @@ class DashboardEdit extends Component {
             <div className="tags">
               <span
                 className={
-                  `tag is-medium ${this.state.tr ? 'is-dark' :
+                  `tag is-medium is-rounded ${this.state.tr ? 'is-dark' :
                   this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
@@ -141,7 +141,7 @@ class DashboardEdit extends Component {
               </span>
               <span
                 className={
-                  `tag is-medium ${this.state.lead ? 'is-dark' :
+                  `tag is-medium is-rounded ${this.state.lead ? 'is-dark' :
                   this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
