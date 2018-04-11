@@ -80,7 +80,7 @@ class Login extends Component {
           <div className="field login-buttons">
             <p className="control">
               <button
-                className={ `button is-info${
+                className={ `button login-button is-info${
                   this.state.isLoggingIn ? ' is-loading' : ''
                 }`}
               >

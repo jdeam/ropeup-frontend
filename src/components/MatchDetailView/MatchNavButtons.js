@@ -9,7 +9,7 @@ const MatchNavButtons = ({ match }) => {
       <div className="matchdetail-nav">
         <Link
           to="/matches"
-          className="button is-small climberdetail-button"
+          className="button is-small matchdetail-button"
         >
          <span className="icon">
            <FontAwesome name="chevron-circle-left" />

@@ -14,7 +14,6 @@ class Signup extends Component {
     last_name: '',
     email: '',
     password: '',
-    confirm: '',
     isSigningUp: false
   };
 
@@ -24,15 +23,13 @@ class Signup extends Component {
   }
 
   signup = async () => {
-    const { first_name, last_name, email, password, confirm } = this.state;
+    const { isSigningUp, ...signupBody } = this.state;
     if (
-      first_name &&
-      last_name &&
-      email &&
-      password &&
-      password === confirm
+      signupBody.first_name &&
+      signupBody.last_name &&
+      signupBody.email &&
+      signupBody.password
     ) {
-      const signupBody = { first_name, last_name, email, password };
       this.setState({ isSigningUp: true });
       const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
       if (response.status === 200) {
@@ -111,20 +108,6 @@ class Signup extends Component {
               </span>
             </p>
           </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input"
-                type="password"
-                placeholder="Confirm password"
-                value={ this.state.confirm }
-                onChange={ (e) => this.setState({ confirm: e.target.value }) }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="check" />
-              </span>
-            </p>
-          </div>
           <div className="field signup-buttons">
             {
               this.state.is_logging_in ? (
@@ -135,7 +118,11 @@ class Signup extends Component {
                 </p>
               ) : (
                 <p className="control">
-                  <button className="button is-info">
+                  <button
+                    className={ `button signup-button is-info${
+                      this.state.isSigningUp ? ' is-loading' : ''
+                    }`}
+                  >
                     Sign up
                   </button>
                 </p>

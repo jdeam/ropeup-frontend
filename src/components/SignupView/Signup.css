@@ -15,3 +15,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.signup-button {
+  width: 30vw;
+}

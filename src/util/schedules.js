@@ -21,20 +21,20 @@ export function scheduleItemsToWeek(scheduleArr) {
     .map(day => day.join(''));
 }
 
-export function compareSchedules(userSched, climberSched) {
+export function compareSchedules(userSched, matchSched) {
   const userSchedStr = scheduleItemsToWeek(userSched).join('');
-  const climberSchedStr = scheduleItemsToWeek(climberSched).join('');
+  const matchSchedStr = scheduleItemsToWeek(matchSched).join('');
 
   let userCount = 0;
-  let climberCount = 0;
+  let matchCount = 0;
 
   for (let i=0; i<126; i++) {
     if (parseInt(userSchedStr[i], 10)) {
       userCount++;
-      if (parseInt(climberSchedStr[i], 10)) climberCount++;
+      if (parseInt(matchSchedStr[i], 10)) matchCount++;
     }
   }
-  return (climberCount/userCount).toFixed(2);
+  return (matchCount/userCount).toFixed(2);
 }
 
 export const scheduleMap = {

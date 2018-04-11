@@ -29,9 +29,14 @@
   margin-top: 0.25rem;
 }
 
-.dashboard-image-is-empty {
-  border-radius: 50%;
+.dashboard-dropzone {
   border: 1px solid lightgray;
+  border-radius: 50%;
+  height: 128px;
+  width: 128px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tabs:not(:last-child) {
