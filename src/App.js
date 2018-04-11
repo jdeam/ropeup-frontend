@@ -26,10 +26,10 @@ const App = ({ token }) => {
             token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
           ) } />
           <Route path="/login" render={ (props) => (
-            token ? <Redirect to="/dashboard" /> : <Login { ...props }/>
+            token ? <Redirect to="/dashboard" /> : <Login { ...props } />
           ) } />
           <Route path="/signup" render={ (props) => (
-            token ? <Redirect to="/dashboard" /> : <Signup { ...props }/>
+            token ? <Redirect to="/dashboard" /> : <Signup { ...props } />
           ) } />
           <Route path="/dashboard" render={ (props) => (
             token ? <Dashboard { ...props } /> : <Redirect to="/login" />
