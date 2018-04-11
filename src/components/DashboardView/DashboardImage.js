@@ -10,8 +10,8 @@ import moment from 'moment';
 import './Dashboard.css';
 
 const BaseURL = process.env.REACT_APP_BASE_URL;
-const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
-const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
+const UPLOAD_URL = process.env.REACT_APP_CLOUDINARY_UPLOAD_URL;
+const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
 
 class DashboardImage extends Component {
   state = {
