@@ -17,11 +17,6 @@ class Signup extends Component {
     isSigningUp: false
   };
 
-  componentDidMount() {
-    const { token, history } = this.props;
-    if (token) history.push('/dashboard');
-  }
-
   signup = async () => {
     const { isSigningUp, ...signupBody } = this.state;
     if (
@@ -36,7 +31,7 @@ class Signup extends Component {
         const token = response.headers.auth.split(' ')[1];
         localStorage.setItem('token', token);
         const { fetchAllUserInfo, history } = this.props;
-        await fetchAllUserInfo();
+        fetchAllUserInfo();
         history.push('/dashboard');
       }
     }
@@ -129,7 +124,7 @@ class Signup extends Component {
               )
             }
             <p className="control">
-              <Link to="/" className="button is-text is-size-7">
+              <Link to="/login" className="button is-text is-size-7">
                 Already signed up? Login
               </Link>
             </p>
@@ -140,15 +135,11 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.token
-});
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchAllUserInfo
 }, dispatch);
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Signup);

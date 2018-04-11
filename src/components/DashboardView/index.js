@@ -4,17 +4,15 @@ import DashboardTabs from './DashboardTabs';
 import { connect } from 'react-redux';
 import './Dashboard.css';
 
-const Dashboard = ({ token, user, tab, history }) => {
-  if (!token) history.push('/');
-
-  return (user) ? (
+const Dashboard = ({ user, tabInView }) => {
+  return user ? (
     <div className="dashboard-container">
       <div className="dashboard">
         <DashboardImage user={ user } />
         <DashboardTabs
-          edit={ tab === 'edit' }
-          schedule={ tab === 'schedule' }
-          settings={ tab === 'settings' }
+          edit={ tabInView === 'edit' }
+          schedule={ tabInView === 'schedule' }
+          settings={ tabInView === 'settings' }
         />
       </div>
     </div>
@@ -24,9 +22,8 @@ const Dashboard = ({ token, user, tab, history }) => {
 };
 
 const mapStateToProps = (state) => ({
-  token: state.token,
   user: state.user,
-  tab: state.dashboardTabInView
+  tabInView: state.dashboardTabInView
 });
 
 export default connect(

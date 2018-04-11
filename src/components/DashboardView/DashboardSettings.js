@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import './Dashboard.css';
 
 const DashboardSettings = ({ isActive, user, logout }) => {
-
   return isActive ? (
     <div className="dashboard-form-container">
       <div className="dashboard-form">

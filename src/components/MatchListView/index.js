@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './MatchList.css';
 
-const MatchList = ({ token, user, matches, history, switchDashboardTab }) => {
-  if (!token) history.push('/');
-
+const MatchList = ({ user, matches, switchDashboardTab }) => {
   const matchEls =  matches.map((match, i) => {
     return <MatchListItem key={ i } zip={ user.zip } match={ match } />
   });
@@ -46,7 +44,6 @@ const MatchList = ({ token, user, matches, history, switchDashboardTab }) => {
 };
 
 const mapStateToProps = (state) => ({
-  token: state.token,
   user: state.user,
   matches: state.matches
 });

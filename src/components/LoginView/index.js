@@ -15,11 +15,6 @@ class Login extends Component {
     isLoggingIn: false
   };
 
-  componentDidMount() {
-    const { token, history } = this.props;
-    if (token) history.push('/dashboard');
-  }
-
   login = async () => {
     const { isLoggingIn, ...loginBody } = this.state;
     if (loginBody.email && loginBody.password) {
@@ -28,8 +23,8 @@ class Login extends Component {
       if (response.status === 200) {
         const token = response.headers.auth.split(' ')[1];
         localStorage.setItem('token', token);
-        const { fetchAllUserInfo, history } = this.props;
-        await fetchAllUserInfo();
+        const { history, fetchAllUserInfo } = this.props;
+        fetchAllUserInfo();
         history.push('/dashboard');
       }
     }
@@ -99,15 +94,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.token
-});
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchAllUserInfo
 }, dispatch);
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Login);

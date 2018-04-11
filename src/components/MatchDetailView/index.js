@@ -7,16 +7,13 @@ import { connect } from 'react-redux';
 import './MatchDetail.css';
 
 const MatchDetail = ({
-  token,
   user,
   schedule,
   matches,
   history,
   match
 }) => {
-  if (!token) history.push('/');
-  const { id } = match.params;
-  const matchingUser = matches[id];
+  const matchingUser = matches[match.params.id];
   if (!matchingUser) history.push('/matches');
 
   return matchingUser ? (
@@ -43,7 +40,6 @@ const MatchDetail = ({
 };
 
 const mapStateToProps = (state) => ({
-  token: state.token,
   user: state.user,
   schedule: state.scheduleByDay,
   matches: state.matchesById

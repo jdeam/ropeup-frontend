@@ -7,7 +7,7 @@ import './Navbar.css';
 const Navbar = ({ location }) => {
   const { pathname } = location;
 
-  return (pathname !== "/" && pathname !== "/signup") ? (
+  return (pathname !== "/login" && pathname !== "/signup") ? (
     <Headroom>
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>

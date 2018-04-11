@@ -3,34 +3,59 @@ import Navbar from './components/Navbar';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
-import MatchList from './components/MatchListView';
 import MatchDetail from './components/MatchDetailView';
-import ChatList from './components/ChatListView';
+import MatchList from './components/MatchListView';
 import ChatDetail from './components/ChatDetailView';
+import ChatList from './components/ChatListView';
+import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
+  Switch,
   Route,
-  Switch
+  Redirect
 } from 'react-router-dom';
 import 'bulma/css/bulma.css';
 
-const App = () => {
+const App = ({ token }) => {
   return (
     <Router>
       <div>
         <Navbar />
         <Switch>
-          <Route path="/signup" component={ Signup } />
-          <Route path="/dashboard" component={ Dashboard } />
-          <Route path="/matches/:id" component={ MatchDetail } />
-          <Route path="/matches" component={ MatchList } />
-          <Route path="/chat/:id" component={ ChatDetail } />
-          <Route path="/chat" componenent={ ChatList } />
-          <Route path="/" component={ Login } />
+          <Route exact path="/" render={ () => (
+            token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/login" render={ (props) => (
+            token ? <Redirect to="/dashboard" /> : <Login { ...props }/>
+          ) } />
+          <Route path="/signup" render={ (props) => (
+            token ? <Redirect to="/dashboard" /> : <Signup { ...props }/>
+          ) } />
+          <Route path="/dashboard" render={ (props) => (
+            token ? <Dashboard { ...props } /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/matches/:id" render={ (props) => (
+            token ? <MatchDetail { ...props } /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/matches" render={ (props) => (
+            token ? <MatchList { ...props } /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/chat/:id" render={ (props) => (
+            token ? <ChatDetail { ...props } /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/chat" render={ (props) => (
+            token ? <ChatList { ...props } /> : <Redirect to="/login" />
+          ) } />
         </Switch>
       </div>
     </Router>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  token: state.token
+});
+
+export default connect(
+  mapStateToProps
+)(App);

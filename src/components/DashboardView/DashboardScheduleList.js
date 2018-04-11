@@ -3,7 +3,6 @@ import ScheduleItem from './DashboardScheduleItem';
 import './Dashboard.css';
 
 const DashboardScheduleList = ({ schedule }) => {
-
   const itemEls = schedule.map((item, i) => {
     return <ScheduleItem key={ i } item={ item } />
   });

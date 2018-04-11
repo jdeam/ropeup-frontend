@@ -14,7 +14,7 @@ const MatchNavButtons = ({ match }) => {
          <span className="icon">
            <FontAwesome name="chevron-circle-left" />
          </span>
-         <span>Back to matches</span>
+         <span>Back to Matches</span>
        </Link>
         <a className="button is-small is-info matchdetail-button">
          <span>{ `Message ${match.first_name}` }</span>
