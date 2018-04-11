@@ -11,7 +11,7 @@ const DashboardScheduleItem = ({
   user,
   item,
   fetchSchedule,
-  fetchMatches
+  fetchMatches,
 }) => {
   const day = scheduleMap.day[item.day];
   const start = scheduleMap.time[item.start];
@@ -43,12 +43,12 @@ const DashboardScheduleItem = ({
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  token: state.token
+  token: state.token,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchSchedule,
-  fetchMatches
+  fetchMatches,
 }, dispatch);
 
 export default connect(

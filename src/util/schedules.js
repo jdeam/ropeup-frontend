@@ -45,7 +45,7 @@ export const scheduleMap = {
     'Thurs',
     'Fri',
     'Sat',
-    'Sun'
+    'Sun',
   ],
   time: [
     '6am',
@@ -66,7 +66,7 @@ export const scheduleMap = {
     '9pm',
     '10pm',
     '11pm',
-    '12pm'
+    '12pm',
   ]
 };
 
@@ -77,5 +77,5 @@ export const emptySchedule = [
   '000000000000000000',
   '000000000000000000',
   '000000000000000000',
-  '000000000000000000'
+  '000000000000000000',
 ];

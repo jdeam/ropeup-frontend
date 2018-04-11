@@ -13,7 +13,7 @@ import {
   SCHEDULE_CLEARED,
   FETCHING_MATCHES,
   MATCHES_RECEIVED,
-  MATCHES_CLEARED
+  MATCHES_CLEARED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -160,5 +160,5 @@ export default combineReducers({
   scheduleByDay,
   fetchingMatches,
   matches,
-  matchesById
+  matchesById,
 });

@@ -12,7 +12,7 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    isLoggingIn: false
+    isLoggingIn: false,
   };
 
   login = async () => {
@@ -95,7 +95,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchAllUserInfo
+  fetchAllUserInfo,
 }, dispatch);
 
 export default connect(

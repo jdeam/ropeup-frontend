@@ -14,7 +14,7 @@ class Signup extends Component {
     last_name: '',
     email: '',
     password: '',
-    isSigningUp: false
+    isSigningUp: false,
   };
 
   signup = async () => {
@@ -136,7 +136,7 @@ class Signup extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchAllUserInfo
+  fetchAllUserInfo,
 }, dispatch);
 
 export default connect(

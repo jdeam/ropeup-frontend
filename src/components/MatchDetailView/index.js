@@ -11,7 +11,7 @@ const MatchDetail = ({
   schedule,
   matches,
   history,
-  match
+  match,
 }) => {
   const matchingUser = matches[match.params.id];
   if (!matchingUser) history.push('/matches');
@@ -42,9 +42,9 @@ const MatchDetail = ({
 const mapStateToProps = (state) => ({
   user: state.user,
   schedule: state.scheduleByDay,
-  matches: state.matchesById
+  matches: state.matchesById,
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(MatchDetail);

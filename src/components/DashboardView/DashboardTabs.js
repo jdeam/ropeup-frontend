@@ -12,7 +12,7 @@ const DashboardTabs = ({
   edit,
   schedule,
   settings,
-  switchDashboardTab
+  switchDashboardTab,
 }) => {
   return (
     <div>
@@ -67,7 +67,7 @@ const DashboardTabs = ({
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  switchDashboardTab
+  switchDashboardTab,
 }, dispatch);
 
 export default connect(

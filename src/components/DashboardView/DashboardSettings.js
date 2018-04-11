@@ -24,11 +24,11 @@ const DashboardSettings = ({ isActive, user, logout }) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  logout
+  logout,
 }, dispatch)
 
 export default connect(

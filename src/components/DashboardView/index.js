@@ -23,7 +23,7 @@ const Dashboard = ({ user, tabInView }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  tabInView: state.dashboardTabInView
+  tabInView: state.dashboardTabInView,
 });
 
 export default connect(

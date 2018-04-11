@@ -45,11 +45,11 @@ const MatchList = ({ user, matches, switchDashboardTab }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  matches: state.matches
+  matches: state.matches,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  switchDashboardTab
+  switchDashboardTab,
 }, dispatch);
 
 export default connect(

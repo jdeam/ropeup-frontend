@@ -18,7 +18,7 @@ class DashboardEdit extends Component {
     lead: false,
     grade_low: 0,
     grade_high: 0,
-    about: ''
+    about: '',
   };
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class DashboardEdit extends Component {
         lead: this.props.user.lead || false,
         grade_low: this.props.user.grade_low || 0,
         grade_high: this.props.user.grade_high || 0,
-        about: this.props.user.about || ''
+        about: this.props.user.about || '',
       });
     }
   };
@@ -49,7 +49,7 @@ class DashboardEdit extends Component {
       matches,
       fetchUser,
       fetchMatches,
-      clearMatches
+      clearMatches,
     } = this.props;
     this.setState({ isSubmitting: true });
     if (matches.length && !editBody.zip) clearMatches();
@@ -272,13 +272,13 @@ class DashboardEdit extends Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
-  matches: state.matches
+  matches: state.matches,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
   fetchMatches,
-  clearMatches
+  clearMatches,
 }, dispatch);
 
 export default connect(

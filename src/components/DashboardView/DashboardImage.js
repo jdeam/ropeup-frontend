@@ -15,7 +15,7 @@ const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
 
 class DashboardImage extends Component {
   state = {
-    isUploading: false
+    isUploading: false,
   };
 
   handleImageUpload = (files) => {
@@ -89,11 +89,11 @@ class DashboardImage extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.token,
-  user: state.user
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser
+  fetchUser,
 }, dispatch);
 
 export default connect(

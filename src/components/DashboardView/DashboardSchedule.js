@@ -140,12 +140,12 @@ class DashboardSchedule extends Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
-  schedule: state.schedule
+  schedule: state.schedule,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchSchedule,
-  fetchMatches
+  fetchMatches,
 }, dispatch);
 
 export default connect(

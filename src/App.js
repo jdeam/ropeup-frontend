@@ -12,7 +12,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import 'bulma/css/bulma.css';
 
@@ -53,7 +53,7 @@ const App = ({ token }) => {
 };
 
 const mapStateToProps = (state) => ({
-  token: state.token
+  token: state.token,
 });
 
 export default connect(
