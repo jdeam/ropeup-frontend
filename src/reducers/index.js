@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import { createEmptySchedule, scheduleItemsToWeek } from '../util/schedules';
+import { emptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
   DASHBOARD_TAB_SWITCHED,
+  DASHBOARD_TAB_RESET,
   TOKEN_RECEIVED,
   TOKEN_CLEARED,
   FETCHING_USER,
@@ -19,6 +20,9 @@ function dashboardTabInView(state = 'edit', action) {
   switch (action.type) {
     case DASHBOARD_TAB_SWITCHED: {
       return action.tab;
+    }
+    case DASHBOARD_TAB_RESET: {
+      return 'edit';
     }
     default:
       return state;
@@ -90,13 +94,13 @@ function schedule(state = [], action) {
   }
 }
 
-function scheduleByDay(state = createEmptySchedule(), action) {
+function scheduleByDay(state = [...emptySchedule], action) {
   switch (action.type) {
     case SCHEDULE_RECEIVED : {
       return scheduleItemsToWeek(action.schedule);
     }
     case SCHEDULE_CLEARED: {
-      return createEmptySchedule();
+      return [...emptySchedule];
     }
     default:
       return state;

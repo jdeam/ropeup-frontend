@@ -80,14 +80,16 @@ export const TOKEN_CLEARED = 'TOKEN_CLEARED';
 export const USER_CLEARED = 'USER_CLEARED';
 export const SCHEDULE_CLEARED = 'SCHEDULE_CLEARED';
 export const MATCHES_CLEARED = 'MATCHES_CLEARED';
+export const DASHBOARD_TAB_RESET = 'DASHBOARD_TAB_RESET';
 export function logout() {
   return (dispatch) => {
     dispatch({ type: TOKEN_CLEARED });
     dispatch({ type: USER_CLEARED });
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
+    dispatch({ type: DASHBOARD_TAB_RESET });
     localStorage.removeItem('token');
-  }
+  };
 }
 
 export function clearMatches() {
@@ -102,5 +104,5 @@ export function fetchAllUserInfo() {
     await dispatch(fetchUser());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
-  }
+  };
 }

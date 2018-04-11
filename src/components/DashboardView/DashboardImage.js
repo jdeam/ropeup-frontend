@@ -14,14 +14,15 @@ const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
 const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
 
 class DashboardImage extends Component {
-  onDrop = (files) => {
-    this.handleImageUpload(files[0]);
-  }
+  state = {
+    isUploading: false
+  };
 
-  handleImageUpload = (file) => {
+  handleImageUpload = (files) => {
+    this.setState({ isUploading: true })
     request.post(UPLOAD_URL)
       .field('upload_preset', UPLOAD_PRESET)
-      .field('file', file)
+      .field('file', files[0])
       .end(async (err, res) => {
         if (err) console.log(err);
         const { secure_url } = res.body;
@@ -37,8 +38,11 @@ class DashboardImage extends Component {
       updateBody,
       { headers: { token } }
     );
-    if (response.status === 200) fetchUser();
-  }
+    if (response.status === 200) {
+      await fetchUser();
+      this.setState({ isUploading: false });
+    }
+  };
 
   getUserAge = () => {
     const { user } = this.props;
@@ -65,11 +69,11 @@ class DashboardImage extends Component {
                 className="dashboard-dropzone"
                 multiple={ false }
                 accept="image/*"
-                onDrop={ this.onDrop }
+                onDrop={ this.handleImageUpload }
               >
                 <FontAwesome
-                  className="fa-4x"
-                  name="cloud-upload"
+                  className={ `fa-4x${ this.state.isUploading ? ' fa-spin': ''}` }
+                  name={ this.state.isUploading ? 'spinner' : 'cloud-upload' }
                 />
               </Dropzone>
             </div>
