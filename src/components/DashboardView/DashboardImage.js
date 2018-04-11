@@ -15,28 +15,30 @@ const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
 
 class DashboardImage extends Component {
   onDrop = (files) => {
-    this.setState({ uploadedFile: files[0] });
     this.handleImageUpload(files[0]);
   }
 
   handleImageUpload = (file) => {
-    const upload = request.post(UPLOAD_URL)
+    request.post(UPLOAD_URL)
       .field('upload_preset', UPLOAD_PRESET)
       .field('file', file)
-      .end( async (err, res) => {
+      .end(async (err, res) => {
         if (err) console.log(err);
-        if (res.body.secure_url) {
-          const uploadBody = { img_url: res.body.secure_url };
-          const { token, user, fetchUser } = this.props;
-          const response = await axios.patch(
-            `${BaseURL}/users/${user.id}`,
-            uploadBody,
-            { headers: { token } }
-          );
-          if (response.status === 200) fetchUser();
-        }
+        const { secure_url } = res.body;
+        if (secure_url) this.updateUserImage(secure_url);
       });
   };
+
+  updateUserImage = async (img_url) => {
+    const updateBody = { img_url };
+    const { token, user, fetchUser } = this.props;
+    const response = await axios.patch(
+      `${BaseURL}/users/${user.id}`,
+      updateBody,
+      { headers: { token } }
+    );
+    if (response.status === 200) fetchUser();
+  }
 
   getUserAge = () => {
     const { user } = this.props;
