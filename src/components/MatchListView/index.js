@@ -1,17 +1,29 @@
 import React from 'react';
 import MatchListItem from './MatchListItem';
+import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import { switchDashboardTab } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './MatchList.css';
 
-const MatchList = ({ user, matches, switchDashboardTab }) => {
+const MatchList = ({
+  user,
+  matches,
+  fetchingMatches,
+  switchDashboardTab
+}) => {
   const matchEls =  matches.map((match, i) => {
     return <MatchListItem key={ i } zip={ user.zip } match={ match } />
   });
 
-  return matches.length ? (
+  return fetchingMatches ? (
+    <div className="matchlist-empty-container">
+      <div className="matchlist-empty-message">
+        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+      </div>
+    </div>
+  ) : matches.length ? (
     <div className="matchlist-container">
       <div className="matchlist">
         { matchEls }
@@ -46,6 +58,7 @@ const MatchList = ({ user, matches, switchDashboardTab }) => {
 const mapStateToProps = (state) => ({
   user: state.user,
   matches: state.matches,
+  fetchingMatches: state.fetchingMatches,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

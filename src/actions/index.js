@@ -24,9 +24,9 @@ export const FETCHING_USER = 'FETCHING_USER';
 export const USER_RECEIVED = 'USER_RECEIVED';
 export function fetchUser() {
   return async (dispatch, getState) => {
-    const { token } = getState();
+    const { token, fetchingUser } = getState();
     if (!token) return;
-    dispatch({ type: FETCHING_USER });
+    if (!fetchingUser) dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`,
       { headers: { token } }
@@ -40,9 +40,9 @@ export const FETCHING_SCHEDULE = 'FETCHING_SCHEDULE';
 export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
-    const { token, user } = getState();
+    const { token, user, fetchingSchedule } = getState();
     if (!token || !user.id) return;
-    dispatch({ type: FETCHING_SCHEDULE });
+    if (!fetchingSchedule) dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`,
       { headers: { token } }
@@ -56,9 +56,9 @@ export const FETCHING_MATCHES = 'FETCHING_MATCHES';
 export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
-    const { token, user, schedule } = getState();
+    const { token, user, schedule, fetchingMatches } = getState();
     if (!token || !user.zip || !schedule) return;
-    dispatch({ type: FETCHING_MATCHES });
+    if (!fetchingMatches) dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`,
       { headers: { token } }
@@ -101,6 +101,9 @@ export function clearMatches() {
 export function fetchAllUserInfo() {
   return async (dispatch) => {
     dispatch(fetchToken());
+    dispatch({ type: FETCHING_USER });
+    dispatch({ type: FETCHING_SCHEDULE });
+    dispatch({ type: FETCHING_MATCHES });
     await dispatch(fetchUser());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());

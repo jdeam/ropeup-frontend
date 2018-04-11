@@ -129,3 +129,18 @@
 .matchdetail-grades {
   font-weight: 400;
 }
+
+.matchdetail-empty-container {
+  height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.matchdetail-empty-message {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}

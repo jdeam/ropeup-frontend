@@ -19,6 +19,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "sendbird": "^3.0.57",
     "superagent": "^3.8.2",
     "zipcodes": "^6.0.0"
   },
