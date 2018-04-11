@@ -10,8 +10,8 @@ import moment from 'moment';
 import './Dashboard.css';
 
 const BaseURL = process.env.REACT_APP_BASE_URL;
-const UPLOAD_URL = process.env.REACT_APP_CLOUDINARY_UPLOAD_URL;
-const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+const uploadUrl = process.env.REACT_APP_CLOUDINARY_UPLOAD_URL;
+const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
 
 class DashboardImage extends Component {
   state = {
@@ -20,8 +20,8 @@ class DashboardImage extends Component {
 
   handleImageUpload = (files) => {
     this.setState({ isUploading: true })
-    request.post(UPLOAD_URL)
-      .field('upload_preset', UPLOAD_PRESET)
+    request.post(uploadUrl)
+      .field('upload_preset', uploadPreset)
       .field('file', files[0])
       .end(async (err, res) => {
         if (err) console.log(err);
