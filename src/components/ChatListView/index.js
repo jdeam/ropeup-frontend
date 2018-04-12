@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { sbFetchChannels } from '../../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import './ChatList.css';
 
-const ChatList = () => {
+class ChatList extends Component {
+  componentDidMount() {
+    this.props.sbFetchChannels();
+  }
 
-  return (
-    <div></div>
-  );
+  render() {
+    return (
+      <div>
+      </div>
+    );
+  }
 };
 
-export default ChatList;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  sbFetchChannels
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ChatList);

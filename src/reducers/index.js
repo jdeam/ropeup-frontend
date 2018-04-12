@@ -142,12 +142,12 @@ function matchesById(state = {}, action) {
   }
 }
 
-function sbUser(state = null, action) {
+function sbUser(state = {}, action) {
   switch (action.type) {
     case SB_LOGIN_SUCCESS:
-      return action.user;
+      return action.sbUser;
     case SB_LOGOUT_SUCCESS:
-      return null;
+      return {};
     default:
       return state;
   }
@@ -156,7 +156,7 @@ function sbUser(state = null, action) {
 function sbChannels(state = [], action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      return action.channels;
+      return action.sbChannels;
     case SB_LOGOUT_SUCCESS:
       return [];
     default:

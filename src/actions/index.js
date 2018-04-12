@@ -102,7 +102,7 @@ export function logout() {
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
     dispatch({ type: DASHBOARD_TAB_RESET });
-    dispatch(sendbirdLogout());
+    dispatch(sbLogout());
     localStorage.removeItem('token');
   };
 }
@@ -122,25 +122,26 @@ export function fetchAllUserInfo() {
     await dispatch(fetchUser());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
-    await dispatch(sendbirdLogin());
-    await dispatch(fetchChannels());
+    await dispatch(sbLogin());
+    await dispatch(sbFetchChannels());
   };
 }
 
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
-export function sendbirdLogin() {
+export function sbLogin() {
   return (dispatch, getState) => {
     const { user } = getState();
     if (!user.email) return;
     sbConnect(user.email)
-      .then((user) => {
-        dispatch({ type: SB_LOGIN_SUCCESS, user });
+      .then((sbUser) => {
+        dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
+        return user;
       });
   };
 }
 
 export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
-export function sendbirdLogout() {
+export function sbLogout() {
   return (dispatch) => {
     sbDisconnect()
       .then(() => dispatch({type: SB_LOGOUT_SUCCESS }));
@@ -148,13 +149,14 @@ export function sendbirdLogout() {
 }
 
 export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
-export function fetchChannels() {
+export function sbFetchChannels() {
   return (dispatch, getState) => {
-    const { user } = getState();
-    if (!user.email) return;
+    const { sbUser } = getState();
+    console.log(sbUser);
+    if (!sbUser.userId) return;
     sbGetChannels()
-      .then((channels) => {
-        dispatch({ type: SB_CHANNELS_RECEIVED, channels });
+      .then((sbChannels) => {
+        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
       });
   };
 }

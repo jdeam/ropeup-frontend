@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import { sbCreateChannel } from '../../sendbirdActions';
+// import { sbCreateChannel } from '../../sendbirdActions';
 
 const MatchNavButtons = ({ match }) => {
 
