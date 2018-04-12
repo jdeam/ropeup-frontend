@@ -19,7 +19,7 @@ const MatchList = ({
 
   return fetchingMatches ? (
     <div className="matchlist-empty-container">
-      <div className="matchlist-empty-message">
+      <div className="matchlist-empty-message matchlist-spinner">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
       </div>
     </div>

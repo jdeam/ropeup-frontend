@@ -107,6 +107,10 @@
   margin-bottom: 0.3rem;
 }
 
+.matchlist-spinner {
+  color: #DBDBDB;
+}
+
 .matchlist-empty-links {
   text-align: center;
   font-size: 0.8rem;

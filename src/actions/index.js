@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { compareSchedules } from '../util/schedules';
-import { sbConnect, sbDisconnect } from '../sendbirdActions';
+import {
+  sbConnect,
+  sbDisconnect,
+  sbGetChannels,
+} from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
 export const DASHBOARD_TAB_SWITCHED = 'DASHBOARD_TAB_SWITCHED';
@@ -116,9 +120,10 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_SCHEDULE });
     dispatch({ type: FETCHING_MATCHES });
     await dispatch(fetchUser());
-    await dispatch(sendbirdLogin());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
+    await dispatch(sendbirdLogin());
+    await dispatch(fetchChannels());
   };
 }
 
@@ -127,17 +132,29 @@ export function sendbirdLogin() {
   return (dispatch, getState) => {
     const { user } = getState();
     if (!user.email) return;
-    sbConnect(user.email, user.first_name)
+    sbConnect(user.email)
       .then((user) => {
         dispatch({ type: SB_LOGIN_SUCCESS, user });
       });
   };
 }
 
-export const SB_DISCONNECT_SUCCESS = 'SB_DISCONNECT_SUCCESS';
+export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
 export function sendbirdLogout() {
   return (dispatch) => {
     sbDisconnect()
-      .then(() => dispatch({type: SB_DISCONNECT_SUCCESS }));
+      .then(() => dispatch({type: SB_LOGOUT_SUCCESS }));
+  };
+}
+
+export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
+export function fetchChannels() {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (!user.email) return;
+    sbGetChannels()
+      .then((channels) => {
+        dispatch({ type: SB_CHANNELS_RECEIVED, channels });
+      });
   };
 }

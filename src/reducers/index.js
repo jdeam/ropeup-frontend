@@ -18,7 +18,8 @@ import {
   MATCHES_RECEIVED,
   MATCHES_CLEARED,
   SB_LOGIN_SUCCESS,
-  SB_DISCONNECT_SUCCESS,
+  SB_LOGOUT_SUCCESS,
+  SB_CHANNELS_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -145,8 +146,19 @@ function sbUser(state = null, action) {
   switch (action.type) {
     case SB_LOGIN_SUCCESS:
       return action.user;
-    case SB_DISCONNECT_SUCCESS:
+    case SB_LOGOUT_SUCCESS:
       return null;
+    default:
+      return state;
+  }
+}
+
+function sbChannels(state = [], action) {
+  switch (action.type) {
+    case SB_CHANNELS_RECEIVED:
+      return action.channels;
+    case SB_LOGOUT_SUCCESS:
+      return [];
     default:
       return state;
   }
@@ -164,4 +176,5 @@ export default combineReducers({
   matches,
   matchesById,
   sbUser,
+  sbChannels,
 });

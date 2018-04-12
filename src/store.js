@@ -2,12 +2,16 @@ import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
-// import { logger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
+
+const logger = createLogger({
+  predicate: (getState, action) => action.type.slice(0, 2) === 'SB'
+});
 
 const middlewares = [ thunkMiddleware ];
-// if (process.env.NODE_ENV === 'development') {
-//   middlewares.push(logger);
-// }
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger);
+}
 
 const store = createStore(
   rootReducer,

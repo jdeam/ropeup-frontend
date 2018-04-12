@@ -32,11 +32,12 @@ class DashboardSchedule extends Component {
   }
 
   render() {
-    const { isActive, schedule } = this.props;
+    const { isActive, schedule, fetchingSchedule } = this.props;
     return isActive ? (
       <div className="dashboard-form">
         <ScheduleList
           schedule={ schedule }
+          fetchingSchedule={ fetchingSchedule }
         />
         <div className="dashboard-divider"></div>
         <div className="dashboard-form-item">
@@ -141,6 +142,7 @@ const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
   schedule: state.schedule,
+  fetchingSchedule: state.fetchingSchedule,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -140,6 +140,7 @@
 }
 
 .matchdetail-empty-message {
+  color: #DBDBDB;
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.3rem;
