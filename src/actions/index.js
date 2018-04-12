@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { compareSchedules } from '../util/schedules';
+import { sbConnect, sbDisconnect } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
 export const DASHBOARD_TAB_SWITCHED = 'DASHBOARD_TAB_SWITCHED';
@@ -21,11 +22,14 @@ export function fetchToken() {
 }
 
 export const FETCHING_USER = 'FETCHING_USER';
+export const FETCHING_USER_CANCELED ='FETCHING_USER_CANCELED';
 export const USER_RECEIVED = 'USER_RECEIVED';
 export function fetchUser() {
   return async (dispatch, getState) => {
     const { token, fetchingUser } = getState();
-    if (!token) return;
+    if (!token) {
+      return dispatch({ type: FETCHING_USER_CANCELED });
+    }
     if (!fetchingUser) dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`,
@@ -37,11 +41,14 @@ export function fetchUser() {
 }
 
 export const FETCHING_SCHEDULE = 'FETCHING_SCHEDULE';
+export const FETCHING_SCHEDULE_CANCELED = 'FETCHING_SCHEDULE_CANCELED';
 export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
     const { token, user, fetchingSchedule } = getState();
-    if (!token || !user.id) return;
+    if (!token || !user.id) {
+      return dispatch({ type: FETCHING_SCHEDULE_CANCELED });
+    }
     if (!fetchingSchedule) dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`,
@@ -53,11 +60,14 @@ export function fetchSchedule() {
 }
 
 export const FETCHING_MATCHES = 'FETCHING_MATCHES';
+export const FETCHING_MATCHES_CANCELED = 'FETCHING_MATCHES_CANCELED';
 export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
     const { token, user, schedule, fetchingMatches } = getState();
-    if (!token || !user.zip || !schedule) return;
+    if (!token || !user.zip || !schedule) {
+      return dispatch({ type: FETCHING_MATCHES_CANCELED });
+    }
     if (!fetchingMatches) dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`,
@@ -88,6 +98,7 @@ export function logout() {
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
     dispatch({ type: DASHBOARD_TAB_RESET });
+    dispatch(sendbirdLogout());
     localStorage.removeItem('token');
   };
 }
@@ -105,7 +116,28 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_SCHEDULE });
     dispatch({ type: FETCHING_MATCHES });
     await dispatch(fetchUser());
+    await dispatch(sendbirdLogin());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
+  };
+}
+
+export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
+export function sendbirdLogin() {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (!user.email) return;
+    sbConnect(user.email, user.first_name)
+      .then((user) => {
+        dispatch({ type: SB_LOGIN_SUCCESS, user });
+      });
+  };
+}
+
+export const SB_DISCONNECT_SUCCESS = 'SB_DISCONNECT_SUCCESS';
+export function sendbirdLogout() {
+  return (dispatch) => {
+    sbDisconnect()
+      .then(() => dispatch({type: SB_DISCONNECT_SUCCESS }));
   };
 }

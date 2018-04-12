@@ -52,6 +52,7 @@ class DashboardImage extends Component {
 
   render() {
     const { user } = this.props;
+    
     return (
       <div className="dashboard-image-container">
         {
