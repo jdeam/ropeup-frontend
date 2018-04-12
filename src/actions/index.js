@@ -3,7 +3,7 @@ import { compareSchedules } from '../util/schedules';
 import {
   sbConnect,
   sbDisconnect,
-  sbGetChannels,
+  // sbGetChannels,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
@@ -95,6 +95,7 @@ export const USER_CLEARED = 'USER_CLEARED';
 export const SCHEDULE_CLEARED = 'SCHEDULE_CLEARED';
 export const MATCHES_CLEARED = 'MATCHES_CLEARED';
 export const DASHBOARD_TAB_RESET = 'DASHBOARD_TAB_RESET';
+export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
 export function logout() {
   return (dispatch) => {
     dispatch({ type: TOKEN_CLEARED });
@@ -104,6 +105,13 @@ export function logout() {
     dispatch({ type: DASHBOARD_TAB_RESET });
     dispatch(sbLogout());
     localStorage.removeItem('token');
+  };
+}
+
+export function sbLogout() {
+  return (dispatch) => {
+    sbDisconnect()
+      .then(() => dispatch({type: SB_LOGOUT_SUCCESS }));
   };
 }
 
@@ -123,40 +131,31 @@ export function fetchAllUserInfo() {
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
     await dispatch(sbLogin());
-    await dispatch(sbFetchChannels());
   };
 }
 
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
+export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
 export function sbLogin() {
   return (dispatch, getState) => {
     const { user } = getState();
     if (!user.email) return;
     sbConnect(user.email)
-      .then((sbUser) => {
-        dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
-        return user;
+      .then((data) => {
+        dispatch({ type: SB_LOGIN_SUCCESS, sbUser: data.user });
+        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels: data.channels });
       });
   };
 }
 
-export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
-export function sbLogout() {
-  return (dispatch) => {
-    sbDisconnect()
-      .then(() => dispatch({type: SB_LOGOUT_SUCCESS }));
-  };
-}
-
-export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
-export function sbFetchChannels() {
-  return (dispatch, getState) => {
-    const { sbUser } = getState();
-    console.log(sbUser);
-    if (!sbUser.userId) return;
-    sbGetChannels()
-      .then((sbChannels) => {
-        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
-      });
-  };
-}
+// export function sbFetchChannels() {
+//   return (dispatch, getState) => {
+//     const { sbUser } = getState();
+//     console.log(sbUser);
+//     if (!sbUser.userId) return;
+//     sbGetChannels()
+//       .then((sbChannels) => {
+//         dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
+//       });
+//   };
+// }
