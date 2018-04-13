@@ -28,6 +28,6 @@ const MatchSchedule = ({ userSched, matchSched }) => {
       </div>
     </div>
   );
-}
+};
 
 export default MatchSchedule;

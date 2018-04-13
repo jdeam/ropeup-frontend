@@ -1,13 +1,25 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
+import MessageDetailScheduleItem from './MessageDetailScheduleItem';
 import { withRouter, Link } from 'react-router-dom';
 import './MessageDetail.css';
 
-const MessageDetailHeader = ({ matchingUser, schedule, history }) => {
-
-  console.log(matchingUser, schedule);
+const MessageDetailHeader = ({ matchingUser, userSched, history }) => {
   const name = matchingUser.first_name;
-
+  const scheduleEls = matchingUser.schedule.filter(item => {
+    for (let time=item.start; time<item.end; time++) {
+      if (parseInt(userSched[item.day][time], 10)) return true;
+    }
+    return false;
+  }).map((item, i) => {
+    let { day, start, end } = item;
+    while (!parseInt(userSched[day][start], 10)) start++;
+    while (!parseInt(userSched[day][end-1], 10)) end--;
+    return <MessageDetailScheduleItem
+      key={ i }
+      item={ { day, start, end } }
+    />
+  });
 
   return (
     <div className="messagedetail-header">
@@ -36,10 +48,16 @@ const MessageDetailHeader = ({ matchingUser, schedule, history }) => {
       </div>
       <div className="messagedetail-divider"></div>
       <div className="messagedetail-schedule">
-
+        <div className="messagedetail-schedule-header">
+          Matches your schedule on ...
+        </div>
+        <div className="messagedetail-tags tags">
+          { scheduleEls }
+        </div>
       </div>
+      <div className="messagedetail-divider"></div>
     </div>
   );
-}
+};
 
 export default withRouter(MessageDetailHeader);

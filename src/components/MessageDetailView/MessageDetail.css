@@ -61,7 +61,7 @@
 }
 
 .messagedetail-header-top-right {
-  margin: 0.25rem 0.6rem 0.25rem 0;
+  margin: 0.2rem 0.6rem 0.2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -72,12 +72,29 @@
   font-size: 1.8rem;
   font-weight: 600;
   align-self: flex-end;
-  line-height: 1.8rem;
+  line-height: 1.9rem;
 }
 
 .messagedetail-header-profile-link {
-  text-decoration: underline;
-  font-size: 0.7rem;
-  align-self: center;
+  font-size: 0.65rem;
+  align-self: flex-end;
   color: gray;
+}
+
+.messagedetail-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.messagedetail-schedule-header {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+  font-style: italic;
+}
+
+.messagedetail-tags {
+
 }

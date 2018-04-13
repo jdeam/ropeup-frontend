@@ -26,7 +26,7 @@ const MessageDetail = ({
       <div className="messagedetail">
         <MessageDetailHeader
           matchingUser={ matches[id] }
-          schedule={ schedule}
+          userSched={ schedule}
         />
       </div>
     </div>
