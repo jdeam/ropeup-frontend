@@ -142,10 +142,10 @@ export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
 export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
 export function sbLogin() {
   return (dispatch, getState) => {
-    const { user, fetchingSb } = getState();
+    const { user, isFetchingSb } = getState();
     const { id, first_name, last_name, img_url } = user;
     if (!id) return dispatch({ type: SB_FETCHING_DATA_CANCELED });
-    if (!fetchingSb) dispatch({ type: SB_FETCHING_DATA });
+    if (!isFetchingSb) dispatch({ type: SB_FETCHING_DATA });
     const nickname = `${first_name} ${last_name[0]}.`;
     sbConnect(id, nickname, img_url)
       .then((data) => {
