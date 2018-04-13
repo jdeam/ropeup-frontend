@@ -27,7 +27,7 @@ const MatchList = ({
     <div className="matchlist-container">
       <div className="matchlist">
         <h1 className="matchlist-title">
-          Your Matches
+          Matches
         </h1>
         { matchEls }
       </div>

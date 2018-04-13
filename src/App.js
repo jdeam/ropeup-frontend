@@ -5,8 +5,8 @@ import Signup from './components/SignupView';
 import Dashboard from './components/DashboardView';
 import MatchDetail from './components/MatchDetailView';
 import MatchList from './components/MatchListView';
-import ChatDetail from './components/ChatDetailView';
-import ChatList from './components/ChatListView';
+import MessageDetail from './components/MessageDetailView';
+import MessageList from './components/MessageListView';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -22,15 +22,6 @@ const App = ({ token }) => {
       <div>
         <Navbar />
         <Switch>
-          <Route exact path="/" render={ () => (
-            token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
-          ) } />
-          <Route path="/login" render={ (props) => (
-            token ? <Redirect to="/dashboard" /> : <Login { ...props } />
-          ) } />
-          <Route path="/signup" render={ (props) => (
-            token ? <Redirect to="/dashboard" /> : <Signup { ...props } />
-          ) } />
           <Route path="/dashboard" render={ (props) => (
             token ? <Dashboard { ...props } /> : <Redirect to="/login" />
           ) } />
@@ -40,11 +31,20 @@ const App = ({ token }) => {
           <Route path="/matches" render={ (props) => (
             token ? <MatchList { ...props } /> : <Redirect to="/login" />
           ) } />
-          <Route path="/chat/:id" render={ (props) => (
-            token ? <ChatDetail { ...props } /> : <Redirect to="/login" />
+          <Route path="/messages/:id" render={ (props) => (
+            token ? <MessageDetail { ...props } /> : <Redirect to="/login" />
           ) } />
-          <Route path="/chat" render={ (props) => (
-            token ? <ChatList { ...props } /> : <Redirect to="/login" />
+          <Route path="/messages" render={ (props) => (
+            token ? <MessageList { ...props } /> : <Redirect to="/login" />
+          ) } />
+          <Route path="/login" render={ (props) => (
+            token ? <Redirect to="/dashboard" /> : <Login { ...props } />
+          ) } />
+          <Route path="/signup" render={ (props) => (
+            token ? <Redirect to="/dashboard" /> : <Signup { ...props } />
+          ) } />
+          <Route path="/" render={ () => (
+            token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
           ) } />
         </Switch>
       </div>

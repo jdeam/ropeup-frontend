@@ -1,24 +1,24 @@
-.chatlist-container {
+.messagelist-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
 }
 
-.chatlist {
+.messagelist {
   width: 98%;
   margin: 0.2rem 0 0.2rem 0;
   display: flex;
   flex-direction: column;
 }
 
-.chatlist-title {
+.messagelist-title {
   font-size: 2.2rem;
   font-weight: 600;
   margin-left: 0.8rem;
 }
 
-.chatlist-empty-container {
+.messagelist-empty-container {
   height: 80vh;
   width: 100vw;
   display: flex;
@@ -27,17 +27,17 @@
   align-items: center;
 }
 
-.chatlist-empty-message {
+.messagelist-empty-message {
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.3rem;
 }
 
-.chatlist-spinner {
+.messagelist-spinner {
   color: #DBDBDB;
 }
 
-.chatlist-empty-links {
+.messagelist-empty-links {
   text-align: center;
   font-size: 0.8rem;
   width: 50%;
@@ -45,21 +45,21 @@
   font-style: italic;
 }
 
-.chatlist-divider {
+.messagelist-divider {
   width: 100%;
   border-top: 1px solid #DBDBDB;
   margin-top: 0.2rem;
   margin-bottom: 0.4rem;
 }
 
-.chatlist-chat-container {
+.messagelist-chat-container {
   height: 3.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.chatlist-chat {
+.messagelist-chat {
   height: 100%;
   width: 94%;
   display: flex;
@@ -67,7 +67,11 @@
   align-items: center;
 }
 
-.chatlist-chat-content {
+.messagelist-img {
+  border-radius: 50%;
+}
+
+.messagelist-chat-content {
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -75,19 +79,19 @@
   color: black;
 }
 
-.chatlist-chat-content-top {
+.messagelist-chat-content-top {
   display: flex;
   justify-content: space-between;
 }
 
-.chatlist-chat-content-message {
+.messagelist-chat-content-message {
   color: gray;
 }
 
-/* .chatlist-chat-content-name {
+/* .messagelist-chat-content-name {
 
 }
 
-.chatlist-chat-content-time {
+.messagelist-chat-content-time {
 
 } */

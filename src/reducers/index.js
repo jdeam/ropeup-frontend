@@ -179,6 +179,22 @@ function sbChannels(state = [], action) {
   }
 }
 
+function sbChannelsByUserId(state = {}, action) {
+  switch (action.type) {
+    case SB_CHANNELS_RECEIVED:
+      return action.sbChannels.reduce((byUserId, channel) => {
+        const { members } = channel;
+        const { userId } = members[1];
+        byUserId[userId] = channel;
+        return byUserId;
+      }, {});
+    case SB_LOGOUT_SUCCESS:
+      return {};
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   dashboardTabInView,
   token,
@@ -193,4 +209,5 @@ export default combineReducers({
   isFetchingSb,
   sbUser,
   sbChannels,
+  sbChannelsByUserId,
 });

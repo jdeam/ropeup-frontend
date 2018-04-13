@@ -26,9 +26,9 @@ const Navbar = ({ location }) => {
             </Link>
           </li>
           <li
-            className={ pathname === "/chat" ? "is-active" : "" }
+            className={ pathname.includes("/messages") ? "is-active" : "" }
           >
-            <Link to="/chat">
+            <Link to="/messages">
               <FontAwesome name="comments" />
             </Link>
           </li>

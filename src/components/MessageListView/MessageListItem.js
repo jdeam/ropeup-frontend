@@ -1,34 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import './ChatList.css';
+import './MessageList.css';
 
-const ChatListItem = ({ channel, user }) => {
+const MessageListItem = ({ channel, user }) => {
   const otherUser = channel.members[1];
   const time = moment(Date.now()).format('h:mm a');
   const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec lacus facilisis, accumsan metus quis, interdum justo.';
 
   return (
-    <Link to={ `/chat/${otherUser.userId}`}>
-      <div className="chatlist-chat-container">
-        <div className="chatlist-chat">
+    <Link to={ `/messages/${otherUser.userId}`}>
+      <div className="messagelist-chat-container">
+        <div className="messagelist-chat">
           <div className="image is-48x48">
             <img
               src={ otherUser.profileUrl }
-              className="matchlist-img"
+              className="messagelist-img"
               alt=""
             />
           </div>
-          <div className="chatlist-chat-content">
-            <div className="chatlist-chat-content-top">
-              <div className="chatlist-chat-content-name">
+          <div className="messagelist-chat-content">
+            <div className="messagelist-chat-content-top">
+              <div className="messagelist-chat-content-name">
                 { otherUser.nickname }
               </div>
-              <div className="chatlist-chat-content-time">
+              <div className="messagelist-chat-content-time">
                 { time }
               </div>
             </div>
-            <div className="chatlist-chat-content-message">
+            <div className="messagelist-chat-content-message">
               { `${message.slice(0, 26)} ...` }
             </div>
           </div>
@@ -38,7 +38,7 @@ const ChatListItem = ({ channel, user }) => {
   );
 };
 
-export default ChatListItem;
+export default MessageListItem;
 
 // Laurianne58@gmail.com
 // Fausto_Schmidt75@hotmail.com

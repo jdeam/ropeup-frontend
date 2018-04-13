@@ -1,13 +1,13 @@
 import React from 'react';
-import ChatListItem from './ChatListItem';
+import MessageListItem from './MessageListItem';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import './ChatList.css';
+import './MessageList.css';
 
-const ChatList = ({ user, channels, isFetching }) => {
-  const chatEls = channels.map((channel, i) => {
-    return <ChatListItem
+const MessageList = ({ user, channels, isFetching }) => {
+  const messageEls = channels.map((channel, i) => {
+    return <MessageListItem
       key={ i }
       channel={ channel }
       user={ user }
@@ -15,27 +15,27 @@ const ChatList = ({ user, channels, isFetching }) => {
   });
 
   return isFetching ? (
-    <div className="chatlist-empty-container">
-      <div className="chatlist-empty-message chatlist-spinner">
+    <div className="messagelist-empty-container">
+      <div className="messagelist-empty-message messagelist-spinner">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
       </div>
     </div>
   ) : channels.length ? (
-    <div className="chatlist-container">
-      <div className="chatlist">
-        <h1 className="chatlist-title">
+    <div className="messagelist-container">
+      <div className="messagelist">
+        <h1 className="messagelist-title">
           Messages
         </h1>
-        <div className="chatlist-divider"></div>
-        { chatEls }
+        <div className="messagelist-divider"></div>
+        { messageEls }
       </div>
     </div>
   ) : (
-    <div className="chatlist-empty-container">
-      <div className="chatlist-empty-message">
+    <div className="messagelist-empty-container">
+      <div className="messagelist-empty-message">
         No messages to show
       </div>
-      <div className="chatlist-empty-links">
+      <div className="messagelist-empty-links">
         View your&nbsp;
         <Link
           to="/matches"
@@ -56,4 +56,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(ChatList);
+)(MessageList);
