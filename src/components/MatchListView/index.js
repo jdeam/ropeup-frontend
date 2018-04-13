@@ -26,6 +26,9 @@ const MatchList = ({
   ) : matches.length ? (
     <div className="matchlist-container">
       <div className="matchlist">
+        <h1 className="matchlist-title">
+          Your Matches
+        </h1>
         { matchEls }
       </div>
     </div>

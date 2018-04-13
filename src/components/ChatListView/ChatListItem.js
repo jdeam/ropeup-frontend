@@ -1,7 +1,7 @@
 import React from 'react';
 import './ChatList.css';
 
-const ChatListItem = ({ channel }) => {
+const ChatListItem = ({ channel, user }) => {
   console.log(channel);
 
   return (

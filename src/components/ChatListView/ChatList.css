@@ -1,0 +1,46 @@
+.chatlist-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.chatlist {
+  width: 98%;
+  margin: 0.2rem 0 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatlist-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-left: 0.8rem;
+}
+
+.chatlist-empty-container {
+  height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatlist-empty-message {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+
+.chatlist-spinner {
+  color: #DBDBDB;
+}
+
+.chatlist-empty-links {
+  text-align: center;
+  font-size: 0.8rem;
+  width: 50%;
+  font-weight: 300;
+  font-style: italic;
+}

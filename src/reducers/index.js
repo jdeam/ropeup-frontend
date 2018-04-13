@@ -20,6 +20,8 @@ import {
   SB_LOGIN_SUCCESS,
   SB_LOGOUT_SUCCESS,
   SB_CHANNELS_RECEIVED,
+  FETCHING_SB_DATA,
+  FETCHING_SB_DATA_CANCELED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -164,6 +166,19 @@ function sbChannels(state = [], action) {
   }
 }
 
+function fetchingSb(state = false, action) {
+  switch (action.type) {
+    case FETCHING_SB_DATA:
+      return true;
+    case SB_CHANNELS_RECEIVED:
+      return false;
+    case FETCHING_SB_DATA_CANCELED:
+      return false;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   dashboardTabInView,
   token,
@@ -175,6 +190,7 @@ export default combineReducers({
   fetchingMatches,
   matches,
   matchesById,
+  fetchingSb,
   sbUser,
   sbChannels,
 });

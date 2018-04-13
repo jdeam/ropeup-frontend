@@ -10,7 +10,12 @@
   margin: 0.2rem 0 0.2rem 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+}
+
+.matchlist-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-left: 0.8rem;
 }
 
 .matchlist-box-container {

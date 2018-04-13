@@ -127,6 +127,7 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_USER });
     dispatch({ type: FETCHING_SCHEDULE });
     dispatch({ type: FETCHING_MATCHES });
+    dispatch({ type: FETCHING_SB_DATA });
     await dispatch(fetchUser());
     await dispatch(fetchSchedule());
     await dispatch(fetchMatches());
@@ -134,13 +135,18 @@ export function fetchAllUserInfo() {
   };
 }
 
+export const FETCHING_SB_DATA = 'FETCHING_SB_DATA';
+export const FETCHING_SB_DATA_CANCELED = 'FETCHING_SB_DATA_CANCELED';
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
 export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
 export function sbLogin() {
   return (dispatch, getState) => {
-    const { user } = getState();
-    if (!user.email) return;
-    sbConnect(user.email)
+    const { user, fetchingSb } = getState();
+    const { email, first_name, last_name, img_url } = user;
+    if (!email) return dispatch({ type: FETCHING_SB_DATA_CANCELED });
+    if (!fetchingSb) dispatch({ type: FETCHING_SB_DATA });
+    const nickname = `${first_name} ${last_name[0]}.`;
+    sbConnect(email, nickname, img_url)
       .then((data) => {
         dispatch({ type: SB_LOGIN_SUCCESS, sbUser: data.user });
         dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels: data.channels });
