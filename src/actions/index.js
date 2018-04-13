@@ -130,7 +130,7 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_MATCHES });
     dispatch({ type: SB_FETCHING_DATA });
     await dispatch(fetchUser());
-    dispatch(sbLogin());
+    dispatch(sbLoginAndGetChannels());
     await dispatch(fetchSchedule());
     dispatch(fetchMatches());
   };
@@ -140,43 +140,38 @@ export const SB_FETCHING_DATA = 'SB_FETCHING_DATA';
 export const SB_FETCHING_DATA_CANCELED = 'SB_FETCHING_DATA_CANCELED';
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
 export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
-export function sbLogin() {
-  return (dispatch, getState) => {
+export function sbLoginAndGetChannels() {
+  return async (dispatch, getState) => {
     const { user, isFetchingSb } = getState();
     const { id, first_name, last_name, img_url } = user;
     if (!id) return dispatch({ type: SB_FETCHING_DATA_CANCELED });
     if (!isFetchingSb) dispatch({ type: SB_FETCHING_DATA });
     const nickname = `${first_name} ${last_name[0]}.`;
-    sbConnect(id, nickname, img_url)
-      .then((data) => {
-        dispatch({ type: SB_LOGIN_SUCCESS, sbUser: data.user });
-        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels: data.channels });
-      });
+    const sbData = await sbConnect(id, nickname, img_url);
+    const { sbUser, sbChannels } = sbData;
+    dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
+    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
   };
 }
 
 export function sbAddChannel(recipientId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { sbUser } = getState();
     if (!sbUser) return;
     dispatch({ type: SB_FETCHING_DATA });
-    sbCreateChannel(recipientId)
-      .then((sbChannels) => {
-        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
-      });
+    const sbChannels = await sbCreateChannel(recipientId);
+    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels});
   };
 }
 
+export const SB_IMAGE_UPDATED = 'SB_IMAGE_UPDATED';
 export function sbAddUserImage() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { user, sbUser } = getState();
     if (!sbUser || !user.img_url) return;
     const { nickname } = sbUser;
     dispatch({ type: SB_FETCHING_DATA });
-    sbUpdateUser(nickname, user.img_url)
-      .then((sbUser) => {
-        dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
-        dispatch({ type: SB_FETCHING_DATA_CANCELED });
-      });
+    const updatedUser = await sbUpdateUser(nickname, user.img_url);
+    dispatch({ type: SB_IMAGE_UPDATED, sbUser: updatedUser });
   };
 }

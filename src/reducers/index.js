@@ -22,6 +22,7 @@ import {
   SB_CHANNELS_RECEIVED,
   SB_FETCHING_DATA,
   SB_FETCHING_DATA_CANCELED,
+  SB_IMAGE_UPDATED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -150,6 +151,8 @@ function isFetchingSb(state = false, action) {
       return true;
     case SB_CHANNELS_RECEIVED:
       return false;
+    case SB_IMAGE_UPDATED:
+      return false;
     case SB_FETCHING_DATA_CANCELED:
       return false;
     default:
@@ -160,6 +163,8 @@ function isFetchingSb(state = false, action) {
 function sbUser(state = {}, action) {
   switch (action.type) {
     case SB_LOGIN_SUCCESS:
+      return action.sbUser;
+    case SB_IMAGE_UPDATED:
       return action.sbUser;
     case SB_LOGOUT_SUCCESS:
       return {};

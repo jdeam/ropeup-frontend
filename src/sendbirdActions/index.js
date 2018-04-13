@@ -14,7 +14,7 @@ export const sbConnect = (userId, nickname, profileUrl) => {
           if (error) {
             reject('Update user failed.');
           } else {
-            data.user = updatedUser;
+            data.sbUser = updatedUser;
             const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
             channelListQuery.includeEmpty = true;
             if (channelListQuery.hasNext) {
@@ -22,7 +22,7 @@ export const sbConnect = (userId, nickname, profileUrl) => {
                 if (error) {
                   reject('No channels found.');
                 } else {
-                  data.channels = channels;
+                  data.sbChannels = channels;
                   resolve(data);
                 }
               });
