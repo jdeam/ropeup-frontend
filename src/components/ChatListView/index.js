@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './ChatList.css';
 
-const ChatList = ({ user, channels, fetchingSb }) => {
+const ChatList = ({ user, channels, isFetching }) => {
   const chatEls = channels.map((channel, i) => {
     return <ChatListItem
       key={ i }
@@ -14,7 +14,7 @@ const ChatList = ({ user, channels, fetchingSb }) => {
     />
   });
 
-  return fetchingSb ? (
+  return isFetching ? (
     <div className="chatlist-empty-container">
       <div className="chatlist-empty-message chatlist-spinner">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
@@ -51,7 +51,7 @@ const ChatList = ({ user, channels, fetchingSb }) => {
 const mapStateToProps = (state) => ({
   user: state.user,
   channels: state.sbChannels,
-  fetchingSb: state.fetchingSb,
+  isFetching: state.isFetchingSb,
 });
 
 export default connect(

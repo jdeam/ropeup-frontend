@@ -5,8 +5,8 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import './Dashboard.css';
 
-const Dashboard = ({ user, fetchingUser, tabInView }) => {
-  return fetchingUser ? (
+const Dashboard = ({ user, isFetching, tabInView }) => {
+  return isFetching ? (
     <div className="dashboard-empty-container">
       <div className="dashboard-empty-message">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
@@ -28,7 +28,7 @@ const Dashboard = ({ user, fetchingUser, tabInView }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  fetchingUser: state.fetchingUser,
+  isFetching: state.isFetchingUser,
   tabInView: state.dashboardTabInView,
 });
 

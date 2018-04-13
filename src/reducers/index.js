@@ -46,7 +46,7 @@ function token(state = '', action) {
   }
 }
 
-function fetchingUser(state = false, action) {
+function isFetchingUser(state = false, action) {
   switch(action.type) {
     case FETCHING_USER:
       return true;
@@ -70,7 +70,7 @@ function user(state = {}, action) {
   }
 }
 
-function fetchingSchedule(state = false, action) {
+function isFetchingSchedule(state = false, action) {
   switch (action.type) {
     case FETCHING_SCHEDULE:
       return true;
@@ -105,7 +105,7 @@ function scheduleByDay(state = [...emptySchedule], action) {
   }
 }
 
-function fetchingMatches(state = false, action) {
+function isFetchingMatches(state = false, action) {
   switch (action.type) {
     case FETCHING_MATCHES:
       return true;
@@ -144,6 +144,19 @@ function matchesById(state = {}, action) {
   }
 }
 
+function isFetchingSb(state = false, action) {
+  switch (action.type) {
+    case SB_FETCHING_DATA:
+      return true;
+    case SB_CHANNELS_RECEIVED:
+      return false;
+    case SB_FETCHING_DATA_CANCELED:
+      return false;
+    default:
+      return state;
+  }
+}
+
 function sbUser(state = {}, action) {
   switch (action.type) {
     case SB_LOGIN_SUCCESS:
@@ -166,31 +179,18 @@ function sbChannels(state = [], action) {
   }
 }
 
-function fetchingSb(state = false, action) {
-  switch (action.type) {
-    case SB_FETCHING_DATA:
-      return true;
-    case SB_CHANNELS_RECEIVED:
-      return false;
-    case SB_FETCHING_DATA_CANCELED:
-      return false;
-    default:
-      return state;
-  }
-}
-
 export default combineReducers({
   dashboardTabInView,
   token,
-  fetchingUser,
+  isFetchingUser,
   user,
-  fetchingSchedule,
+  isFetchingSchedule,
   schedule,
   scheduleByDay,
-  fetchingMatches,
+  isFetchingMatches,
   matches,
   matchesById,
-  fetchingSb,
+  isFetchingSb,
   sbUser,
   sbChannels,
 });

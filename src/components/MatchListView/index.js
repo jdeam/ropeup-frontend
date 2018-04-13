@@ -10,14 +10,14 @@ import './MatchList.css';
 const MatchList = ({
   user,
   matches,
-  fetchingMatches,
+  isFetching,
   switchDashboardTab
 }) => {
   const matchEls =  matches.map((match, i) => {
     return <MatchListItem key={ i } zip={ user.zip } match={ match } />
   });
 
-  return fetchingMatches ? (
+  return isFetching ? (
     <div className="matchlist-empty-container">
       <div className="matchlist-empty-message matchlist-spinner">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
@@ -61,7 +61,7 @@ const MatchList = ({
 const mapStateToProps = (state) => ({
   user: state.user,
   matches: state.matches,
-  fetchingMatches: state.fetchingMatches,
+  isFetching: state.isFetchingMatches,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

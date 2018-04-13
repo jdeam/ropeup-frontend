@@ -12,12 +12,12 @@ const MatchDetail = ({
   user,
   schedule,
   matches,
-  fetchingMatches,
+  isFetching,
   match,
 }) => {
   const matchingUser = matches[match.params.id];
 
-  return fetchingMatches ? (
+  return isFetching ? (
     <div className="matchdetail-empty-container">
       <div className="matchdetail-empty-message">
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   schedule: state.scheduleByDay,
   matches: state.matchesById,
-  fetchingMatches: state.fetchingMatches,
+  isFetching: state.isFetchingMatches,
 });
 
 export default connect(

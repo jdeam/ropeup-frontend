@@ -3,12 +3,12 @@ import ScheduleItem from './DashboardScheduleItem';
 import FontAwesome from 'react-fontawesome';
 import './Dashboard.css';
 
-const DashboardScheduleList = ({ schedule, fetchingSchedule }) => {
+const DashboardScheduleList = ({ schedule, isFetching }) => {
   const itemEls = schedule.map((item, i) => {
     return <ScheduleItem key={ i } item={ item } />
   });
 
-  return fetchingSchedule ? (
+  return isFetching ? (
     <div className="dashboard-schedule-empty-container">
       <div className="dashboard-schedule-empty">
         <FontAwesome className="fa-2x fa-spin" name="spinner" />
