@@ -9,6 +9,6 @@ const ChatListItem = ({ channel, user }) => {
 
     </div>
   );
-}
+};
 
 export default ChatListItem;

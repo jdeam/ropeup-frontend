@@ -26,6 +26,7 @@ const ChatList = ({ user, channels, fetchingSb }) => {
         <h1 className="chatlist-title">
           Messages
         </h1>
+        <div className="chatlist-divider"></div>
         { chatEls }
       </div>
     </div>
