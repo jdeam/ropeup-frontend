@@ -15,7 +15,7 @@
 .matchlist-title {
   font-size: 2.2rem;
   font-weight: 600;
-  margin-left: 0.8rem;
+  align-self: center;
 }
 
 .matchlist-box-container {

@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const MatchNavButtons = ({ match, fetchingSb, sbAddChannel }) => {
-  console.log(match);
-
   return (
     <div className="matchdetail-nav-container">
       <div className="matchdetail-nav">
@@ -20,7 +18,8 @@ const MatchNavButtons = ({ match, fetchingSb, sbAddChannel }) => {
          </span>
          <span>Back to Matches</span>
        </Link>
-        <a
+        <Link
+          to={ `/messages/${match.id}`}
           className={ `button is-small is-info matchdetail-button${
             fetchingSb ? ' is-loading' : ""
           }` }
@@ -30,7 +29,7 @@ const MatchNavButtons = ({ match, fetchingSb, sbAddChannel }) => {
          <span className="icon">
            <FontAwesome name="comment" />
          </span>
-        </a>
+       </Link>
       </div>
     </div>
   );

@@ -4,7 +4,9 @@ import moment from 'moment';
 import './MessageList.css';
 
 const MessageListItem = ({ channel, user }) => {
-  const otherUser = channel.members[1];
+  const otherUser = channel.members.filter(member => {
+    return member.userId !== user.id.toString();
+  })[0];
   const time = moment(Date.now()).format('h:mm a');
   const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec lacus facilisis, accumsan metus quis, interdum justo.';
 
@@ -40,11 +42,13 @@ const MessageListItem = ({ channel, user }) => {
 
 export default MessageListItem;
 
-// Laurianne58@gmail.com
-// Fausto_Schmidt75@hotmail.com
-// Emerald45@yahoo.com
-// Kolby_Conn99@yahoo.com
-// Wava71@yahoo.com
-// Van.Bednar98@yahoo.com
-// Filiberto52@yahoo.com
-// Santiago60@hotmail.com
+/*
+Laurianne58@gmail.com
+Fausto_Schmidt75@hotmail.com
+Emerald45@yahoo.com
+Kolby_Conn99@yahoo.com
+Wava71@yahoo.com
+Van.Bednar98@yahoo.com
+Filiberto52@yahoo.com
+Santiago60@hotmail.com
+*/

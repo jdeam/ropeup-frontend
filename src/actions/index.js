@@ -150,17 +150,18 @@ export function sbLoginAndGetChannels() {
     const sbData = await sbConnect(id, nickname, img_url);
     const { sbUser, sbChannels } = sbData;
     dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
-    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
+    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels, id });
   };
 }
 
 export function sbAddChannel(recipientId) {
   return async (dispatch, getState) => {
-    const { sbUser } = getState();
+    const { sbUser, user } = getState();
     if (!sbUser) return;
+    const { id } = user;
     dispatch({ type: SB_FETCHING_DATA });
     const sbChannels = await sbCreateChannel(recipientId);
-    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels});
+    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels, id });
   };
 }
 

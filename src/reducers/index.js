@@ -189,7 +189,9 @@ function sbChannelsByUserId(state = {}, action) {
     case SB_CHANNELS_RECEIVED:
       return action.sbChannels.reduce((byUserId, channel) => {
         const { members } = channel;
-        const { userId } = members[1];
+        const { userId } = members.filter(member => {
+          return member.userId !== action.id.toString(); 
+        })[0];
         byUserId[userId] = channel;
         return byUserId;
       }, {});
