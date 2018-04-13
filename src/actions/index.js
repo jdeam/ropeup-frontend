@@ -3,7 +3,7 @@ import { compareSchedules } from '../util/schedules';
 import {
   sbConnect,
   sbDisconnect,
-  // sbGetChannels,
+  sbCreateChannel,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
@@ -148,14 +148,13 @@ export function sbLogin() {
   };
 }
 
-// export function sbFetchChannels() {
-//   return (dispatch, getState) => {
-//     const { sbUser } = getState();
-//     console.log(sbUser);
-//     if (!sbUser.userId) return;
-//     sbGetChannels()
-//       .then((sbChannels) => {
-//         dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
-//       });
-//   };
-// }
+export function sbAddChannel(recipientId) {
+  return (dispatch, getState) => {
+    const { sbUser } = getState();
+    if (!sbUser) return;
+    sbCreateChannel(recipientId)
+      .then((sbChannels) => {
+        dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
+      });
+  };
+}

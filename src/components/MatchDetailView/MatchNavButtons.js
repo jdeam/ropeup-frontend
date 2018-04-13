@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-// import { sbCreateChannel } from '../../sendbirdActions';
+import { sbAddChannel } from '../../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-const MatchNavButtons = ({ match }) => {
+const MatchNavButtons = ({ match, sbAddChannel }) => {
 
   return (
     <div className="matchdetail-nav-container">
@@ -17,7 +19,10 @@ const MatchNavButtons = ({ match }) => {
          </span>
          <span>Back to Matches</span>
        </Link>
-        <a className="button is-small is-info matchdetail-button">
+        <a
+          className="button is-small is-info matchdetail-button"
+          onClick={ () => sbAddChannel(match.email) }
+        >
          <span>{ `Message ${match.first_name}` }</span>
          <span className="icon">
            <FontAwesome name="comment" />
@@ -28,4 +33,11 @@ const MatchNavButtons = ({ match }) => {
   );
 }
 
-export default MatchNavButtons;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  sbAddChannel
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(MatchNavButtons);
