@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
-import { fetchUser } from '../../actions';
+import { fetchUser, sbAddUserImage } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -26,21 +26,24 @@ class DashboardImage extends Component {
       .end(async (err, res) => {
         if (err) console.log(err);
         const { secure_url } = res.body;
-        if (secure_url) this.updateUserImage(secure_url);
+        if (secure_url) {
+          this.setState({ isUploading: false });
+          this.updateUserImage(secure_url);
+        }
       });
   };
 
   updateUserImage = async (img_url) => {
     const updateBody = { img_url };
-    const { token, user, fetchUser } = this.props;
+    const { token, user, fetchUser, sbAddUserImage } = this.props;
     const response = await axios.patch(
       `${BaseURL}/users/${user.id}`,
       updateBody,
       { headers: { token } }
     );
     if (response.status === 200) {
-      await fetchUser();
-      this.setState({ isUploading: false });
+      await fetchUser()
+      sbAddUserImage();
     }
   };
 
@@ -52,7 +55,7 @@ class DashboardImage extends Component {
 
   render() {
     const { user } = this.props;
-    
+
     return (
       <div className="dashboard-image-container">
         {
@@ -95,6 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
+  sbAddUserImage,
 }, dispatch);
 
 export default connect(

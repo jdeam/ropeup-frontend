@@ -20,8 +20,8 @@ import {
   SB_LOGIN_SUCCESS,
   SB_LOGOUT_SUCCESS,
   SB_CHANNELS_RECEIVED,
-  FETCHING_SB_DATA,
-  FETCHING_SB_DATA_CANCELED,
+  SB_FETCHING_DATA,
+  SB_FETCHING_DATA_CANCELED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -133,8 +133,8 @@ function matchesById(state = {}, action) {
   switch (action.type) {
     case MATCHES_RECEIVED:
       return action.matches.reduce((byId, match) => {
-        const { id, ...matchWithoutId } = match;
-        byId[id] = matchWithoutId;
+        const { id } = match;
+        byId[id] = match;
         return byId;
       }, {});
     case MATCHES_CLEARED:
@@ -168,11 +168,11 @@ function sbChannels(state = [], action) {
 
 function fetchingSb(state = false, action) {
   switch (action.type) {
-    case FETCHING_SB_DATA:
+    case SB_FETCHING_DATA:
       return true;
     case SB_CHANNELS_RECEIVED:
       return false;
-    case FETCHING_SB_DATA_CANCELED:
+    case SB_FETCHING_DATA_CANCELED:
       return false;
     default:
       return state;

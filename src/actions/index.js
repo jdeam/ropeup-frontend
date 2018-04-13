@@ -3,6 +3,7 @@ import { compareSchedules } from '../util/schedules';
 import {
   sbConnect,
   sbDisconnect,
+  sbUpdateUser,
   sbCreateChannel,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -127,26 +128,26 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_USER });
     dispatch({ type: FETCHING_SCHEDULE });
     dispatch({ type: FETCHING_MATCHES });
-    dispatch({ type: FETCHING_SB_DATA });
+    dispatch({ type: SB_FETCHING_DATA });
     await dispatch(fetchUser());
+    dispatch(sbLogin());
     await dispatch(fetchSchedule());
-    await dispatch(fetchMatches());
-    await dispatch(sbLogin());
+    dispatch(fetchMatches());
   };
 }
 
-export const FETCHING_SB_DATA = 'FETCHING_SB_DATA';
-export const FETCHING_SB_DATA_CANCELED = 'FETCHING_SB_DATA_CANCELED';
+export const SB_FETCHING_DATA = 'SB_FETCHING_DATA';
+export const SB_FETCHING_DATA_CANCELED = 'SB_FETCHING_DATA_CANCELED';
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
 export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
 export function sbLogin() {
   return (dispatch, getState) => {
     const { user, fetchingSb } = getState();
-    const { email, first_name, last_name, img_url } = user;
-    if (!email) return dispatch({ type: FETCHING_SB_DATA_CANCELED });
-    if (!fetchingSb) dispatch({ type: FETCHING_SB_DATA });
+    const { id, first_name, last_name, img_url } = user;
+    if (!id) return dispatch({ type: SB_FETCHING_DATA_CANCELED });
+    if (!fetchingSb) dispatch({ type: SB_FETCHING_DATA });
     const nickname = `${first_name} ${last_name[0]}.`;
-    sbConnect(email, nickname, img_url)
+    sbConnect(id, nickname, img_url)
       .then((data) => {
         dispatch({ type: SB_LOGIN_SUCCESS, sbUser: data.user });
         dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels: data.channels });
@@ -158,9 +159,24 @@ export function sbAddChannel(recipientId) {
   return (dispatch, getState) => {
     const { sbUser } = getState();
     if (!sbUser) return;
+    dispatch({ type: SB_FETCHING_DATA });
     sbCreateChannel(recipientId)
       .then((sbChannels) => {
         dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels });
+      });
+  };
+}
+
+export function sbAddUserImage() {
+  return (dispatch, getState) => {
+    const { user, sbUser } = getState();
+    if (!sbUser || !user.img_url) return;
+    const { nickname } = sbUser;
+    dispatch({ type: SB_FETCHING_DATA });
+    sbUpdateUser(nickname, user.img_url)
+      .then((sbUser) => {
+        dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
+        dispatch({ type: SB_FETCHING_DATA_CANCELED });
       });
   };
 }

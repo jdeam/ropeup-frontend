@@ -5,7 +5,8 @@ import { sbAddChannel } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-const MatchNavButtons = ({ match, sbAddChannel }) => {
+const MatchNavButtons = ({ match, fetchingSb, sbAddChannel }) => {
+  console.log(match);
 
   return (
     <div className="matchdetail-nav-container">
@@ -20,8 +21,10 @@ const MatchNavButtons = ({ match, sbAddChannel }) => {
          <span>Back to Matches</span>
        </Link>
         <a
-          className="button is-small is-info matchdetail-button"
-          onClick={ () => sbAddChannel(match.email) }
+          className={ `button is-small is-info matchdetail-button${
+            fetchingSb ? ' is-loading' : ""
+          }` }
+          onClick={ () => sbAddChannel(match.id) }
         >
          <span>{ `Message ${match.first_name}` }</span>
          <span className="icon">
@@ -31,13 +34,17 @@ const MatchNavButtons = ({ match, sbAddChannel }) => {
       </div>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  fetchingSb: state.fetchingSb,
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   sbAddChannel
 }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MatchNavButtons);

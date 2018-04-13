@@ -22,7 +22,7 @@ const MatchListItem = ({ match, zip }) => {
       <div className="matchlist-box-container">
         <div className="matchlist-box">
           <div className="matchlist-box-left">
-            <div className="image is-64x64">
+            <div className="image is-48x48">
               <img
                 src={ match.img_url }
                 className="matchlist-img"

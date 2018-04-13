@@ -34,6 +34,16 @@ export const sbConnect = (userId, nickname, profileUrl) => {
   });
 };
 
+export const sbUpdateUser = (nickname, profileUrl) => {
+  return new Promise((resolve, reject) => {
+    const sb = SendBird.getInstance();
+    if (sb) sb.updateCurrentUserInfo(nickname, profileUrl, (user, error) => {
+      if (error) reject('Update user failed.');
+      else resolve(user);
+    });
+  });
+};
+
 export const sbCreateChannel = (recipientId) => {
   return new Promise((resolve, reject) => {
     const sb = SendBird.getInstance();
