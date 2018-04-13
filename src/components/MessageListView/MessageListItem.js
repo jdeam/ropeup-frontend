@@ -23,10 +23,10 @@ const MessageListItem = ({ channel, user }) => {
           </div>
           <div className="messagelist-chat-content">
             <div className="messagelist-chat-content-top">
-              <div className="messagelist-chat-content-name">
+              <div>
                 { otherUser.nickname }
               </div>
-              <div className="messagelist-chat-content-time">
+              <div>
                 { time }
               </div>
             </div>

@@ -77,7 +77,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: black;
+  color: #4A4A4A;
 }
 
 .messagelist-chat-content-top {
@@ -88,11 +88,3 @@
 .messagelist-chat-content-message {
   color: gray;
 }
-
-/* .messagelist-chat-content-name {
-
-}
-
-.messagelist-chat-content-time {
-
-} */

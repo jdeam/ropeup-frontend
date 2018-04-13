@@ -1,3 +1,17 @@
+.messagedetail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.messagedetail {
+  width: 98%;
+  margin: 0.2rem 0 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .messagedetail-empty-container {
   height: 80vh;
   width: 100vw;
@@ -12,4 +26,58 @@
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.3rem;
+}
+
+.messagedetail-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  align-self: flex-end;
+  margin-right: 0.6rem;
+}
+
+.messagedetail-divider {
+  width: 100%;
+  border-top: 1px solid #DBDBDB;
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.messagedetail-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.messagedetail-header-back-nav {
+  color: #4A4A4A;
+  display: flex;
+  align-items: center;
+  margin-left: 0.6rem;
+}
+
+.messagedetail-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messagedetail-header-top-right {
+  margin: 0.25rem 0.6rem 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #4A4A4A;
+}
+
+.messagedetail-header-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  align-self: flex-end;
+  line-height: 1.8rem;
+}
+
+.messagedetail-header-profile-link {
+  text-decoration: underline;
+  font-size: 0.7rem;
+  align-self: center;
+  color: gray;
 }
