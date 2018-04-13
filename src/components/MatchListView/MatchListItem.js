@@ -47,11 +47,11 @@ const MatchListItem = ({ match, zip }) => {
             </div>
           </div>
           <div className="matchlist-box-right">
-            <div className="matchlist-interests">
-              { interests }
-            </div>
             <div className="matchlist-graderange">
               { gradeRange }
+            </div>
+            <div className="matchlist-interests">
+              { interests }
             </div>
           </div>
         </div>
