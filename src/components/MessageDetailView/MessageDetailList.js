@@ -19,7 +19,7 @@ class MessageDetailList extends Component {
     return fakeMessages.map((message, i) => {
       return <MessageDetailListItem
         key={ i }
-        sbUser={ this.props.sbUser}
+        sbUser={ this.props.sbUser }
         message={ message }
       />;
     });
@@ -40,7 +40,7 @@ class MessageDetailList extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => ({
   schedule: state.schedule,

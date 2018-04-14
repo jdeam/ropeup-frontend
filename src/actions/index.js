@@ -2,9 +2,12 @@ import axios from 'axios';
 import { calculateMatchRating } from '../util/schedules';
 import {
   sbConnect,
+  sbCreateGroupChannelListQuery,
+  sbFetchGroupChannels,
   sbDisconnect,
   sbUpdateUser,
   sbCreateChannel,
+  sbEnterChannel,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
@@ -128,40 +131,49 @@ export function fetchAllUserInfo() {
     dispatch({ type: FETCHING_USER });
     dispatch({ type: FETCHING_SCHEDULE });
     dispatch({ type: FETCHING_MATCHES });
-    dispatch({ type: SB_FETCHING_DATA });
+    dispatch({ type: SB_FETCHING_STARTED });
     await dispatch(fetchUser());
-    dispatch(sbLoginAndGetChannels());
+    await dispatch(sbLogin());
     await dispatch(fetchSchedule());
+    dispatch(sbGetChannels());
     dispatch(fetchMatches());
   };
 }
 
-export const SB_FETCHING_DATA = 'SB_FETCHING_DATA';
-export const SB_FETCHING_DATA_CANCELED = 'SB_FETCHING_DATA_CANCELED';
+export const SB_FETCHING_STARTED = 'SB_FETCHING_STARTED';
+export const SB_FETCHING_CANCELED = 'SB_FETCHING_CANCELED';
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
-export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
-export function sbLoginAndGetChannels() {
+export function sbLogin() {
   return async (dispatch, getState) => {
-    const { user, isFetchingSb } = getState();
+    const { user } = getState();
     const { id, first_name, last_name, img_url } = user;
-    if (!id) return dispatch({ type: SB_FETCHING_DATA_CANCELED });
-    if (!isFetchingSb) dispatch({ type: SB_FETCHING_DATA });
+    if (!id) return;
     const nickname = `${first_name} ${last_name[0]}.`;
-    const sbData = await sbConnect(id, nickname, img_url);
-    const { sbUser, sbChannels } = sbData;
+    const sbUser = await sbConnect(id, nickname, img_url);
     dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
-    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels, id });
-  };
+  }
 }
 
+export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
+export function sbGetChannels() {
+  return async (dispatch, getState) => {
+    const { isFetchingSb, sbUser } = getState();
+    if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
+    if (!isFetchingSb) dispatch({ type: SB_FETCHING_STARTED });
+    const groupChannelListQuery = sbCreateGroupChannelListQuery();
+    const sbChannels = await sbFetchGroupChannels(groupChannelListQuery);
+    dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, sbChannels });
+  }
+}
+
+export const SB_CHANNEL_CREATED = 'SB_CHANNEL_CREATED';
 export function sbAddChannel(recipientId) {
   return async (dispatch, getState) => {
-    const { sbUser, user } = getState();
+    const { sbUser } = getState();
     if (!sbUser) return;
-    const { id } = user;
-    dispatch({ type: SB_FETCHING_DATA });
-    const sbChannels = await sbCreateChannel(recipientId);
-    dispatch({ type: SB_CHANNELS_RECEIVED, sbChannels, id });
+    dispatch({ type: SB_FETCHING_STARTED });
+    const sbChannel = await sbCreateChannel(recipientId);
+    dispatch({ type: SB_CHANNEL_CREATED, id: sbUser.userId, sbChannel });
   };
 }
 
@@ -171,8 +183,17 @@ export function sbAddUserImage() {
     const { user, sbUser } = getState();
     if (!sbUser || !user.img_url) return;
     const { nickname } = sbUser;
-    dispatch({ type: SB_FETCHING_DATA });
+    dispatch({ type: SB_FETCHING_STARTED });
     const updatedUser = await sbUpdateUser(nickname, user.img_url);
     dispatch({ type: SB_IMAGE_UPDATED, sbUser: updatedUser });
   };
+}
+
+export const SB_CHANNEL_JOINED = 'SB_CHANNEL_JOINED';
+export function sbJoinChannel(channelUrl) {
+  return async (dispatch, getState) => {
+    if (!channelUrl) return;
+    const sbChannelInView = await sbEnterChannel(channelUrl);
+    console.log(sbChannelInView);
+  }
 }

@@ -19,10 +19,11 @@ import {
   SB_LOGIN_SUCCESS,
   SB_LOGOUT_SUCCESS,
   SB_CHANNELS_RECEIVED,
-  SB_FETCHING_DATA,
-  SB_FETCHING_DATA_CANCELED,
+  SB_FETCHING_STARTED,
+  SB_FETCHING_CANCELED,
   SB_IMAGE_UPDATED,
-  // SB_MESSAGES_RECEIVED,
+  SB_CHANNEL_CREATED,
+  SB_CHANNEL_JOINED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -136,13 +137,15 @@ function matchesById(state = {}, action) {
 
 function isFetchingSb(state = false, action) {
   switch (action.type) {
-    case SB_FETCHING_DATA:
+    case SB_FETCHING_STARTED:
       return true;
     case SB_CHANNELS_RECEIVED:
       return false;
     case SB_IMAGE_UPDATED:
       return false;
-    case SB_FETCHING_DATA_CANCELED:
+    case SB_CHANNEL_CREATED:
+      return false;
+    case SB_FETCHING_CANCELED:
       return false;
     default:
       return state;
@@ -166,6 +169,8 @@ function sbChannels(state = [], action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
       return action.sbChannels;
+    case SB_CHANNEL_CREATED:
+      return [ action.sbChannel, ...state ]
     case SB_LOGOUT_SUCCESS:
       return [];
     default:
@@ -184,6 +189,13 @@ function sbChannelsByUserId(state = {}, action) {
         byUserId[userId] = channel;
         return byUserId;
       }, {});
+    case SB_CHANNEL_CREATED: {
+      const { members } = action.sbChannel;
+      const { userId } = members.filter(member => {
+        return member.userId !== action.id.toString();
+      })[0];
+      return { ...state, [userId]: action.sbChannel };
+    }
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -191,16 +203,14 @@ function sbChannelsByUserId(state = {}, action) {
   }
 }
 
-// function sbMessagesInView(state = [], action) {
-//   switch (action.type) {
-//     case SB_MESSAGES_RECEIVED:
-//       return [];
-//     case SB_LOGOUT_SUCCESS:
-//       return [];
-//     default:
-//       return state;
-//   }
-// }
+function sbChannelInView(state = null, action) {
+  switch (action.type) {
+    case SB_CHANNEL_JOINED:
+      return action.sbChannelInView;
+    default:
+      return state;
+  }
+}
 
 export default combineReducers({
   dashboardTabInView,
@@ -216,5 +226,5 @@ export default combineReducers({
   sbUser,
   sbChannels,
   sbChannelsByUserId,
-  // sbMessagesInView,
+  sbChannelInView,
 });

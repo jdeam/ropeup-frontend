@@ -1,35 +1,35 @@
 import SendBird from 'sendbird';
+import Promise from 'bluebird';
 
 const APP_ID = process.env.REACT_APP_SENDBIRD_APP_ID;
 
 export const sbConnect = (userId, nickname, profileUrl) => {
   return new Promise((resolve, reject) => {
-    let data = {}
     const sb = new SendBird({ appId: APP_ID });
     sb.connect(userId, (user, error) => {
       if (error) {
-        reject('Sendbird login failed.');
+        reject('Could not connect to Sendbird.');
       } else {
         sb.updateCurrentUserInfo(nickname, profileUrl, (updatedUser, error) => {
-          if (error) {
-            reject('Update user failed.');
-          } else {
-            data.sbUser = updatedUser;
-            const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-            channelListQuery.includeEmpty = true;
-            if (channelListQuery.hasNext) {
-              channelListQuery.next((channels, error) => {
-                if (error) {
-                  reject('No channels found.');
-                } else {
-                  data.sbChannels = channels;
-                  resolve(data);
-                }
-              });
-            }
-          }
+          if (error) reject('Could not update user info.');
+          else resolve(updatedUser);
         });
       }
+    });
+  });
+};
+
+export const sbCreateGroupChannelListQuery = () => {
+  const sb = SendBird.getInstance();
+  return sb.GroupChannel.createMyGroupChannelListQuery();
+};
+
+export const sbFetchGroupChannels = (groupChannelListQuery) => {
+  return new Promise((resolve, reject) => {
+    groupChannelListQuery.includeEmpty = true;
+    groupChannelListQuery.next((channels, error) => {
+      if (error) reject('No channels found');
+      else resolve(channels);
     });
   });
 };
@@ -49,19 +49,21 @@ export const sbCreateChannel = (recipientId) => {
     const sb = SendBird.getInstance();
     if (sb) {
       sb.GroupChannel.createChannelWithUserIds([recipientId], true, null, null, null, null, (channel, error) => {
-        if (error) {
-          reject('Channel could not be created');
-        } else {
-          const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-          channelListQuery.includeEmpty = true;
-          if (channelListQuery.hasNext) {
-            channelListQuery.next((channels, error) => {
-              if (error) reject('No channels found.');
-              else resolve(channels);
-            });
-          }
-        }
+        if (error) reject('Could not create channel.');
+        else resolve(channel);
       });
+    }
+  });
+};
+
+export const sbEnterChannel = (channelUrl) => {
+  return new Promise((resolve, reject) => {
+    const sb = SendBird.getInstance();
+    if (sb) {
+      sb.GroupChannel.getChannel(channelUrl, (channel, error) => {
+        if (error) reject('Could not join channel.')
+        else resolve(channel);
+      })
     }
   });
 };
