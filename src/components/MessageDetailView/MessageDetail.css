@@ -95,6 +95,24 @@
   font-style: italic;
 }
 
-.messagedetail-tags {
+.messagedetail-footer {
+  height: 3.2rem;
+  width: 100%;
+  border-top: 1px solid #DBDBDB;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.messagedetail-messagelist {
+  overflow: auto;
+  width: 100%;
+  height: 21.8rem;
+}
+
+.messagedetail-input {
+  width: 78%;
+  margin-right: 0.5rem;
 }

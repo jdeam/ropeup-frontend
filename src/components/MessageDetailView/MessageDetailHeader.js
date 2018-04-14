@@ -51,7 +51,7 @@ const MessageDetailHeader = ({ matchingUser, userSched, history }) => {
         <div className="messagedetail-schedule-header">
           Matches your schedule on ...
         </div>
-        <div className="messagedetail-tags tags">
+        <div className="tags">
           { scheduleEls }
         </div>
       </div>

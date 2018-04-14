@@ -1,5 +1,7 @@
 import React from 'react';
 import MessageDetailHeader from './MessageDetailHeader';
+import MessageDetailMessageList from './MessageDetailMessageList';
+import MessageDetailInput from './MessageDetailInput';
 import FontAwesome from 'react-fontawesome';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,7 +30,9 @@ const MessageDetail = ({
           matchingUser={ matches[id] }
           userSched={ schedule}
         />
+        <MessageDetailMessageList />
       </div>
+      <MessageDetailInput />
     </div>
   ) : (
     <Redirect to="/messages" />
