@@ -9,7 +9,7 @@ const MatchScheduleItem = ({ item }) => {
     `${start.slice(0, -2)}-${end}` : `${start}-${end}`;
 
   return (
-    <span className="tag is-info">
+    <span className="tag is-white">
       { `${day}, ${times}` }
     </span>
   );

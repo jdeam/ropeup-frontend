@@ -151,3 +151,20 @@
 .messagedetail-send-button {
   margin-bottom: 0.3rem;
 }
+
+.messagedetail-timestamp {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: gray;
+  line-height: 0.5rem;
+  padding-top: 1rem;
+}
+
+.messagedetail-time-left {
+margin-left: 1.3rem;
+}
+
+.messagedetail-time-right {
+  text-align: right;
+  margin-right: 1.3rem;
+}
