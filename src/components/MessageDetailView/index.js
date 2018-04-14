@@ -9,10 +9,10 @@ import './MessageDetail.css';
 
 const MessageDetail = ({
   channels,
-  schedule,
   matches,
   isFetching,
   match,
+  history,
 }) => {
   const { id } = match.params;
   const channelInView = channels[id];
@@ -27,10 +27,10 @@ const MessageDetail = ({
     <div className="messagedetail-container">
       <div className="messagedetail">
         <MessageDetailHeader
-          matchingUser={ matches[id] }
-          userSchedule={ schedule }
+          match={ matches[id] }
+          history={ history }
         />
-        <MessageDetailList />
+        <MessageDetailList match={ matches[id] }/>
       </div>
       <MessageDetailInput />
     </div>
@@ -41,7 +41,6 @@ const MessageDetail = ({
 
 const mapStateToProps = (state) => ({
   channels: state.sbChannelsByUserId,
-  schedule: state.schedule,
   matches: state.matchesById,
   isFetching: state.isFetchingSb,
 });

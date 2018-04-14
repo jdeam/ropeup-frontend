@@ -1,17 +1,9 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import MessageDetailScheduleItem from './MessageDetailScheduleItem';
-import { overlapSchedules } from '../../util/schedules';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './MessageDetail.css';
 
-const MessageDetailHeader = ({ matchingUser, userSchedule, history }) => {
-  const name = matchingUser.first_name;
-  const scheduleItems = overlapSchedules(userSchedule, matchingUser.schedule);
-  const scheduleItemEls = scheduleItems.map((item, i) => {
-    return <MessageDetailScheduleItem key={ i } item={ item } />
-  });
-
+const MessageDetailHeader = ({ match, history }) => {
   return (
     <div className="messagedetail-header">
       <div className="messagedetail-header-top">
@@ -26,11 +18,11 @@ const MessageDetailHeader = ({ matchingUser, userSchedule, history }) => {
           &nbsp;Back
         </a>
         <Link
-          to={ `/matches/${matchingUser.id}`}
+          to={ `/matches/${match.id}`}
           className="messagedetail-header-top-right"
         >
           <div className="messagedetail-header-name">
-            { name }
+            { match.first_name }
           </div>
           <div className="messagedetail-header-profile-link">
             View profile
@@ -38,17 +30,8 @@ const MessageDetailHeader = ({ matchingUser, userSchedule, history }) => {
         </Link>
       </div>
       <div className="messagedetail-divider"></div>
-      <div className="messagedetail-schedule">
-        <div className="messagedetail-schedule-header">
-          Matches your schedule on ...
-        </div>
-        <div className="tags">
-          { scheduleItemEls }
-        </div>
-      </div>
-      <div className="messagedetail-divider"></div>
     </div>
   );
 };
 
-export default withRouter(MessageDetailHeader);
+export default MessageDetailHeader;
