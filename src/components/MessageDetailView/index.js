@@ -1,6 +1,6 @@
 import React from 'react';
 import MessageDetailHeader from './MessageDetailHeader';
-import MessageDetailMessageList from './MessageDetailMessageList';
+import MessageDetailList from './MessageDetailList';
 import MessageDetailInput from './MessageDetailInput';
 import FontAwesome from 'react-fontawesome';
 import { Redirect } from 'react-router-dom';
@@ -30,7 +30,7 @@ const MessageDetail = ({
           matchingUser={ matches[id] }
           userSched={ schedule}
         />
-        <MessageDetailMessageList />
+        <MessageDetailList />
       </div>
       <MessageDetailInput />
     </div>

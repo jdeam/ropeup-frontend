@@ -190,7 +190,7 @@ function sbChannelsByUserId(state = {}, action) {
       return action.sbChannels.reduce((byUserId, channel) => {
         const { members } = channel;
         const { userId } = members.filter(member => {
-          return member.userId !== action.id.toString(); 
+          return member.userId !== action.id.toString();
         })[0];
         byUserId[userId] = channel;
         return byUserId;
@@ -201,6 +201,17 @@ function sbChannelsByUserId(state = {}, action) {
       return state;
   }
 }
+
+// function sbMessagesByUserId(state = {}, action) {
+//   switch (action.type) {
+//     case SB_MESSAGES_RECEIVED:
+//       return {};
+//     case SB_LOGOUT_SUCCESS:
+//       return {};
+//     default:
+//       return state;
+//   }
+// }
 
 export default combineReducers({
   dashboardTabInView,

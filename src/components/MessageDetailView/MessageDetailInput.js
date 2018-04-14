@@ -4,7 +4,7 @@ import './MessageDetail.css';
 
 class MessageDetailInput extends Component {
   state ={
-
+    content: ''
   };
 
   render() {
@@ -15,6 +15,8 @@ class MessageDetailInput extends Component {
             className="input is-rounded"
             type="text"
             placeholder="Aa"
+            value={ this.state.content }
+            onChange={ (e) => this.setState({ content: e.target.value }) }
           />
         </div>
         <a className="button is-rounded is-info">

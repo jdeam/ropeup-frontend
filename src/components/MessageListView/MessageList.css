@@ -88,3 +88,8 @@
 .messagelist-chat-content-message {
   color: gray;
 }
+
+.messagelist-chat-content-top {
+  font-weight: 500;
+  line-height: 1.1rem;
+}

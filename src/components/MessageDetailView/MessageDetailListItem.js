@@ -1,7 +1,7 @@
 import React from 'react';
 import './MessageDetail.css';
 
-const MessageDetailMessageListItem = () => {
+const MessageDetailListItem = () => {
 
   return (
     <div>
@@ -10,4 +10,4 @@ const MessageDetailMessageListItem = () => {
   );
 };
 
-export default MessageDetailMessageListItem;
+export default MessageDetailListItem;
