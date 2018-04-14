@@ -153,11 +153,11 @@
 }
 
 .messagedetail-timestamp {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 300;
   color: gray;
   line-height: 0.5rem;
-  padding-top: 1rem;
+  padding-top: 0.7rem;
 }
 
 .messagedetail-time-left {
