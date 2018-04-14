@@ -21,7 +21,10 @@ class MessageDetailInput extends Component {
         </div>
         <a className="button is-rounded is-info">
           <span className="icon">
-            <FontAwesome name="chevron-up" />
+            <FontAwesome
+              className="messagedetail-send-button" 
+              name="chevron-up"
+            />
           </span>
         </a>
       </form>
