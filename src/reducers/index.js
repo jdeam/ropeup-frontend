@@ -22,6 +22,7 @@ import {
   SB_FETCHING_DATA,
   SB_FETCHING_DATA_CANCELED,
   SB_IMAGE_UPDATED,
+  // SB_MESSAGES_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -190,12 +191,12 @@ function sbChannelsByUserId(state = {}, action) {
   }
 }
 
-// function sbMessagesByUserId(state = {}, action) {
+// function sbMessagesInView(state = [], action) {
 //   switch (action.type) {
 //     case SB_MESSAGES_RECEIVED:
-//       return {};
+//       return [];
 //     case SB_LOGOUT_SUCCESS:
-//       return {};
+//       return [];
 //     default:
 //       return state;
 //   }
@@ -215,4 +216,5 @@ export default combineReducers({
   sbUser,
   sbChannels,
   sbChannelsByUserId,
+  // sbMessagesInView,
 });
