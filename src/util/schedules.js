@@ -1,4 +1,4 @@
-export function createEmptySchedule() {
+function createEmptySchedule() {
   const week = [];
   for (let i=0; i<7; i++) {
     const day = [];
@@ -10,8 +10,8 @@ export function createEmptySchedule() {
   return week;
 }
 
-export function scheduleItemsToWeek(scheduleArr) {
-  return scheduleArr.reduce((arr, item) => {
+function scheduleItemsToWeek(scheduleItems) {
+  return scheduleItems.reduce((arr, item) => {
       const { day, start, end } = item;
       for (let i=start; i<end; i++) {
         arr[day][i] = '1';
@@ -21,20 +21,35 @@ export function scheduleItemsToWeek(scheduleArr) {
     .map(day => day.join(''));
 }
 
-export function compareSchedules(userSched, matchSched) {
-  const userSchedStr = scheduleItemsToWeek(userSched).join('');
-  const matchSchedStr = scheduleItemsToWeek(matchSched).join('');
+export function calculateMatchRating(userSchedule, matchSchedule) {
+  const userScheduleString = scheduleItemsToWeek(userSchedule).join('');
+  const matchScheduleString = scheduleItemsToWeek(matchSchedule).join('');
 
   let userCount = 0;
   let matchCount = 0;
 
   for (let i=0; i<126; i++) {
-    if (parseInt(userSchedStr[i], 10)) {
+    if (parseInt(userScheduleString[i], 10)) {
       userCount++;
-      if (parseInt(matchSchedStr[i], 10)) matchCount++;
+      if (parseInt(matchScheduleString[i], 10)) matchCount++;
     }
   }
   return (matchCount/userCount).toFixed(2);
+}
+
+export function overlapSchedules(userSchedule, matchSchedule) {
+  const userScheduleArr = scheduleItemsToWeek(userSchedule);
+  return matchSchedule.filter(item => {
+    for (let time=item.start; time<item.end; time++) {
+      if (parseInt(userScheduleArr[item.day][time], 10)) return true;
+    }
+    return false;
+  }).map(item => {
+    let { day, start, end } = item;
+    while (!parseInt(userScheduleArr[day][start], 10)) start++;
+    while (!parseInt(userScheduleArr[day][end-1], 10)) end--;
+    return { day, start, end };
+  });
 }
 
 export const scheduleMap = {
@@ -69,13 +84,3 @@ export const scheduleMap = {
     '12pm',
   ]
 };
-
-export const emptySchedule = [
-  '000000000000000000',
-  '000000000000000000',
-  '000000000000000000',
-  '000000000000000000',
-  '000000000000000000',
-  '000000000000000000',
-  '000000000000000000',
-];

@@ -1,24 +1,15 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import MessageDetailScheduleItem from './MessageDetailScheduleItem';
+import { overlapSchedules } from '../../util/schedules';
 import { withRouter, Link } from 'react-router-dom';
 import './MessageDetail.css';
 
-const MessageDetailHeader = ({ matchingUser, userSched, history }) => {
+const MessageDetailHeader = ({ matchingUser, userSchedule, history }) => {
   const name = matchingUser.first_name;
-  const scheduleEls = matchingUser.schedule.filter(item => {
-    for (let time=item.start; time<item.end; time++) {
-      if (parseInt(userSched[item.day][time], 10)) return true;
-    }
-    return false;
-  }).map((item, i) => {
-    let { day, start, end } = item;
-    while (!parseInt(userSched[day][start], 10)) start++;
-    while (!parseInt(userSched[day][end-1], 10)) end--;
-    return <MessageDetailScheduleItem
-      key={ i }
-      item={ { day, start, end } }
-    />
+  const scheduleItems = overlapSchedules(userSchedule, matchingUser.schedule);
+  const scheduleItemEls = scheduleItems.map((item, i) => {
+    return <MessageDetailScheduleItem key={ i } item={ item } />
   });
 
   return (
@@ -52,7 +43,7 @@ const MessageDetailHeader = ({ matchingUser, userSched, history }) => {
           Matches your schedule on ...
         </div>
         <div className="tags">
-          { scheduleEls }
+          { scheduleItemEls }
         </div>
       </div>
       <div className="messagedetail-divider"></div>

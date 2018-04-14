@@ -33,8 +33,8 @@ const MatchDetail = ({
         <MatchNavButtons match={ matchingUser } />
         <div className="matchdetail-divider"></div>
         <MatchSchedule
-          userSched={ schedule }
-          matchSched={ matchingUser.schedule }
+          userSchedule={ schedule }
+          matchSchedule={ matchingUser.schedule }
         />
         <div className="matchdetail-divider"></div>
         <MatchContent match={ matchingUser } />
@@ -47,7 +47,7 @@ const MatchDetail = ({
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  schedule: state.scheduleByDay,
+  schedule: state.schedule,
   matches: state.matchesById,
   isFetching: state.isFetchingMatches,
 });

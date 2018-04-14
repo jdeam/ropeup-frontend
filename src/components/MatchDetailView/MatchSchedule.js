@@ -1,21 +1,12 @@
 import React from 'react';
 import MatchScheduleItem from './MatchScheduleItem';
+import { overlapSchedules } from '../../util/schedules';
 import './MatchDetail.css';
 
-const MatchSchedule = ({ userSched, matchSched }) => {
-  const scheduleItemEls = matchSched.filter(item => {
-    for (let time=item.start; time<item.end; time++) {
-      if (parseInt(userSched[item.day][time], 10)) return true;
-    }
-    return false;
-  }).map((item, i) => {
-    let { day, start, end } = item;
-    while (!parseInt(userSched[day][start], 10)) start++;
-    while (!parseInt(userSched[day][end-1], 10)) end--;
-    return <MatchScheduleItem
-      key={ i }
-      item={ { day, start, end} }
-    />
+const MatchSchedule = ({ userSchedule, matchSchedule }) => {
+  const scheduleItems = overlapSchedules(userSchedule, matchSchedule);
+  const scheduleItemEls = scheduleItems.map((item, i) => {
+    return <MatchScheduleItem key={ i } item={ item }/>
   });
 
   return (

@@ -10,7 +10,7 @@ const MatchListItem = ({ match, zip }) => {
   const name = `${match.first_name} ${match.last_name[0]}.`;
   const age = moment().diff(match.dob, 'years', false);
   const distance = zipcodes.distance(zip, match.zip);
-  const matchRating = `${(match.match * 100).toFixed(0)}% Match`;
+  const matchRating = `${(match.matchRating * 100).toFixed(0)}% Match`;
   const interests = <span className="tag is-rounded is-dark">{
     match.tr && match.lead ? 'TR & Lead' :
     match.tr ? 'TR only' : 'Lead only'

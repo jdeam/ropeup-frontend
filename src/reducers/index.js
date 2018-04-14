@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { emptySchedule, scheduleItemsToWeek } from '../util/schedules';
 import {
   DASHBOARD_TAB_SWITCHED,
   DASHBOARD_TAB_RESET,
@@ -90,17 +89,6 @@ function schedule(state = [], action) {
       return action.schedule;
     case SCHEDULE_CLEARED:
       return [];
-    default:
-      return state;
-  }
-}
-
-function scheduleByDay(state = [...emptySchedule], action) {
-  switch (action.type) {
-    case SCHEDULE_RECEIVED :
-      return scheduleItemsToWeek(action.schedule);
-    case SCHEDULE_CLEARED:
-      return [...emptySchedule];
     default:
       return state;
   }
@@ -220,7 +208,6 @@ export default combineReducers({
   user,
   isFetchingSchedule,
   schedule,
-  scheduleByDay,
   isFetchingMatches,
   matches,
   matchesById,

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import './MessageList.css';
 
 const MessageList = ({ user, channels, isFetching }) => {
+  window.scrollTo(0, 0);
+
   const messageEls = channels.map((channel, i) => {
     return <MessageListItem
       key={ i }

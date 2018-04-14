@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { compareSchedules } from '../util/schedules';
+import { calculateMatchRating } from '../util/schedules';
 import {
   sbConnect,
   sbDisconnect,
@@ -79,15 +79,15 @@ export function fetchMatches() {
       { headers: { token } }
     );
     const { users } = response.data;
-    const usersWithMatch = users.map(user => {
-        user.match = compareSchedules(schedule, user.schedule);
+    const matchesWithRating = users.map(user => {
+        user.matchRating = calculateMatchRating(schedule, user.schedule);
         return user;
       })
-      .filter(user => user.match > 0)
+      .filter(user => user.matchRating > 0)
       .sort((userA, userB) => {
-        return userB.match - userA.match;
+        return userB.matchRating - userA.matchRating;
       });
-    dispatch({ type: MATCHES_RECEIVED, matches: usersWithMatch });
+    dispatch({ type: MATCHES_RECEIVED, matches: matchesWithRating });
   };
 }
 

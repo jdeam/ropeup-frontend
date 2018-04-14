@@ -28,7 +28,7 @@ const MessageDetail = ({
       <div className="messagedetail">
         <MessageDetailHeader
           matchingUser={ matches[id] }
-          userSched={ schedule}
+          userSchedule={ schedule }
         />
         <MessageDetailList />
       </div>
@@ -41,7 +41,7 @@ const MessageDetail = ({
 
 const mapStateToProps = (state) => ({
   channels: state.sbChannelsByUserId,
-  schedule: state.scheduleByDay,
+  schedule: state.schedule,
   matches: state.matchesById,
   isFetching: state.isFetchingSb,
 });
