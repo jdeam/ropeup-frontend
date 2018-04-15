@@ -13,8 +13,8 @@ class MessageDetailInput extends Component {
   sendMessage = (e) => {
     e.preventDefault();
     const { content } = this.state;
-    const { channel, sbSendMessage } = this.props;
-    sbSendMessage(channel, content);
+    const { channel, otherUserId, sbSendMessage } = this.props;
+    sbSendMessage(channel, otherUserId, content);
     this.setState({ content: '' });
   }
 

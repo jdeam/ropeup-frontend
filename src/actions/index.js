@@ -214,11 +214,10 @@ export function sbGetAllMessages(channels) {
   };
 }
 
-////REFACTOR THIS!!!!
 export const SB_MESSAGE_SENT = 'SB_MESSAGE_SENT';
-export function sbSendMessage(channel, text) {
+export function sbSendMessage(channel, otherUserId, text) {
   return async (dispatch) => {
     const sbMessage = await sbSendTextMessage(channel, text);
-    dispatch({ type: SB_MESSAGE_SENT, sbMessage });
+    dispatch({ type: SB_MESSAGE_SENT, otherUserId, sbMessage });
   };
 }

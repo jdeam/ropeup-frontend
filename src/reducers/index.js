@@ -24,7 +24,7 @@ import {
   SB_IMAGE_UPDATED,
   SB_CHANNEL_CREATED,
   SB_MESSAGES_RECEIVED,
-  // SB_MESSAGE_SENT,
+  SB_MESSAGE_SENT,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -208,6 +208,11 @@ function sbMessagesByUserId(state = {}, action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
       return action.sbMessagesByUserId;
+    case SB_MESSAGE_SENT: {
+      const messageList = state[action.otherUserId];
+      const newMessageList = [...messageList, action.sbMessage];
+      return { ...state, [action.otherUserId]: newMessageList };
+    }
     case SB_LOGOUT_SUCCESS:
       return {};
     default:

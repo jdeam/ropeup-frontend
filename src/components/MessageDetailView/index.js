@@ -36,7 +36,10 @@ const MessageDetail = ({
           match={ matches[id] }
         />
       </div>
-      <MessageDetailInput channel={ currentChannel } />
+      <MessageDetailInput
+        otherUserId={ id }
+        channel={ currentChannel }
+      />
     </div>
   ) : (
     <Redirect to="/messages" />

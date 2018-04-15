@@ -10,7 +10,7 @@ class MessageDetailList extends Component {
   }
 
   componentDidUpdate() {
-    this.messagesEnd.scrollIntoView({ behavior: "instant" });
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   createMessageEls = () => {
