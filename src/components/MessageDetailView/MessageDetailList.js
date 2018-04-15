@@ -4,7 +4,7 @@ import MessageDetailSchedule from './MessageDetailSchedule';
 import { connect } from 'react-redux';
 import './MessageDetail.css';
 
-import fakeMessages from './fake_messages';
+// import fakeMessages from './fake_messages';
 
 class MessageDetailList extends Component {
   componentDidMount() {
@@ -16,7 +16,7 @@ class MessageDetailList extends Component {
   }
 
   createMessageEls = () => {
-    return fakeMessages.map((message, i) => {
+    return this.props.messages.map((message, i) => {
       return <MessageDetailListItem
         key={ i }
         sbUser={ this.props.sbUser }
@@ -45,6 +45,7 @@ class MessageDetailList extends Component {
 const mapStateToProps = (state) => ({
   schedule: state.schedule,
   sbUser: state.sbUser,
+  messages: state.sbMessagesInView,
 });
 
 export default connect(

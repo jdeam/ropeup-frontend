@@ -8,7 +8,7 @@ const MessageListItem = ({ channel, user }) => {
     return member.userId !== user.id.toString();
   })[0];
   const time = moment(Date.now()).format('h:mm a');
-  const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec lacus facilisis, accumsan metus quis, interdum justo.';
+  const message = 'Lorem ipsum dolor sit amet, consectetur ...';
 
   return (
     <Link to={ `/messages/${otherUser.userId}`}>

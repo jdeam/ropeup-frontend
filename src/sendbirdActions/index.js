@@ -19,6 +19,26 @@ export const sbConnect = (userId, nickname, profileUrl) => {
   });
 };
 
+export const sbDisconnect = () => {
+  return new Promise((resolve, reject) => {
+    const sb = SendBird.getInstance();
+    if (sb) sb.disconnect(() => {
+      resolve(null);
+    });
+    else resolve(null);
+  });
+};
+
+export const sbUpdateUser = (nickname, profileUrl) => {
+  return new Promise((resolve, reject) => {
+    const sb = SendBird.getInstance();
+    if (sb) sb.updateCurrentUserInfo(nickname, profileUrl, (user, error) => {
+      if (error) reject('Update user failed.');
+      else resolve(user);
+    });
+  });
+};
+
 export const sbCreateGroupChannelListQuery = () => {
   const sb = SendBird.getInstance();
   return sb.GroupChannel.createMyGroupChannelListQuery();
@@ -30,16 +50,6 @@ export const sbFetchGroupChannels = (groupChannelListQuery) => {
     groupChannelListQuery.next((channels, error) => {
       if (error) reject('No channels found');
       else resolve(channels);
-    });
-  });
-};
-
-export const sbUpdateUser = (nickname, profileUrl) => {
-  return new Promise((resolve, reject) => {
-    const sb = SendBird.getInstance();
-    if (sb) sb.updateCurrentUserInfo(nickname, profileUrl, (user, error) => {
-      if (error) reject('Update user failed.');
-      else resolve(user);
     });
   });
 };
@@ -56,24 +66,21 @@ export const sbCreateChannel = (recipientId) => {
   });
 };
 
-export const sbEnterChannel = (channelUrl) => {
+export const sbGetPreviousMessages = (channel) => {
   return new Promise((resolve, reject) => {
-    const sb = SendBird.getInstance();
-    if (sb) {
-      sb.GroupChannel.getChannel(channelUrl, (channel, error) => {
-        if (error) reject('Could not join channel.')
-        else resolve(channel);
-      })
-    }
+    const messageListQuery = channel.createPreviousMessageListQuery();
+    messageListQuery.load(100, true, (messageList, error) => {
+      if (error) reject('Could not load messages.');
+      else resolve(messageList);
+    });
   });
 };
 
-export const sbDisconnect = () => {
+export const sbSendTextMessage = (channel, textMessage) => {
   return new Promise((resolve, reject) => {
-    const sb = SendBird.getInstance();
-    if (sb) sb.disconnect(() => {
-      resolve(null);
+    channel.sendUserMessage(textMessage, (message, error) => {
+      if (error) reject('Could not send message.');
+      else resolve(message);
     });
-    else resolve(null);
   });
 };

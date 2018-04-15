@@ -5,6 +5,8 @@ import MessageDetailInput from './MessageDetailInput';
 import FontAwesome from 'react-fontawesome';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { sbLoadMessages } from '../../actions';
+import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 const MessageDetail = ({
@@ -13,9 +15,11 @@ const MessageDetail = ({
   isFetching,
   match,
   history,
+  sbLoadMessages,
 }) => {
   const { id } = match.params;
-  const channelInView = channels[id];
+  const currentChannel = channels[id];
+  if (currentChannel) sbLoadMessages(currentChannel);
 
   return isFetching ? (
     <div className="messagedetail-empty-container">
@@ -23,7 +27,7 @@ const MessageDetail = ({
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
       </div>
     </div>
-  ) : channelInView ? (
+  ) : currentChannel ? (
     <div className="messagedetail-container">
       <div className="messagedetail">
         <MessageDetailHeader
@@ -32,7 +36,7 @@ const MessageDetail = ({
         />
         <MessageDetailList match={ matches[id] }/>
       </div>
-      <MessageDetailInput />
+      <MessageDetailInput channel={ currentChannel } />
     </div>
   ) : (
     <Redirect to="/messages" />
@@ -45,6 +49,11 @@ const mapStateToProps = (state) => ({
   isFetching: state.isFetchingSb,
 });
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  sbLoadMessages,
+}, dispatch);
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MessageDetail);

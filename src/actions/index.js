@@ -7,7 +7,8 @@ import {
   sbDisconnect,
   sbUpdateUser,
   sbCreateChannel,
-  sbEnterChannel,
+  sbGetPreviousMessages,
+  sbSendTextMessage,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
@@ -107,6 +108,7 @@ export function logout() {
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
     dispatch({ type: DASHBOARD_TAB_RESET });
+    dispatch({ type: SB_MESSAGES_CLEARED });
     dispatch(sbLogout());
     localStorage.removeItem('token');
   };
@@ -189,11 +191,20 @@ export function sbAddUserImage() {
   };
 }
 
-export const SB_CHANNEL_JOINED = 'SB_CHANNEL_JOINED';
-export function sbJoinChannel(channelUrl) {
-  return async (dispatch, getState) => {
-    if (!channelUrl) return;
-    const sbChannelInView = await sbEnterChannel(channelUrl);
-    console.log(sbChannelInView);
-  }
+export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
+export const SB_MESSAGES_CLEARED = 'SB_MESSAGES_CLEARED';
+export function sbLoadMessages(channel) {
+  return async (dispatch) => {
+    const sbMessages = await sbGetPreviousMessages(channel);
+    dispatch({ type: SB_MESSAGES_RECEIVED, sbMessages });
+  };
+}
+
+export const SB_MESSAGE_SENT = 'SB_MESSAGE_SENT';
+export function sbSendMessage(channel, text) {
+  return async (dispatch) => {
+    const sbMessage = await sbSendTextMessage(channel, text);
+    // dispatch({ type: SB_MESSAGE_SENT, sbMessage });
+    console.log(sbMessage);
+  };
 }
