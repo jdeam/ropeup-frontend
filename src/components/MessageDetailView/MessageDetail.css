@@ -117,7 +117,7 @@
 }
 
 .messagedetail-message {
-  width: 16.5rem;
+  max-width: 16.5rem;
   background-color: whitesmoke;
   border-radius: 16px;
   margin: 0.4rem;
