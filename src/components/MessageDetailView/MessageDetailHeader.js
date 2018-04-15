@@ -18,7 +18,7 @@ const MessageDetailHeader = ({ match, history }) => {
           &nbsp;Back
         </a>
         <Link
-          to={ `/matches/${match.id}`}
+          to={ `/matches/${match ? match.id : ''}`}
           className="messagedetail-header-top-right"
         >
           <div className="messagedetail-header-name">

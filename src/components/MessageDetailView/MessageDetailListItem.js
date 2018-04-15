@@ -3,7 +3,6 @@ import moment from 'moment';
 import './MessageDetail.css';
 
 const MessageDetailListItem = ({ message, sbUser }) => {
-  console.log(message);
   const isUser = message.sender.userId === sbUser.userId;
   const time = moment(message.createdAt).format('h:mm A');
 

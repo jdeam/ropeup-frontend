@@ -204,7 +204,6 @@ export const SB_MESSAGE_SENT = 'SB_MESSAGE_SENT';
 export function sbSendMessage(channel, text) {
   return async (dispatch) => {
     const sbMessage = await sbSendTextMessage(channel, text);
-    // dispatch({ type: SB_MESSAGE_SENT, sbMessage });
-    console.log(sbMessage);
+    dispatch({ type: SB_MESSAGE_SENT, sbMessage });
   };
 }
