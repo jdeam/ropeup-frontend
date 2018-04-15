@@ -5,21 +5,18 @@ import MessageDetailInput from './MessageDetailInput';
 import FontAwesome from 'react-fontawesome';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { sbLoadMessages } from '../../actions';
-import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 const MessageDetail = ({
   channels,
   matches,
+  messages,
   isFetching,
   match,
   history,
-  sbLoadMessages,
 }) => {
   const { id } = match.params;
   const currentChannel = channels[id];
-  // if (currentChannel) sbLoadMessages(currentChannel);
 
   return isFetching ? (
     <div className="messagedetail-empty-container">
@@ -34,7 +31,10 @@ const MessageDetail = ({
           match={ matches[id] }
           history={ history }
         />
-        <MessageDetailList match={ matches[id] }/>
+        <MessageDetailList
+          messages={ messages[id] }
+          match={ matches[id] }
+        />
       </div>
       <MessageDetailInput channel={ currentChannel } />
     </div>
@@ -47,13 +47,9 @@ const mapStateToProps = (state) => ({
   channels: state.sbChannelsByUserId,
   matches: state.matchesById,
   isFetching: state.isFetchingSb,
+  messages: state.sbMessagesByUserId,
 });
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  // sbLoadMessages,
-}, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(MessageDetail);

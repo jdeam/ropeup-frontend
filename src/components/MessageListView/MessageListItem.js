@@ -4,9 +4,9 @@ import moment from 'moment';
 import './MessageList.css';
 
 const MessageListItem = ({ channel, user }) => {
-  const otherUser = channel.members.filter(member => {
+  const otherUser = channel.members.find(member => {
     return member.userId !== user.id.toString();
-  })[0];
+  });
   const time = moment(channel.lastMessage.createdAt).format('h:mm a');
   let { message } = channel.lastMessage;
   if (message.length > 25) message = `${message.slice(0, 25)} ...`;

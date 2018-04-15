@@ -108,7 +108,6 @@ export function logout() {
     dispatch({ type: SCHEDULE_CLEARED });
     dispatch({ type: MATCHES_CLEARED });
     dispatch({ type: DASHBOARD_TAB_RESET });
-    dispatch({ type: SB_MESSAGES_CLEARED });
     dispatch(sbLogout());
     localStorage.removeItem('token');
   };
@@ -138,8 +137,8 @@ export function fetchAllUserInfo() {
     await dispatch(sbLogin());
     await dispatch(fetchSchedule());
     await dispatch(sbGetChannels());
+    await dispatch(fetchMatches());
     dispatch(sbGetAllMessages());
-    dispatch(fetchMatches());
   };
 }
 
@@ -193,31 +192,29 @@ export function sbAddUserImage() {
 }
 
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
-export function sbLoadMessages(channel) {
-  return async (dispatch) => {
-    const sbMessages = await sbGetPreviousMessages(channel);
-    dispatch({ type: SB_MESSAGES_RECEIVED, sbMessages });
-  };
-}
-
 export function sbGetAllMessages(channels) {
   return async (dispatch, getState) => {
     const { sbChannels, sbUser } = getState();
-    const sbChannelProms = sbChannels.map(channel => {
+    const nonEmptyChannels = sbChannels.filter(channel => {
+      return channel.lastMessage;
+    });
+    const sbChannelProms = nonEmptyChannels.map(channel => {
       return sbGetPreviousMessages(channel);
     });
     const sbMessages = await Promise.all(sbChannelProms);
-    // dispatch({ type: SB_ALL_MESSAGES_RECEIVED, });
+    const sbMessagesByUserId = sbMessages.reduce((byId, messageList, i) => {
+      const { members } = nonEmptyChannels[i];
+      const { userId } = members.find(member => {
+        return member.userId !== sbUser.userId;
+      });
+      byId[userId] = messageList;
+      return byId;
+    }, {});
+    dispatch({ type: SB_MESSAGES_RECEIVED, sbMessagesByUserId });
   };
 }
 
-export const SB_MESSAGES_CLEARED = 'SB_MESSAGES_CLEARED';
-export function sbClearMessages() {
-  return (dispatch) => {
-    dispatch({ type: SB_MESSAGES_CLEARED });
-  };
-}
-
+////REFACTOR THIS!!!!
 export const SB_MESSAGE_SENT = 'SB_MESSAGE_SENT';
 export function sbSendMessage(channel, text) {
   return async (dispatch) => {

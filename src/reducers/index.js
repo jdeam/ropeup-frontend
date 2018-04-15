@@ -24,8 +24,7 @@ import {
   SB_IMAGE_UPDATED,
   SB_CHANNEL_CREATED,
   SB_MESSAGES_RECEIVED,
-  SB_MESSAGE_SENT,
-  SB_MESSAGES_CLEARED,
+  // SB_MESSAGE_SENT,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -141,13 +140,11 @@ function isFetchingSb(state = false, action) {
   switch (action.type) {
     case SB_FETCHING_STARTED:
       return true;
-    case SB_CHANNELS_RECEIVED:
+    case SB_MESSAGES_RECEIVED:
       return false;
     case SB_IMAGE_UPDATED:
       return false;
     case SB_CHANNEL_CREATED:
-      return false;
-    case SB_MESSAGES_RECEIVED:
       return false;
     case SB_FETCHING_CANCELED:
       return false;
@@ -187,17 +184,17 @@ function sbChannelsByUserId(state = {}, action) {
     case SB_CHANNELS_RECEIVED:
       return action.sbChannels.reduce((byUserId, channel) => {
         const { members } = channel;
-        const { userId } = members.filter(member => {
+        const { userId } = members.find(member => {
           return member.userId !== action.id.toString();
-        })[0];
+        });
         byUserId[userId] = channel;
         return byUserId;
       }, {});
     case SB_CHANNEL_CREATED: {
       const { members } = action.sbChannel;
-      const { userId } = members.filter(member => {
+      const { userId } = members.find(member => {
         return member.userId !== action.id.toString();
-      })[0];
+      });
       return { ...state, [userId]: action.sbChannel };
     }
     case SB_LOGOUT_SUCCESS:
@@ -207,29 +204,16 @@ function sbChannelsByUserId(state = {}, action) {
   }
 }
 
-function sbMessagesInView(state = [], action) {
+function sbMessagesByUserId(state = {}, action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
-      return action.sbMessages;
-    case SB_MESSAGE_SENT:
-      return [ ...state, action.sbMessage ];
-    case SB_MESSAGES_CLEARED:
-      return [];
+      return action.sbMessagesByUserId;
+    case SB_LOGOUT_SUCCESS:
+      return {};
     default:
       return state;
   }
 }
-
-// function sbMessagesById(state = {}, action) {
-//   switch (action.type) {
-//     case SB_ALL_MESSAGES_RECEIVED:
-//       return {};
-//     case SB_MESSAGES_CLEARED:
-//       return {};
-//     default:
-//       return state;
-//   }
-// }
 
 export default combineReducers({
   dashboardTabInView,
@@ -245,5 +229,5 @@ export default combineReducers({
   sbUser,
   sbChannels,
   sbChannelsByUserId,
-  sbMessagesInView,
+  sbMessagesByUserId,
 });

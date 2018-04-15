@@ -40,16 +40,17 @@ export function calculateMatchRating(userSchedule, matchSchedule) {
 export function overlapSchedules(userSchedule, matchSchedule) {
   const userScheduleArr = scheduleItemsToWeek(userSchedule);
   return matchSchedule.filter(item => {
-    for (let time=item.start; time<item.end; time++) {
-      if (parseInt(userScheduleArr[item.day][time], 10)) return true;
-    }
-    return false;
-  }).map(item => {
-    let { day, start, end } = item;
-    while (!parseInt(userScheduleArr[day][start], 10)) start++;
-    while (!parseInt(userScheduleArr[day][end-1], 10)) end--;
-    return { day, start, end };
-  });
+      for (let time=item.start; time<item.end; time++) {
+        if (parseInt(userScheduleArr[item.day][time], 10)) return true;
+      }
+      return false;
+    })
+    .map(item => {
+      let { day, start, end } = item;
+      while (!parseInt(userScheduleArr[day][start], 10)) start++;
+      while (!parseInt(userScheduleArr[day][end-1], 10)) end--;
+      return { day, start, end };
+    });
 }
 
 export const scheduleMap = {

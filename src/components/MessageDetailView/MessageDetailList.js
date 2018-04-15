@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import MessageDetailListItem from './MessageDetailListItem';
 import MessageDetailSchedule from './MessageDetailSchedule';
-import { sbClearMessages } from '../../actions';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 class MessageDetailList extends Component {
@@ -13,10 +11,6 @@ class MessageDetailList extends Component {
 
   componentDidUpdate() {
     this.messagesEnd.scrollIntoView({ behavior: "instant" });
-  }
-
-  componentWillUnmount() {
-    this.props.sbClearMessages();
   }
 
   createMessageEls = () => {
@@ -43,7 +37,8 @@ class MessageDetailList extends Component {
         </div>
       </div>
     ) : (
-      <div></div>
+      <div ref={ (el) => { this.messagesEnd = el; } }>
+      </div>
     )
   }
 }
@@ -51,14 +46,8 @@ class MessageDetailList extends Component {
 const mapStateToProps = (state) => ({
   schedule: state.schedule,
   sbUser: state.sbUser,
-  messages: state.sbMessagesInView,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  sbClearMessages
-}, dispatch);
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(MessageDetailList);
