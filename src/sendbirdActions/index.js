@@ -1,5 +1,4 @@
 import SendBird from 'sendbird';
-import Promise from 'bluebird';
 
 const APP_ID = process.env.REACT_APP_SENDBIRD_APP_ID;
 
