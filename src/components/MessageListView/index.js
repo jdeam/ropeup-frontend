@@ -8,7 +8,13 @@ import './MessageList.css';
 const MessageList = ({ user, channels, isFetching }) => {
   window.scrollTo(0, 0);
 
-  const messageEls = channels.map((channel, i) => {
+  const activeChannels = channels.filter(channel => {
+    return channel.lastMessage;
+  });
+
+  console.log(activeChannels);
+
+  const messageEls = activeChannels.map((channel, i) => {
     return <MessageListItem
       key={ i }
       channel={ channel }

@@ -7,8 +7,8 @@ const MessageListItem = ({ channel, user }) => {
   const otherUser = channel.members.filter(member => {
     return member.userId !== user.id.toString();
   })[0];
-  const time = moment(Date.now()).format('h:mm a');
-  const message = 'Lorem ipsum dolor sit amet, consectetur ...';
+  const time = moment(channel.lastMessage.createdAt).format('h:mm a');
+  const { message } = channel.lastMessage;
 
   return (
     <Link to={ `/messages/${otherUser.userId}`}>
