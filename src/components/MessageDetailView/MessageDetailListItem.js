@@ -3,8 +3,9 @@ import moment from 'moment';
 import './MessageDetail.css';
 
 const MessageDetailListItem = ({ message, sbUser }) => {
-  const isUser = sbUser.nickname === message.nickname;
-  const time = moment(message.time).format('h:mm A');
+  console.log(message);
+  const isUser = message.sender.userId === sbUser.userId;
+  const time = moment(message.createdAt).format('h:mm A');
 
   return (
     <div className={ isUser ?
@@ -22,7 +23,7 @@ const MessageDetailListItem = ({ message, sbUser }) => {
         ' messagedetail-other-message'
       }` }
       >
-        { message.text }
+        { message.message }
       </div>
     </div>
   );

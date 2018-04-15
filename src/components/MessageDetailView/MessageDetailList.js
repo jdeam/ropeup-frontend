@@ -4,8 +4,6 @@ import MessageDetailSchedule from './MessageDetailSchedule';
 import { connect } from 'react-redux';
 import './MessageDetail.css';
 
-// import fakeMessages from './fake_messages';
-
 class MessageDetailList extends Component {
   componentDidMount() {
     this.messagesEnd.scrollIntoView({ behavior: "instant" });

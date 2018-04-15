@@ -15,6 +15,7 @@ class MessageDetailInput extends Component {
     const { content } = this.state;
     const { channel, sbSendMessage } = this.props;
     sbSendMessage(channel, content);
+    this.setState({ content: '' });
   }
 
   render() {
