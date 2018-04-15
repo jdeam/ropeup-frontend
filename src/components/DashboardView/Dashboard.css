@@ -179,3 +179,8 @@
   font-weight: 400;
   margin-bottom: 0.3rem;
 }
+
+.dashboard-logout-button {
+  width: 50%;
+  margin-top: 14.5rem;
+}

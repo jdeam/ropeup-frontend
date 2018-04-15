@@ -3,16 +3,24 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './MessageList.css';
 
-const MessageListItem = ({ channel, user }) => {
+const MessageListItem = ({ channel, sbUser }) => {
   const otherUser = channel.members.find(member => {
-    return member.userId !== user.id.toString();
+    return member.userId !== sbUser.userId;
   });
   const time = moment(channel.lastMessage.createdAt).format('h:mm a');
+  const readStatus = channel.cachedReadReceiptStatus[sbUser.userId];
+
   let { message } = channel.lastMessage;
-  if (message.length > 30) message = `${message.slice(0, 30)} ...`;
+  if (message.length > 28) message = `${message.slice(0, 28)} ...`;
 
   return (
-    <Link to={ `/messages/${otherUser.userId}`}>
+    <Link
+      to={ `/messages/${otherUser.userId}`}
+      onClick={ () => {
+        channel.markAsRead();
+        channel.refresh();
+      } }
+    >
       <div className="messagelist-chat-container">
         <div className="messagelist-chat">
           <div className="image is-48x48">
@@ -23,15 +31,19 @@ const MessageListItem = ({ channel, user }) => {
             />
           </div>
           <div className="messagelist-chat-content">
-            <div className="messagelist-chat-content-top">
-              <div className="messagelist-chat-name">
+            <div className={ `messagelist-chat-content-top ${
+              readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+            }` }>
+              <div>
                 { otherUser.nickname }
               </div>
-              <div className="messagelist-chat-time">
+              <div>
                 { time }
               </div>
             </div>
-            <div className="messagelist-chat-content-message">
+            <div className={ `messagelist-chat-content-message ${
+              readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+            }` }>
               { message }
             </div>
           </div>

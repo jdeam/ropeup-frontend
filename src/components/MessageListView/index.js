@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './MessageList.css';
 
-const MessageList = ({ user, channels, isFetching }) => {
+const MessageList = ({ sbUser, channels, isFetching }) => {
   window.scrollTo(0, 0);
 
   const activeChannels = channels.filter(channel => {
@@ -21,7 +21,7 @@ const MessageList = ({ user, channels, isFetching }) => {
     return <MessageListItem
       key={ i }
       channel={ channel }
-      user={ user }
+      sbUser={ sbUser }
     />;
   });
 
@@ -60,7 +60,7 @@ const MessageList = ({ user, channels, isFetching }) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  sbUser: state.sbUser,
   channels: state.sbChannels,
   isFetching: state.sbIsFetching,
 });
