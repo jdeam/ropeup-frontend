@@ -156,29 +156,6 @@ export function sbLogin() {
   }
 }
 
-export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
-export function sbGetChannels() {
-  return async (dispatch, getState) => {
-    const { isFetchingSb, sbUser } = getState();
-    if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
-    if (!isFetchingSb) dispatch({ type: SB_FETCHING_STARTED });
-    const groupChannelListQuery = sbCreateGroupChannelListQuery();
-    const sbChannels = await sbFetchGroupChannels(groupChannelListQuery);
-    dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, sbChannels });
-  }
-}
-
-export const SB_CHANNEL_CREATED = 'SB_CHANNEL_CREATED';
-export function sbAddChannel(recipientId) {
-  return async (dispatch, getState) => {
-    const { sbUser } = getState();
-    if (!sbUser) return;
-    dispatch({ type: SB_FETCHING_STARTED });
-    const sbChannel = await sbCreateChannel(recipientId);
-    dispatch({ type: SB_CHANNEL_CREATED, id: sbUser.userId, sbChannel });
-  };
-}
-
 export const SB_IMAGE_UPDATED = 'SB_IMAGE_UPDATED';
 export function sbAddUserImage() {
   return async (dispatch, getState) => {
@@ -191,10 +168,31 @@ export function sbAddUserImage() {
   };
 }
 
+export const SB_CHANNELS_RECEIVED = 'SB_CHANNELS_RECEIVED';
+export function sbGetChannels() {
+  return async (dispatch, getState) => {
+    const { sbUser } = getState();
+    if (!sbUser.userId) return;
+    const groupChannelListQuery = sbCreateGroupChannelListQuery();
+    const sbChannels = await sbFetchGroupChannels(groupChannelListQuery);
+    dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, sbChannels });
+  }
+}
+
+export const SB_CHANNEL_CREATED = 'SB_CHANNEL_CREATED';
+export function sbAddChannel(otherUserId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: SB_FETCHING_STARTED });
+    const sbChannel = await sbCreateChannel(otherUserId);
+    dispatch({ type: SB_CHANNEL_CREATED, otherUserId, sbChannel });
+  };
+}
+
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
 export function sbGetAllMessages(channels) {
   return async (dispatch, getState) => {
     const { sbChannels, sbUser } = getState();
+    if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
     const nonEmptyChannels = sbChannels.filter(channel => {
       return channel.lastMessage;
     });

@@ -190,13 +190,8 @@ function sbChannelsByUserId(state = {}, action) {
         byUserId[userId] = channel;
         return byUserId;
       }, {});
-    case SB_CHANNEL_CREATED: {
-      const { members } = action.sbChannel;
-      const { userId } = members.find(member => {
-        return member.userId !== action.id.toString();
-      });
-      return { ...state, [userId]: action.sbChannel };
-    }
+    case SB_CHANNEL_CREATED:
+      return { ...state, [action.otherUserId]: action.sbChannel };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -213,6 +208,8 @@ function sbMessagesByUserId(state = {}, action) {
       const newMessageList = [...messageList, action.sbMessage];
       return { ...state, [action.otherUserId]: newMessageList };
     }
+    case SB_CHANNEL_CREATED:
+      return { ...state, [action.otherUserId]: [] };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:

@@ -9,7 +9,7 @@ const MessageListItem = ({ channel, user }) => {
   });
   const time = moment(channel.lastMessage.createdAt).format('h:mm a');
   let { message } = channel.lastMessage;
-  if (message.length > 25) message = `${message.slice(0, 25)} ...`;
+  if (message.length > 31) message = `${message.slice(0, 31)} ...`;
 
   return (
     <Link to={ `/messages/${otherUser.userId}`}>
