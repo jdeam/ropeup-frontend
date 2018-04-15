@@ -207,7 +207,7 @@ function sbChannelsByUserId(state = {}, action) {
   }
 }
 
-function sbMessagesInView (state = [], action) {
+function sbMessagesInView(state = [], action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
       return action.sbMessages;
@@ -219,6 +219,17 @@ function sbMessagesInView (state = [], action) {
       return state;
   }
 }
+
+// function sbMessagesById(state = {}, action) {
+//   switch (action.type) {
+//     case SB_ALL_MESSAGES_RECEIVED:
+//       return {};
+//     case SB_MESSAGES_CLEARED:
+//       return {};
+//     default:
+//       return state;
+//   }
+// }
 
 export default combineReducers({
   dashboardTabInView,

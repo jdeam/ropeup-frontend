@@ -8,7 +8,8 @@ const MessageListItem = ({ channel, user }) => {
     return member.userId !== user.id.toString();
   })[0];
   const time = moment(channel.lastMessage.createdAt).format('h:mm a');
-  const { message } = channel.lastMessage;
+  let { message } = channel.lastMessage;
+  if (message.length > 25) message = `${message.slice(0, 25)} ...`;
 
   return (
     <Link to={ `/messages/${otherUser.userId}`}>
@@ -31,7 +32,7 @@ const MessageListItem = ({ channel, user }) => {
               </div>
             </div>
             <div className="messagelist-chat-content-message">
-              { `${message.slice(0, 26)} ...` }
+              { message }
             </div>
           </div>
         </div>

@@ -12,8 +12,6 @@ const MessageList = ({ user, channels, isFetching }) => {
     return channel.lastMessage;
   });
 
-  console.log(activeChannels);
-
   const messageEls = activeChannels.map((channel, i) => {
     return <MessageListItem
       key={ i }

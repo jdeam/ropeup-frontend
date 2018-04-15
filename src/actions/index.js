@@ -137,7 +137,8 @@ export function fetchAllUserInfo() {
     await dispatch(fetchUser());
     await dispatch(sbLogin());
     await dispatch(fetchSchedule());
-    dispatch(sbGetChannels());
+    await dispatch(sbGetChannels());
+    dispatch(sbGetAllMessages());
     dispatch(fetchMatches());
   };
 }
@@ -194,9 +195,19 @@ export function sbAddUserImage() {
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
 export function sbLoadMessages(channel) {
   return async (dispatch) => {
-    // dispatch({ type: SB_FETCHING_STARTED });
     const sbMessages = await sbGetPreviousMessages(channel);
     dispatch({ type: SB_MESSAGES_RECEIVED, sbMessages });
+  };
+}
+
+export function sbGetAllMessages(channels) {
+  return async (dispatch, getState) => {
+    const { sbChannels, sbUser } = getState();
+    const sbChannelProms = sbChannels.map(channel => {
+      return sbGetPreviousMessages(channel);
+    });
+    const sbMessages = await Promise.all(sbChannelProms);
+    // dispatch({ type: SB_ALL_MESSAGES_RECEIVED, });
   };
 }
 
