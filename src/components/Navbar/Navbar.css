@@ -1,3 +1,9 @@
+.navbar-top-container {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
 .header-tabs {
   background-color: rgba(255, 255, 255, 1);
 }

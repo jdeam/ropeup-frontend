@@ -6,7 +6,7 @@ import {
   sbDisconnect,
   sbFetchChannels,
   sbCreateChannel,
-  sbFetchPreviousMessages,
+  sbFetchMessages,
   sbSendTextMessage,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -127,7 +127,7 @@ export function fetchAllUserInfo() {
     await dispatch(fetchSchedule());
     await dispatch(sbGetChannels());
     await dispatch(fetchMatches());
-    dispatch(sbGetAllMessages());
+    dispatch(sbGetMessages());
   };
 }
 
@@ -185,12 +185,12 @@ export function sbAddChannel(otherUserId) {
 }
 
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
-export function sbGetAllMessages(channels) {
+export function sbGetMessages(channels) {
   return async (dispatch, getState) => {
     const { sbChannels, sbUser } = getState();
     if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
     const channelProms = sbChannels.map(channel => {
-      return sbFetchPreviousMessages(channel);
+      return sbFetchMessages(channel);
     });
     const messages = await Promise.all(channelProms);
     const messagesByOtherUserId = messages.reduce((byId, messageList, i) => {

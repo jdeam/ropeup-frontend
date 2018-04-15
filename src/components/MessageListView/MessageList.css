@@ -7,7 +7,7 @@
 
 .messagelist {
   width: 98%;
-  margin: 0.2rem 0 0.2rem 0;
+  margin: 2.2rem 0 0.2rem 0;
   display: flex;
   flex-direction: column;
 }

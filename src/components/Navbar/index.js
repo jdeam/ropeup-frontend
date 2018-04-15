@@ -1,14 +1,21 @@
 import React from 'react';
-import Headroom from 'react-headroom';
 import FontAwesome from 'react-fontawesome';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './Navbar.css';
 
-const Navbar = ({ location }) => {
+const Navbar = ({ channels, sbUser, location }) => {
   const { pathname } = location;
+  const activeChannels = channels.filter(channel => channel.lastMessage);
+  const numUnreadMessages = activeChannels.reduce((numUnread, channel) => {
+    const { cachedReadReceiptStatus } = channel;
+    const readStatus = cachedReadReceiptStatus[sbUser.userId];
+    return numUnread + (readStatus ? 0 : 1);
+  }, 0);
+  console.log(numUnreadMessages);
 
   return (pathname !== "/login" && pathname !== "/signup") ? (
-    <Headroom>
+    <div className="navbar-top-container">
       <div className="tabs is-centered is-fullwidth header-tabs">
         <ul>
           <li
@@ -30,14 +37,22 @@ const Navbar = ({ location }) => {
           >
             <Link to="/messages">
               <FontAwesome name="comments" />
+              {/* { numUnreadMessages } */}
             </Link>
           </li>
         </ul>
       </div>
-    </Headroom>
+    </div>
   ) : (
     <div></div>
   );
 };
 
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({
+  channels: state.sbChannels,
+  sbUser: state.sbUser,
+});
+
+export default withRouter(connect(
+  mapStateToProps
+)(Navbar));
