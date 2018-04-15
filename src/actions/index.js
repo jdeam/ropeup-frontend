@@ -192,11 +192,18 @@ export function sbAddUserImage() {
 }
 
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
-export const SB_MESSAGES_CLEARED = 'SB_MESSAGES_CLEARED';
 export function sbLoadMessages(channel) {
   return async (dispatch) => {
+    // dispatch({ type: SB_FETCHING_STARTED });
     const sbMessages = await sbGetPreviousMessages(channel);
     dispatch({ type: SB_MESSAGES_RECEIVED, sbMessages });
+  };
+}
+
+export const SB_MESSAGES_CLEARED = 'SB_MESSAGES_CLEARED';
+export function sbClearMessages() {
+  return (dispatch) => {
+    dispatch({ type: SB_MESSAGES_CLEARED });
   };
 }
 

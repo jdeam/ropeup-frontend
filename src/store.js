@@ -5,7 +5,8 @@ import rootReducer from './reducers';
 import { createLogger } from 'redux-logger';
 
 const logger = createLogger({
-  predicate: (getState, action) => action.type.slice(0, 2) === 'SB'
+  predicate: (getState, action) => action.type.slice(0, 2) === 'SB',
+  collapsed: (getState, action, logEntry) => !logEntry.error,
 });
 
 const middlewares = [ thunkMiddleware ];

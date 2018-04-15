@@ -147,6 +147,8 @@ function isFetchingSb(state = false, action) {
       return false;
     case SB_CHANNEL_CREATED:
       return false;
+    case SB_MESSAGES_RECEIVED:
+      return false;
     case SB_FETCHING_CANCELED:
       return false;
     default:
