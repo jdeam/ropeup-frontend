@@ -14,37 +14,35 @@ class MessageDetailList extends Component {
   }
 
   createMessageEls = () => {
-    return this.props.messages.map((message, i) => {
+    const { sbUser, messages } = this.props;
+    return messages.map((message, i) => {
       return <MessageDetailListItem
         key={ i }
-        sbUser={ this.props.sbUser }
+        sbUser={ sbUser }
         message={ message }
       />;
     });
   };
 
   render() {
-    const { schedule, match } = this.props;
-    return match ? (
+    const { userSchedule, otherUser } = this.props;
+    return (
       <div className="messagedetail-messagelist">
         <MessageDetailSchedule
-          userSchedule={ schedule }
-          matchSchedule={ match.schedule }
+          userSchedule={ userSchedule }
+          otherUserSchedule={ otherUser.schedule }
         />
         <div className="messagedetail-divider"></div>
         { this.createMessageEls() }
         <div ref={ (el) => { this.messagesEnd = el; } }>
         </div>
       </div>
-    ) : (
-      <div ref={ (el) => { this.messagesEnd = el; } }>
-      </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
-  schedule: state.schedule,
+  userSchedule: state.schedule,
   sbUser: state.sbUser,
 });
 

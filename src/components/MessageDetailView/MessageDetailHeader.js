@@ -3,7 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './MessageDetail.css';
 
-const MessageDetailHeader = ({ match, history }) => {
+const MessageDetailHeader = ({ otherUser, history }) => {
   return (
     <div className="messagedetail-header">
       <div className="messagedetail-header-top">
@@ -18,11 +18,11 @@ const MessageDetailHeader = ({ match, history }) => {
           &nbsp;Back
         </a>
         <Link
-          to={ `/matches/${match ? match.id : ''}`}
+          to={ `/matches/${otherUser.id}`}
           className="messagedetail-header-top-right"
         >
           <div className="messagedetail-header-name">
-            { match ? match.first_name : '' }
+            { otherUser.first_name }
           </div>
           <div className="messagedetail-header-profile-link">
             View profile

@@ -8,15 +8,15 @@ import { connect } from 'react-redux';
 import './MessageDetail.css';
 
 const MessageDetail = ({
-  channels,
-  matches,
-  messages,
+  channelsByOtherUserId,
+  messagesByOtherUserId,
+  matchesById,
   isFetching,
   match,
   history,
 }) => {
   const { id } = match.params;
-  const currentChannel = channels[id];
+  const channelInView = channelsByOtherUserId[id];
 
   return isFetching ? (
     <div className="messagedetail-empty-container">
@@ -24,21 +24,21 @@ const MessageDetail = ({
         <FontAwesome className="fa-4x fa-spin" name="spinner" />
       </div>
     </div>
-  ) : currentChannel ? (
+  ) : channelInView ? (
     <div className="messagedetail-container">
       <div className="messagedetail">
         <MessageDetailHeader
-          match={ matches[id] }
+          otherUser={ matchesById[id] }
           history={ history }
         />
         <MessageDetailList
-          messages={ messages[id] }
-          match={ matches[id] }
+          messages={ messagesByOtherUserId[id] }
+          otherUser={ matchesById[id] }
         />
       </div>
       <MessageDetailInput
         otherUserId={ id }
-        channel={ currentChannel }
+        channel={ channelInView }
       />
     </div>
   ) : (
@@ -47,10 +47,10 @@ const MessageDetail = ({
 };
 
 const mapStateToProps = (state) => ({
-  channels: state.sbChannelsByUserId,
-  matches: state.matchesById,
-  isFetching: state.isFetchingSb,
-  messages: state.sbMessagesByUserId,
+  channelsByOtherUserId: state.sbChannelsByOtherUserId,
+  messagesByOtherUserId: state.sbMessagesByOtherUserId,
+  matchesById: state.matchesById,
+  isFetching: state.sbIsFetching,
 });
 
 export default connect(

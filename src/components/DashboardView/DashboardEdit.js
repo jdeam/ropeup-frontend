@@ -104,21 +104,6 @@ class DashboardEdit extends Component {
           </div>
           <div className="dashboard-form-item">
             <div className="dashboard-form-label">
-              I climb at
-            </div>
-            <div className="dashboard-gym-input">
-              <input
-                className="input"
-                type="text"
-                placeholder="gym(s)"
-                disabled={ !this.state.isEditing }
-                value={ this.state.gyms }
-                onChange={ (e) => this.setState({ gyms: e.target.value }) }
-              />
-            </div>
-          </div>
-          <div className="dashboard-form-item">
-            <div className="dashboard-form-label">
               I started climbing in
             </div>
             <div className="dashboard-year-input">
@@ -129,6 +114,21 @@ class DashboardEdit extends Component {
                 disabled={ !this.state.isEditing }
                 value={ this.state.start_year }
                 onChange={ (e) => this.setState({ start_year: e.target.value }) }
+              />
+            </div>
+          </div>
+          <div className="dashboard-form-item">
+            <div className="dashboard-form-label">
+              I climb at
+            </div>
+            <div className="dashboard-gym-input">
+              <input
+                className="input"
+                type="text"
+                placeholder="gym(s)"
+                disabled={ !this.state.isEditing }
+                value={ this.state.gyms }
+                onChange={ (e) => this.setState({ gyms: e.target.value }) }
               />
             </div>
           </div>

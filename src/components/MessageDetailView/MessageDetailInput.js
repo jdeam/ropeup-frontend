@@ -6,9 +6,7 @@ import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 class MessageDetailInput extends Component {
-  state ={
-    content: ''
-  };
+  state = { content: '' };
 
   sendMessage = (e) => {
     e.preventDefault();
@@ -34,7 +32,9 @@ class MessageDetailInput extends Component {
           />
         </div>
         <a
-          className="button is-rounded is-info"
+          className={ `button is-rounded is-info${
+            this.props.isSending ? " is-loading" : ""
+          }` }
           onClick={ this.sendMessage }
         >
           <span className="icon">
@@ -49,11 +49,15 @@ class MessageDetailInput extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isSending: state.sbIsSending,
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   sbSendMessage
 }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MessageDetailInput);

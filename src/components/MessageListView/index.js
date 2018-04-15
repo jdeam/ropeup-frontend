@@ -9,15 +9,20 @@ const MessageList = ({ user, channels, isFetching }) => {
   window.scrollTo(0, 0);
 
   const activeChannels = channels.filter(channel => {
-    return channel.lastMessage;
-  });
+      return channel.lastMessage;
+    })
+    .sort((channelA, channelB) => {
+      const aLastUpdatedAt = channelA.lastMessage.createdAt;
+      const bLastUpdatedAt = channelB.lastMessage.createdAt;
+      return bLastUpdatedAt - aLastUpdatedAt;
+    });
 
-  const messageEls = activeChannels.map((channel, i) => {
+  const channelEls = activeChannels.map((channel, i) => {
     return <MessageListItem
       key={ i }
       channel={ channel }
       user={ user }
-    />
+    />;
   });
 
   return isFetching ? (
@@ -33,7 +38,7 @@ const MessageList = ({ user, channels, isFetching }) => {
           Messages
         </h1>
         <div className="messagelist-divider"></div>
-        { messageEls }
+        { channelEls }
       </div>
     </div>
   ) : (
@@ -57,7 +62,7 @@ const MessageList = ({ user, channels, isFetching }) => {
 const mapStateToProps = (state) => ({
   user: state.user,
   channels: state.sbChannels,
-  isFetching: state.isFetchingSb,
+  isFetching: state.sbIsFetching,
 });
 
 export default connect(

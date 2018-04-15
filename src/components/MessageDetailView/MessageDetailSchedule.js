@@ -3,8 +3,8 @@ import MessageDetailScheduleItem from './MessageDetailScheduleItem';
 import { overlapSchedules } from '../../util/schedules';
 import './MessageDetail.css';
 
-const MessageDetailSchedule = ({ userSchedule, matchSchedule }) => {
-  const scheduleItems = overlapSchedules(userSchedule, matchSchedule);
+const MessageDetailSchedule = ({ userSchedule, otherUserSchedule }) => {
+  const scheduleItems = overlapSchedules(userSchedule, otherUserSchedule);
   const scheduleItemEls = scheduleItems.map((item, i) => {
     return <MessageDetailScheduleItem key={ i } item={ item } />
   });

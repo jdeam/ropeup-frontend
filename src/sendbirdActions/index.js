@@ -39,14 +39,15 @@ export const sbUpdateUser = (nickname, profileUrl) => {
   });
 };
 
-export const sbCreateGroupChannelListQuery = () => {
+const sbCreateGroupChannelListQuery = () => {
   const sb = SendBird.getInstance();
   return sb.GroupChannel.createMyGroupChannelListQuery();
 };
 
-export const sbFetchGroupChannels = (groupChannelListQuery) => {
+export const sbFetchChannels = () => {
+  const groupChannelListQuery = sbCreateGroupChannelListQuery();
+  groupChannelListQuery.includeEmpty = true;
   return new Promise((resolve, reject) => {
-    groupChannelListQuery.includeEmpty = true;
     groupChannelListQuery.next((channels, error) => {
       if (error) reject('No channels found');
       else resolve(channels);
@@ -66,7 +67,7 @@ export const sbCreateChannel = (recipientId) => {
   });
 };
 
-export const sbGetPreviousMessages = (channel) => {
+export const sbFetchPreviousMessages = (channel) => {
   return new Promise((resolve, reject) => {
     const messageListQuery = channel.createPreviousMessageListQuery();
     messageListQuery.load(100, false, (messageList, error) => {

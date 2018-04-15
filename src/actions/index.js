@@ -2,12 +2,11 @@ import axios from 'axios';
 import { calculateMatchRating } from '../util/schedules';
 import {
   sbConnect,
-  sbCreateGroupChannelListQuery,
-  sbFetchGroupChannels,
-  sbDisconnect,
   sbUpdateUser,
+  sbDisconnect,
+  sbFetchChannels,
   sbCreateChannel,
-  sbGetPreviousMessages,
+  sbFetchPreviousMessages,
   sbSendTextMessage,
 } from '../sendbirdActions';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -31,14 +30,12 @@ export function fetchToken() {
 }
 
 export const FETCHING_USER = 'FETCHING_USER';
-export const FETCHING_USER_CANCELED ='FETCHING_USER_CANCELED';
 export const USER_RECEIVED = 'USER_RECEIVED';
+export const FETCHING_USER_CANCELED ='FETCHING_USER_CANCELED';
 export function fetchUser() {
   return async (dispatch, getState) => {
     const { token, fetchingUser } = getState();
-    if (!token) {
-      return dispatch({ type: FETCHING_USER_CANCELED });
-    }
+    if (!token) return dispatch({ type: FETCHING_USER_CANCELED });
     if (!fetchingUser) dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`,
@@ -50,8 +47,8 @@ export function fetchUser() {
 }
 
 export const FETCHING_SCHEDULE = 'FETCHING_SCHEDULE';
-export const FETCHING_SCHEDULE_CANCELED = 'FETCHING_SCHEDULE_CANCELED';
 export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
+export const FETCHING_SCHEDULE_CANCELED = 'FETCHING_SCHEDULE_CANCELED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
     const { token, user, fetchingSchedule } = getState();
@@ -69,8 +66,8 @@ export function fetchSchedule() {
 }
 
 export const FETCHING_MATCHES = 'FETCHING_MATCHES';
-export const FETCHING_MATCHES_CANCELED = 'FETCHING_MATCHES_CANCELED';
 export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
+export const FETCHING_MATCHES_CANCELED = 'FETCHING_MATCHES_CANCELED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
     const { token, user, schedule, fetchingMatches } = getState();
@@ -95,12 +92,17 @@ export function fetchMatches() {
   };
 }
 
+export const MATCHES_CLEARED = 'MATCHES_CLEARED';
+export function clearMatches() {
+  return (dispatch) => {
+    dispatch({ type: MATCHES_CLEARED });
+  };
+}
+
 export const TOKEN_CLEARED = 'TOKEN_CLEARED';
 export const USER_CLEARED = 'USER_CLEARED';
 export const SCHEDULE_CLEARED = 'SCHEDULE_CLEARED';
-export const MATCHES_CLEARED = 'MATCHES_CLEARED';
 export const DASHBOARD_TAB_RESET = 'DASHBOARD_TAB_RESET';
-export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
 export function logout() {
   return (dispatch) => {
     dispatch({ type: TOKEN_CLEARED });
@@ -110,19 +112,6 @@ export function logout() {
     dispatch({ type: DASHBOARD_TAB_RESET });
     dispatch(sbLogout());
     localStorage.removeItem('token');
-  };
-}
-
-export function sbLogout() {
-  return (dispatch) => {
-    sbDisconnect()
-      .then(() => dispatch({type: SB_LOGOUT_SUCCESS }));
-  };
-}
-
-export function clearMatches() {
-  return (dispatch) => {
-    dispatch({ type: MATCHES_CLEARED });
   };
 }
 
@@ -143,16 +132,16 @@ export function fetchAllUserInfo() {
 }
 
 export const SB_FETCHING_STARTED = 'SB_FETCHING_STARTED';
-export const SB_FETCHING_CANCELED = 'SB_FETCHING_CANCELED';
 export const SB_LOGIN_SUCCESS = 'SB_LOGIN_SUCCESS';
+export const SB_FETCHING_CANCELED = 'SB_FETCHING_CANCELED';
 export function sbLogin() {
   return async (dispatch, getState) => {
     const { user } = getState();
     const { id, first_name, last_name, img_url } = user;
     if (!id) return;
     const nickname = `${first_name} ${last_name[0]}.`;
-    const sbUser = await sbConnect(id, nickname, img_url);
-    dispatch({ type: SB_LOGIN_SUCCESS, sbUser });
+    const loggedInUser = await sbConnect(id, nickname, img_url);
+    dispatch({ type: SB_LOGIN_SUCCESS, loggedInUser });
   }
 }
 
@@ -164,7 +153,15 @@ export function sbAddUserImage() {
     const { nickname } = sbUser;
     dispatch({ type: SB_FETCHING_STARTED });
     const updatedUser = await sbUpdateUser(nickname, user.img_url);
-    dispatch({ type: SB_IMAGE_UPDATED, sbUser: updatedUser });
+    dispatch({ type: SB_IMAGE_UPDATED, updatedUser });
+  };
+}
+
+export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
+export function sbLogout() {
+  return async (dispatch) => {
+    await sbDisconnect();
+    dispatch({type: SB_LOGOUT_SUCCESS });
   };
 }
 
@@ -173,9 +170,8 @@ export function sbGetChannels() {
   return async (dispatch, getState) => {
     const { sbUser } = getState();
     if (!sbUser.userId) return;
-    const groupChannelListQuery = sbCreateGroupChannelListQuery();
-    const sbChannels = await sbFetchGroupChannels(groupChannelListQuery);
-    dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, sbChannels });
+    const channels = await sbFetchChannels();
+    dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, channels });
   }
 }
 
@@ -183,8 +179,8 @@ export const SB_CHANNEL_CREATED = 'SB_CHANNEL_CREATED';
 export function sbAddChannel(otherUserId) {
   return async (dispatch, getState) => {
     dispatch({ type: SB_FETCHING_STARTED });
-    const sbChannel = await sbCreateChannel(otherUserId);
-    dispatch({ type: SB_CHANNEL_CREATED, otherUserId, sbChannel });
+    const channel = await sbCreateChannel(otherUserId);
+    dispatch({ type: SB_CHANNEL_CREATED, otherUserId, channel });
   };
 }
 
@@ -193,29 +189,28 @@ export function sbGetAllMessages(channels) {
   return async (dispatch, getState) => {
     const { sbChannels, sbUser } = getState();
     if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
-    const nonEmptyChannels = sbChannels.filter(channel => {
-      return channel.lastMessage;
+    const channelProms = sbChannels.map(channel => {
+      return sbFetchPreviousMessages(channel);
     });
-    const sbChannelProms = nonEmptyChannels.map(channel => {
-      return sbGetPreviousMessages(channel);
-    });
-    const sbMessages = await Promise.all(sbChannelProms);
-    const sbMessagesByUserId = sbMessages.reduce((byId, messageList, i) => {
-      const { members } = nonEmptyChannels[i];
-      const { userId } = members.find(member => {
+    const messages = await Promise.all(channelProms);
+    const messagesByOtherUserId = messages.reduce((byId, messageList, i) => {
+      const { members } = sbChannels[i];
+      const otherUserId = members.find(member => {
         return member.userId !== sbUser.userId;
-      });
-      byId[userId] = messageList;
+      }).userId;
+      byId[otherUserId] = messageList;
       return byId;
     }, {});
-    dispatch({ type: SB_MESSAGES_RECEIVED, sbMessagesByUserId });
+    dispatch({ type: SB_MESSAGES_RECEIVED, messagesByOtherUserId });
   };
 }
 
+export const SB_SENDING_MESSAGE = 'SB_SENDING_MESSAGE';
 export const SB_MESSAGE_SENT = 'SB_MESSAGE_SENT';
 export function sbSendMessage(channel, otherUserId, text) {
   return async (dispatch) => {
-    const sbMessage = await sbSendTextMessage(channel, text);
-    dispatch({ type: SB_MESSAGE_SENT, otherUserId, sbMessage });
+    dispatch({ type: SB_SENDING_MESSAGE });
+    const message = await sbSendTextMessage(channel, text);
+    dispatch({ type: SB_MESSAGE_SENT, otherUserId, message });
   };
 }

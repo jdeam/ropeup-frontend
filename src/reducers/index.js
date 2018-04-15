@@ -24,6 +24,7 @@ import {
   SB_IMAGE_UPDATED,
   SB_CHANNEL_CREATED,
   SB_MESSAGES_RECEIVED,
+  SB_SENDING_MESSAGE,
   SB_MESSAGE_SENT,
 } from '../actions';
 
@@ -136,7 +137,7 @@ function matchesById(state = {}, action) {
   }
 }
 
-function isFetchingSb(state = false, action) {
+function sbIsFetching(state = false, action) {
   switch (action.type) {
     case SB_FETCHING_STARTED:
       return true;
@@ -156,9 +157,9 @@ function isFetchingSb(state = false, action) {
 function sbUser(state = {}, action) {
   switch (action.type) {
     case SB_LOGIN_SUCCESS:
-      return action.sbUser;
+      return action.loggedInUser;
     case SB_IMAGE_UPDATED:
-      return action.sbUser;
+      return action.updatedUser;
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -169,9 +170,9 @@ function sbUser(state = {}, action) {
 function sbChannels(state = [], action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      return action.sbChannels;
+      return action.channels;
     case SB_CHANNEL_CREATED:
-      return [ action.sbChannel, ...state ]
+      return [action.channel, ...state];
     case SB_LOGOUT_SUCCESS:
       return [];
     default:
@@ -179,10 +180,10 @@ function sbChannels(state = [], action) {
   }
 }
 
-function sbChannelsByUserId(state = {}, action) {
+function sbChannelsByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      return action.sbChannels.reduce((byUserId, channel) => {
+      return action.channels.reduce((byUserId, channel) => {
         const { members } = channel;
         const { userId } = members.find(member => {
           return member.userId !== action.id.toString();
@@ -191,7 +192,7 @@ function sbChannelsByUserId(state = {}, action) {
         return byUserId;
       }, {});
     case SB_CHANNEL_CREATED:
-      return { ...state, [action.otherUserId]: action.sbChannel };
+      return { ...state, [action.otherUserId]: action.channel };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -199,19 +200,30 @@ function sbChannelsByUserId(state = {}, action) {
   }
 }
 
-function sbMessagesByUserId(state = {}, action) {
+function sbMessagesByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
-      return action.sbMessagesByUserId;
+      return action.messagesByOtherUserId;
     case SB_MESSAGE_SENT: {
       const messageList = state[action.otherUserId];
-      const newMessageList = [...messageList, action.sbMessage];
+      const newMessageList = [...messageList, action.message];
       return { ...state, [action.otherUserId]: newMessageList };
     }
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: [] };
     case SB_LOGOUT_SUCCESS:
       return {};
+    default:
+      return state;
+  }
+}
+
+function sbIsSending(state = false, action) {
+  switch (action.type) {
+    case SB_SENDING_MESSAGE:
+      return true;
+    case SB_MESSAGE_SENT:
+      return false;
     default:
       return state;
   }
@@ -227,9 +239,10 @@ export default combineReducers({
   isFetchingMatches,
   matches,
   matchesById,
-  isFetchingSb,
+  sbIsFetching,
   sbUser,
   sbChannels,
-  sbChannelsByUserId,
-  sbMessagesByUserId,
+  sbChannelsByOtherUserId,
+  sbMessagesByOtherUserId,
+  sbIsSending,
 });

@@ -11,11 +11,11 @@ import './MatchDetail.css';
 const MatchDetail = ({
   user,
   schedule,
-  matches,
+  matchesById,
   isFetching,
   match,
 }) => {
-  const matchingUser = matches[match.params.id];
+  const matchingUser = matchesById[match.params.id];
 
   return isFetching ? (
     <div className="matchdetail-empty-container">
@@ -30,7 +30,7 @@ const MatchDetail = ({
           match={ matchingUser }
           zip={ user.zip }
         />
-        <MatchNavButtons match={ matchingUser } />
+        <MatchNavButtons matchingUser={ matchingUser } />
         <div className="matchdetail-divider"></div>
         <MatchSchedule
           userSchedule={ schedule }
@@ -48,7 +48,7 @@ const MatchDetail = ({
 const mapStateToProps = (state) => ({
   user: state.user,
   schedule: state.schedule,
-  matches: state.matchesById,
+  matchesById: state.matchesById,
   isFetching: state.isFetchingMatches,
 });
 
