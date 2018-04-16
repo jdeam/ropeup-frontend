@@ -7,6 +7,7 @@ import {
   FETCHING_USER,
   FETCHING_USER_CANCELED,
   USER_RECEIVED,
+  USER_IMAGE_UPDATED,
   USER_CLEARED,
   FETCHING_SCHEDULE,
   FETCHING_SCHEDULE_CANCELED,
@@ -67,6 +68,8 @@ function user(state = {}, action) {
   switch (action.type) {
     case USER_RECEIVED:
       return action.user;
+    case USER_IMAGE_UPDATED:
+      return { ...state, img_url: action.img_url };
     case USER_CLEARED:
       return {};
     default:

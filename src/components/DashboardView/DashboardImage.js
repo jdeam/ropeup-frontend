@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
-import { fetchUser, sbAddUserImage } from '../../actions';
+import { updateImgUrl, sbAddUserImage } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -35,14 +35,14 @@ class DashboardImage extends Component {
 
   updateUserImage = async (img_url) => {
     const updateBody = { img_url };
-    const { token, user, fetchUser, sbAddUserImage } = this.props;
+    const { token, user, updateImgUrl, sbAddUserImage } = this.props;
     const response = await axios.patch(
       `${BaseURL}/users/${user.id}`,
       updateBody,
       { headers: { token } }
     );
     if (response.status === 200) {
-      await fetchUser()
+      updateImgUrl(img_url);
       sbAddUserImage();
     }
   };
@@ -97,7 +97,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser,
+  updateImgUrl,
   sbAddUserImage,
 }, dispatch);
 

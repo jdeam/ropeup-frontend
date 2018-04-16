@@ -224,7 +224,7 @@ class DashboardEdit extends Component {
               <textarea
                 className="textarea is-small"
                 type="text"
-                placeholder="About me"
+                placeholder="About me ..."
                 disabled={ !this.state.isEditing }
                 value={ this.state.about }
                 onChange={ (e) => this.setState({ about: e.target.value }) }

@@ -47,6 +47,13 @@ export function fetchUser() {
   };
 }
 
+export const USER_IMAGE_UPDATED = 'USER_IMAGE_UPDATED';
+export function updateImgUrl(img_url) {
+  return (dispatch) => {
+    dispatch({ type: USER_IMAGE_UPDATED, img_url });
+  };
+}
+
 export const FETCHING_SCHEDULE = 'FETCHING_SCHEDULE';
 export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export const FETCHING_SCHEDULE_CANCELED = 'FETCHING_SCHEDULE_CANCELED';
