@@ -9,7 +9,7 @@ const MessageDetailScheduleItem = ({ item }) => {
     `${start.slice(0, -2)}-${end}` : `${start}-${end}`;
 
   return (
-    <span className="tag is-white">
+    <span className="tag is-white messagedetail-tag">
       { `${day}, ${times}` }
     </span>
   );

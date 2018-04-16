@@ -169,3 +169,7 @@ margin-left: 1.3rem;
   text-align: right;
   margin-right: 1.3rem;
 }
+
+.messagedetail-tag {
+  border-color: #DBDBDB !important;
+}

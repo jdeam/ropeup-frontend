@@ -145,3 +145,7 @@
   font-weight: 400;
   margin-bottom: 0.3rem;
 }
+
+.matchdetail-tag {
+  border-color: #DBDBDB !important;
+}
