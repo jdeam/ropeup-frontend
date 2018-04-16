@@ -4,7 +4,7 @@ import './MessageDetail.css';
 
 const MessageDetailListItem = ({ message, sbUser }) => {
   const isUser = message.sender.userId === sbUser.userId;
-  const time = moment(message.createdAt).format('h:mm A');
+  const time = moment(message.createdAt).format('M/D h:mm A');
 
   return (
     <div className={ isUser ?
