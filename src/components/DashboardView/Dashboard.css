@@ -94,11 +94,11 @@
 }
 
 .is-white {
-  border: 1px solid lightgray;
+  border: 1px solid #5BCDB3;
 }
 
 .is-light {
-  border: 1px solid #FFFFFF;
+  border: 1px solid #5BCDB3;
 }
 
 .is-dark {
