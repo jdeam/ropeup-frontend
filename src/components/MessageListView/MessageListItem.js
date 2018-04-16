@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './MessageList.css';
@@ -14,42 +14,45 @@ const MessageListItem = ({ channel, sbUser }) => {
   if (message.length > 28) message = `${message.slice(0, 28)} ...`;
 
   return (
-    <Link
-      to={ `/messages/${otherUser.userId}`}
-      onClick={ () => {
-        channel.markAsRead();
-        channel.refresh();
-      } }
-    >
-      <div className="messagelist-chat-container">
-        <div className="messagelist-chat">
-          <div className="image is-48x48">
-            <img
-              src={ otherUser.profileUrl }
-              className="messagelist-img"
-              alt=""
-            />
-          </div>
-          <div className="messagelist-chat-content">
-            <div className={ `messagelist-chat-content-top ${
-              readStatus ? "messagelist-is-read" : "messagelist-is-unread"
-            }` }>
-              <div>
-                { otherUser.nickname }
-              </div>
-              <div>
-                { time }
-              </div>
+    <Fragment>
+      <Link
+        to={ `/messages/${otherUser.userId}`}
+        onClick={ () => {
+          channel.markAsRead();
+          channel.refresh();
+        } }
+      >
+        <div className="messagelist-chat-container">
+          <div className="messagelist-chat">
+            <div className="image is-48x48">
+              <img
+                src={ otherUser.profileUrl }
+                className="messagelist-img"
+                alt=""
+              />
             </div>
-            <div className={ `messagelist-chat-content-message ${
-              readStatus ? "messagelist-is-read" : "messagelist-is-unread"
-            }` }>
-              { message }
+            <div className="messagelist-chat-content">
+              <div className={ `messagelist-chat-content-top ${
+                readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+              }` }>
+                <div>
+                  { otherUser.nickname }
+                </div>
+                <div>
+                  { time }
+                </div>
+              </div>
+              <div className={ `messagelist-chat-content-message ${
+                readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+              }` }>
+                { message }
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <div className="messagelist-divider-short"></div>
+    </Fragment>
   );
 };
 

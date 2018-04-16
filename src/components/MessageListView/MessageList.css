@@ -50,7 +50,7 @@
   width: 100%;
   border-top: 1px solid #DBDBDB;
   margin-top: 0.2rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.1rem;
 }
 
 .messagelist-chat-container {
@@ -98,4 +98,12 @@
 .messagelist-is-read {
   font-weight: 400;
   color: #4A4A4A;
+}
+
+.messagelist-divider-short {
+  width: 97%;
+  align-self: flex-end;
+  border-top: 1px solid #DBDBDB;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
 }
