@@ -114,7 +114,7 @@
 }
 
 .textarea {
-  min-height: 5.8rem !important;
+  min-height: 5.5rem !important;
 }
 
 .dashboard-edit-buttons {
@@ -126,7 +126,7 @@
 
 .dashboard-edit-info-button {
   width: 48%;
-  margin: 0.25rem;
+  margin: 0.35rem;
 }
 
 .dashboard-divider {
@@ -164,8 +164,8 @@
 }
 
 .dashboard-add-button {
-  margin: 0.25rem;
-  width: 12rem;
+  margin-top: 0.4rem;
+  width: 14rem;
 }
 
 .dashboard-empty-container {
