@@ -99,6 +99,7 @@
 
 .is-light {
   border: 1px solid #5BCDB3;
+  color: #7A7A7A !important;
 }
 
 .is-dark {
@@ -186,7 +187,7 @@
 
 .dashboard-logout-button {
   width: 50%;
-  margin-top: 14.9rem;
+  margin-top: 14.7rem;
 }
 
 .grade-tag {
