@@ -16,11 +16,8 @@ const MessageListItem = ({ channel, sbUser }) => {
   return (
     <Fragment>
       <Link
-        to={ `/messages/${otherUser.userId}`}
-        onClick={ () => {
-          channel.markAsRead();
-          channel.refresh();
-        } }
+        to={ `/messages/${otherUser.userId}` }
+        onClick={ () => channel.markAsRead() }
       >
         <div className="messagelist-chat-container">
           <div className="messagelist-chat">

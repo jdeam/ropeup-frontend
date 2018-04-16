@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,34 +14,44 @@ const Navbar = ({ channels, sbUser, location }) => {
   }, 0);
 
   return (pathname !== "/login" && pathname !== "/signup") ? (
-    <div className="navbar-top-container">
-      <div className="tabs is-centered is-fullwidth header-tabs">
-        <ul>
-          <li
-            className={ pathname === "/dashboard" ? "is-active" : "" }
-          >
-            <Link to="/dashboard"
-              ><FontAwesome name="user-circle" />
-            </Link>
-          </li>
-          <li
-            className={ pathname.includes("/matches") ? "is-active" : "" }
-          >
-            <Link to="/matches">
-              <FontAwesome name="search" />
-            </Link>
-          </li>
-          <li
-            className={ pathname.includes("/messages") ? "is-active" : "" }
-          >
-            <Link to="/messages">
-              <FontAwesome name="comments" />
-              {/* { numUnreadMessages } */}
-            </Link>
-          </li>
-        </ul>
+    <Fragment>
+      <div className="navbar-top-container">
+        <div className="tabs is-centered is-fullwidth header-tabs">
+          <ul>
+            <li
+              className={ pathname === "/dashboard" ? "is-active" : "" }
+            >
+              <Link to="/dashboard"
+                ><FontAwesome name="user-circle" />
+              </Link>
+            </li>
+            <li
+              className={ pathname.includes("/matches") ? "is-active" : "" }
+            >
+              <Link to="/matches">
+                <FontAwesome name="search" />
+              </Link>
+            </li>
+            <li
+              className={ pathname.includes("/messages") ? "is-active" : "" }
+            >
+              <Link to="/messages">
+                <FontAwesome name="comments" />
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+      <div
+        className={
+          numUnreadMessages ?
+          "navbar-unread-messages" :
+          "navbar-no-unread-messages"
+        }
+      >
+        { numUnreadMessages }
+      </div>
+    </Fragment>
   ) : (
     <div></div>
   );

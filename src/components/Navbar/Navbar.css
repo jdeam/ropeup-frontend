@@ -7,3 +7,23 @@
 .header-tabs {
   background-color: rgba(255, 255, 255, 1);
 }
+
+.navbar-unread-messages {
+  z-index: 1;
+  position: fixed;
+  top: 0.4rem;
+  right: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0.6rem;
+  height: 0.6rem;
+  font-size: 0.5rem;
+  background-color: #ED4C63;
+  color: white;
+  border-radius: 50%;
+}
+
+.navbar-no-unread-messages {
+  display: none;
+}

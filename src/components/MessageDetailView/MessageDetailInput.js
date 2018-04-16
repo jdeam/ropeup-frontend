@@ -13,6 +13,7 @@ class MessageDetailInput extends Component {
     const { content } = this.state;
     const { channel, otherUserId, sbSendMessage } = this.props;
     sbSendMessage(channel, otherUserId, content);
+    channel.markAsRead();
     this.setState({ content: '' });
   }
 

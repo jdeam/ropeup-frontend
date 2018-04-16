@@ -136,11 +136,11 @@ class DashboardEdit extends Component {
             <div className="dashboard-form-label">
               I like to
             </div>
-            <div className="tags">
+            <div className="tags dashboard-grade-tags">
               <span
                 className={
-                  `tag is-medium is-rounded ${this.state.tr ? 'is-dark' :
-                  this.state.isEditing ? 'is-white' : 'is-light'}`
+                  `tag grade-tag is-medium is-rounded ${this.state.tr ?
+                  'is-dark' : this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
                   this.setState({ tr: !this.state.tr }) : null
@@ -150,8 +150,8 @@ class DashboardEdit extends Component {
               </span>
               <span
                 className={
-                  `tag is-medium is-rounded ${this.state.lead ? 'is-dark' :
-                  this.state.isEditing ? 'is-white' : 'is-light'}`
+                  `tag grade-tag is-medium is-rounded ${this.state.lead ?
+                  'is-dark' : this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
                   this.setState({ lead: !this.state.lead }) : null

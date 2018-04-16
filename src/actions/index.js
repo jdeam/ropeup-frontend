@@ -172,7 +172,6 @@ export function sbGetChannels() {
     const { sbUser } = getState();
     if (!sbUser.userId) return;
     const channels = await sbFetchChannels();
-    console.log(channels);
     dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, channels });
   };
 }
@@ -226,18 +225,8 @@ export function registerChannelHandler(channelUrl, dispatch) {
 
   channelHandler.onMessageReceived = (channel, message) => {
     if (channel.url === channelUrl) {
-      dispatch({ type: SB_MESSAGE_RECEIVED, message });
-    }
-  };
-  channelHandler.onReadReceiptUpdated = (channel) => {
-    if (channel.url === channelUrl) {
-      dispatch({ type: SB_READ_RECEIPT_UPDATED })
-    }
-  };
-  channelHandler.onTypingStatusUpdated = (channel) => {
-    if (channel.url === channelUrl) {
-      const typing = channel.isTyping();
-      dispatch({ type: SB_TYPING_STATUS_UPDATED, typing });
+      console.log(message);
+      // dispatch({ type: SB_MESSAGE_RECEIVED, message });
     }
   };
 
