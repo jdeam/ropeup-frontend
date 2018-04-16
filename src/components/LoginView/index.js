@@ -43,7 +43,7 @@ class Login extends Component {
           <div className="field">
             <p className="control has-icons-left has-icons-right">
               <input
-                className="input"
+                className="input is-primary"
                 type="email"
                 placeholder="Email"
                 value={ this.state.email }
@@ -59,7 +59,7 @@ class Login extends Component {
           <div className="field">
             <p className="control has-icons-left">
               <input
-                className="input"
+                className="input is-primary"
                 type="password"
                 placeholder="Password"
                 value={ this.state.password }
@@ -75,7 +75,7 @@ class Login extends Component {
           <div className="field login-buttons">
             <p className="control">
               <button
-                className={ `button login-button is-info${
+                className={ `button login-button is-inverted is-primary${
                   this.state.isLoggingIn ? ' is-loading' : ''
                 }`}
               >
@@ -83,7 +83,7 @@ class Login extends Component {
               </button>
             </p>
             <p className="control">
-              <Link to="/signup" className="button is-text">
+              <Link to="/signup" className="button is-text create-account-button">
                 Create an account
               </Link>
             </p>

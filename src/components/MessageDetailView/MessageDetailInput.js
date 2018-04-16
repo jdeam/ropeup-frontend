@@ -8,11 +8,12 @@ import './MessageDetail.css';
 class MessageDetailInput extends Component {
   state = { content: '' };
 
-  sendMessage = (e) => {
+  sendMessage = async (e) => {
     e.preventDefault();
     const { content } = this.state;
+    if (!content) return;
     const { channel, otherUserId, sbSendMessage } = this.props;
-    sbSendMessage(channel, otherUserId, content);
+    await sbSendMessage(channel, otherUserId, content);
     channel.markAsRead();
     this.setState({ content: '' });
   }
@@ -25,7 +26,7 @@ class MessageDetailInput extends Component {
       >
         <div className="messagedetail-input">
           <input
-            className="input is-rounded"
+            className="input is-primary is-rounded"
             type="text"
             placeholder="Aa"
             value={ this.state.content }
@@ -33,9 +34,11 @@ class MessageDetailInput extends Component {
           />
         </div>
         <a
-          className={ `button is-rounded is-info${
+          className={ `button is-rounded ${
+            this.state.content ? " is-primary" : "" } ${
             this.props.isSending ? " is-loading" : ""
           }` }
+          disabled={ !this.state.content }
           onClick={ this.sendMessage }
         >
           <span className="icon">

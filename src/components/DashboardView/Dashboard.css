@@ -197,3 +197,7 @@
   padding-left: 0.6rem !important;
   padding-right: 0.6rem !important;
 }
+
+.select:after {
+  border-color: #5BCDB3 !important;
+}

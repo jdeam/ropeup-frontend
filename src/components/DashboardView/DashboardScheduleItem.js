@@ -31,7 +31,7 @@ const DashboardScheduleItem = ({
   }
 
   return (
-    <span className="tag is-medium is-info">
+    <span className="tag is-medium is-primary">
       { `${day}, ${times}` } &nbsp;
       <button
         className="delete is-small"

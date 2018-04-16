@@ -4,6 +4,7 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
+  background-color: #5BCDB3;
 }
 
 .login-form {
@@ -18,4 +19,12 @@
 
 .login-button {
   width: 30vw;
+}
+
+.create-account-button {
+  color: white !important;
+}
+
+.button.is-primary.is-inverted.is-loading:after {
+  border-color: transparent transparent #5BCDB3 !important;
 }

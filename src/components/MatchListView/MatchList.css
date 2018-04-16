@@ -30,7 +30,7 @@
 }
 
 .matchlist-box {
-  margin: 0.2rem;
+  margin: 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,12 +63,13 @@
 
 .matchlist-rating {
   margin-top: 0.1rem;
-  font-weight: 500;
+  font-weight: 700;
+  color: #5BCDB3;
 }
 
 .matchlist-details {
   display: flex;
-  height: 2.5rem;
+  height: 1.5rem;
 }
 
 .matchlist-age {
@@ -78,7 +79,7 @@
 .matchlist-location {
   display: flex;
   align-items: center;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .matchlist-interests {

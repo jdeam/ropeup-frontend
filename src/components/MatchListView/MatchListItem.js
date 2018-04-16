@@ -22,14 +22,13 @@ const MatchListItem = ({ match, zip }) => {
       <div className="matchlist-box-container">
         <div className="matchlist-box">
           <div className="matchlist-box-left">
-            <div className="image is-48x48">
+            <div className="image is-64x64">
               <img
                 src={ match.img_url }
                 className="matchlist-img"
                 alt=""
               />
             </div>
-            <p className="is-size-7 matchlist-rating">{ matchRating }</p>
           </div>
           <div className="matchlist-box-center">
             <div className="matchlist-details">
@@ -45,6 +44,7 @@ const MatchListItem = ({ match, zip }) => {
                 { distance ? `${distance} mi. away` : '<1 mi. away' }
               </small>
             </div>
+            <div className="is-size-7 matchlist-rating">{ matchRating }</div>
           </div>
           <div className="matchlist-box-right">
             <div className="matchlist-graderange">

@@ -123,7 +123,7 @@ class DashboardEdit extends Component {
             </div>
             <div className="dashboard-gym-input">
               <input
-                className="input"
+                className="input is-primary"
                 type="text"
                 placeholder="gym(s)"
                 disabled={ !this.state.isEditing }
@@ -166,7 +166,7 @@ class DashboardEdit extends Component {
               ... from
             </div>
             <div className="dashboard-grade-select">
-              <div className="select">
+              <div className="select is-primary">
                 <select
                   disabled={ !this.state.isEditing }
                   value={ this.state.grade_low }
@@ -194,7 +194,7 @@ class DashboardEdit extends Component {
               to
             </div>
             <div className="dashboard-grade-select">
-              <div className="select">
+              <div className="select is-primary">
                 <select
                   disabled={ !this.state.isEditing }
                   value={ this.state.grade_high }
@@ -222,7 +222,7 @@ class DashboardEdit extends Component {
           <div className="dashboard-form-item">
             <div className="dashboard-about-input">
               <textarea
-                className="textarea is-small"
+                className="textarea is-primary is-small"
                 type="text"
                 placeholder="About me ..."
                 disabled={ !this.state.isEditing }
@@ -244,7 +244,7 @@ class DashboardEdit extends Component {
                   Cancel
                 </div>
                 <div
-                  className={`button is-info${
+                  className={`button is-primary${
                     this.state.isSubmitting ? ' is-loading' : ''
                   }`}
                   onClick={ () => this.submitEdits() }
@@ -254,7 +254,7 @@ class DashboardEdit extends Component {
               </div>
             ) : (
               <div
-                className="button is-info dashboard-edit-info-button"
+                className="button is-primary dashboard-edit-info-button"
                 onClick={ () => this.setState({ isEditing: true }) }
               >
                 Edit info

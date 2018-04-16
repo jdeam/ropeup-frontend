@@ -8,6 +8,11 @@
   background-color: rgba(255, 255, 255, 1);
 }
 
+.tabs li.is-active a {
+  border-bottom-color: #5BCDB3 !important;
+  color: #5BCDB3 !important;
+}
+
 .navbar-unread-messages {
   z-index: 1;
   position: fixed;

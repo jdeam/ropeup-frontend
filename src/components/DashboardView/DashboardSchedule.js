@@ -45,7 +45,7 @@ class DashboardSchedule extends Component {
             I want to climb
           </div>
           <div className="dashboard-day-select">
-            <div className="select">
+            <div className="select is-primary">
               <select
                 value={ this.state.day }
                 onChange={ (e) => this.setState({ day: parseInt(e.target.value, 10) }) }
@@ -66,7 +66,7 @@ class DashboardSchedule extends Component {
             ... from
           </div>
           <div className="dashboard-time-select">
-            <div className="select">
+            <div className="select is-primary">
               <select
                 value={ this.state.start }
                 onChange={ (e) => this.setState({ start: parseInt(e.target.value, 10) }) }
@@ -96,7 +96,7 @@ class DashboardSchedule extends Component {
             to
           </div>
           <div className="dashboard-time-select">
-            <div className="select">
+            <div className="select is-primary">
               <select
                 value={ this.state.end }
                 onChange={ (e) => this.setState({ end: parseInt(e.target.value, 10) }) }
@@ -124,7 +124,7 @@ class DashboardSchedule extends Component {
           </div>
         </div>
         <div
-          className={ `button is-info dashboard-add-button${
+          className={ `button is-primary dashboard-add-button${
             this.state.isAdding ? ' is-loading' : ''
           }` }
           onClick={ this.addScheduleItem }

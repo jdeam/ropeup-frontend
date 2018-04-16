@@ -24,7 +24,7 @@ const MatchNavButtons = ({
        </Link>
         <Link
           to={ `/messages/${matchingUser.id}`}
-          className="button is-small is-info matchdetail-button"
+          className="button is-small is-primary matchdetail-button"
           onClick={ () => {
             if(!channelsByOtherUserId[matchingUser.id]) {
               sbAddChannel(matchingUser.id);

@@ -50,7 +50,7 @@ class Signup extends Component {
           <div className="field">
             <p className="control has-icons-left">
               <input
-                className="input"
+                className="input is-primary"
                 type="text"
                 placeholder="First name"
                 value={ this.state.first_name }
@@ -64,7 +64,7 @@ class Signup extends Component {
           <div className="field">
             <p className="control has-icons-left">
               <input
-                className="input"
+                className="input is-primary"
                 type="text"
                 placeholder="Last name"
                 value={ this.state.last_name }
@@ -78,7 +78,7 @@ class Signup extends Component {
           <div className="field">
             <p className="control has-icons-left">
               <input
-                className="input"
+                className="input is-primary"
                 type="email"
                 placeholder="Email"
                 value={ this.state.email }
@@ -92,7 +92,7 @@ class Signup extends Component {
           <div className="field">
             <p className="control has-icons-left">
               <input
-                className="input"
+                className="input is-primary"
                 type="password"
                 placeholder="Password"
                 value={ this.state.password }
@@ -107,14 +107,14 @@ class Signup extends Component {
             {
               this.state.is_logging_in ? (
                 <p className="control">
-                  <button className="button is-info is-loading">
+                  <button className="button is-primary is-loading">
                     Loading
                   </button>
                 </p>
               ) : (
                 <p className="control">
                   <button
-                    className={ `button signup-button is-info${
+                    className={ `button signup-button is-primary${
                       this.state.isSigningUp ? ' is-loading' : ''
                     }`}
                   >
