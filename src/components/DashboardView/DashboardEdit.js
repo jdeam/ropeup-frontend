@@ -72,7 +72,7 @@ class DashboardEdit extends Component {
     return this.props.isActive ? (
       <div className="dashboard-form-container">
         <div className="dashboard-form">
-          <div className="dashboard-form-item">
+          {/* <div className="dashboard-form-item">
             <div className="dashboard-form-label">
               My ZIP code is
             </div>
@@ -116,7 +116,7 @@ class DashboardEdit extends Component {
                 onChange={ (e) => this.setState({ start_year: e.target.value }) }
               />
             </div>
-          </div>
+          </div> */}
           <div className="dashboard-form-item">
             <div className="dashboard-form-label">
               I climb at

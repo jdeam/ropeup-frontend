@@ -69,7 +69,7 @@ export const sbCreateChannel = (recipientId) => {
 export const sbFetchMessages = (channel) => {
   return new Promise((resolve, reject) => {
     const messageListQuery = channel.createPreviousMessageListQuery();
-    messageListQuery.load(100, false, (messageList, error) => {
+    messageListQuery.load(200, false, (messageList, error) => {
       if (error) reject('Could not load messages.');
       else resolve(messageList);
     });

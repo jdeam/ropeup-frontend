@@ -28,12 +28,12 @@ import {
   SB_MESSAGE_SENT,
 } from '../actions';
 
-function dashboardTabInView(state = 'edit', action) {
+function dashboardTabInView(state = 'settings', action) {
   switch (action.type) {
     case DASHBOARD_TAB_SWITCHED:
       return action.tab;
     case DASHBOARD_TAB_RESET:
-      return 'edit';
+      return 'settings';
     default:
       return state;
   }
