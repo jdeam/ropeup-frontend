@@ -4,14 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Navbar.css';
 
-const Navbar = ({ channels, sbUser, location }) => {
+const Navbar = ({ numUnread, location }) => {
   const { pathname } = location;
-  const activeChannels = channels.filter(channel => channel.lastMessage);
-  const numUnreadMessages = activeChannels.reduce((numUnread, channel) => {
-    const { cachedReadReceiptStatus } = channel;
-    const readStatus = cachedReadReceiptStatus[sbUser.userId];
-    return numUnread + (readStatus ? 0 : 1);
-  }, 0);
 
   return (pathname !== "/login" && pathname !== "/signup") ? (
     <Fragment>
@@ -44,12 +38,12 @@ const Navbar = ({ channels, sbUser, location }) => {
       </div>
       <div
         className={
-          numUnreadMessages ?
+          numUnread ?
           "navbar-unread-messages" :
           "navbar-no-unread-messages"
         }
       >
-        { numUnreadMessages }
+        { numUnread }
       </div>
     </Fragment>
   ) : (
@@ -58,8 +52,7 @@ const Navbar = ({ channels, sbUser, location }) => {
 };
 
 const mapStateToProps = (state) => ({
-  channels: state.sbChannels,
-  sbUser: state.sbUser,
+  numUnread: state.sbNumUnread,
 });
 
 export default withRouter(connect(

@@ -136,7 +136,7 @@ export function fetchAllUserInfo() {
     await dispatch(sbGetChannels());
     await dispatch(fetchMatches());
     await dispatch(sbGetMessages());
-    dispatch(registerAllChannelHandlers());
+    dispatch(sbRegisterAllChannelHandlers());
   };
 }
 
@@ -221,12 +221,14 @@ export function sbSendMessage(channel, otherUserId, text) {
     dispatch({ type: SB_SENDING_MESSAGE });
     const message = await sbSendTextMessage(channel, text);
     dispatch({ type: SB_MESSAGE_SENT, otherUserId, message });
+    channel.markAsRead();
+    channel.refresh();
   };
 }
 
 export const SB_MESSAGE_RECEIVED = 'SB_MESSAGE_RECEIVED';
 export const SB_TYPING_STATUS_UPDATED = 'SB_TYPING_STATUS_UPDATED';
-export function registerChannelHandler(channelUrl, dispatch, getState) {
+export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
   const { sbUser } = getState();
   const sb = SendBird.getInstance();
   const channelHandler = new sb.ChannelHandler();
@@ -240,6 +242,7 @@ export function registerChannelHandler(channelUrl, dispatch, getState) {
       dispatch({ type: SB_MESSAGE_RECEIVED, otherUserId, message });
     }
   };
+
   channelHandler.onTypingStatusUpdated = (channel) => {
     if (channel.url === channelUrl) {
       const { members } = channel;
@@ -256,12 +259,26 @@ export function registerChannelHandler(channelUrl, dispatch, getState) {
   sb.addChannelHandler(channelUrl, channelHandler);
 }
 
-export function registerAllChannelHandlers() {
+export function sbRegisterAllChannelHandlers() {
   return (dispatch, getState) => {
     const { sbChannels } = getState();
     const activeChannels = sbChannels.filter(channel => channel.lastMessage);
     activeChannels.forEach(channel => {
-      registerChannelHandler(channel.url, dispatch, getState);
+      sbRegisterChannelHandler(channel.url, dispatch, getState);
     });
+  };
+}
+
+export const SB_MESSAGE_READ = 'SB_MESSAGE_READ';
+export function sbMarkAsRead(channel) {
+  return (dispatch, getState) => {
+    const { sbUser } = getState();
+    const { cachedReadReceiptStatus } = channel;
+    const timeRead = cachedReadReceiptStatus[sbUser.userId];
+    if (!timeRead) {
+      dispatch({ type: SB_MESSAGE_READ });
+      channel.markAsRead();
+      channel.refresh();
+    }
   };
 }

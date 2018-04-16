@@ -1,9 +1,12 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { sbMarkAsRead } from '../../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import './MessageList.css';
 
-const MessageListItem = ({ channel, sbUser }) => {
+const MessageListItem = ({ channel, sbUser, sbMarkAsRead }) => {
   const otherUser = channel.members.find(member => {
     return member.userId !== sbUser.userId;
   });
@@ -12,12 +15,13 @@ const MessageListItem = ({ channel, sbUser }) => {
 
   let { message } = channel.lastMessage;
   if (message.length > 27) message = `${message.slice(0, 27)} ...`;
+  console.log(channel);
 
   return (
     <Fragment>
       <Link
         to={ `/messages/${otherUser.userId}` }
-        onClick={ () => channel.markAsRead() }
+        onClick={ () => sbMarkAsRead(channel) }
       >
         <div className="messagelist-chat-container">
           <div className="messagelist-chat">
@@ -53,7 +57,14 @@ const MessageListItem = ({ channel, sbUser }) => {
   );
 };
 
-export default MessageListItem;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  sbMarkAsRead,
+}, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(MessageListItem);
 
 /*
 Laurianne58@gmail.com

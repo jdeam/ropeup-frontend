@@ -14,7 +14,6 @@ class MessageDetailInput extends Component {
     if (!content) return;
     const { channel, otherUserId, sbSendMessage } = this.props;
     await sbSendMessage(channel, otherUserId, content);
-    channel.markAsRead();
     this.setState({ content: '' });
   }
 

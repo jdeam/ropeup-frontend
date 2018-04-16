@@ -28,6 +28,7 @@ import {
   SB_SENDING_MESSAGE,
   SB_MESSAGE_SENT,
   SB_MESSAGE_RECEIVED,
+  SB_MESSAGE_READ,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -187,10 +188,11 @@ function sbChannels(state = [], action) {
 function sbChannelsByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      return action.channels.reduce((byOtherUserId, channel) => {
+      const { channels, id } = action;
+      return channels.reduce((byOtherUserId, channel) => {
         const { members } = channel;
         const otherUserId = members.find(member => {
-          return member.userId !== action.id;
+          return member.userId !== id;
         }).userId;
         byOtherUserId[otherUserId] = channel;
         return byOtherUserId;
@@ -216,7 +218,7 @@ function sbMessagesByOtherUserId(state = {}, action) {
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: [] };
     case SB_MESSAGE_RECEIVED: {
-      const messageList = state[action.otherUserId];
+      const messageList = state[action.otherUserId] || [];
       const newMessageList = [...messageList, action.message];
       return { ...state, [action.otherUserId]: newMessageList };
     }
@@ -238,6 +240,27 @@ function sbIsSending(state = false, action) {
   }
 }
 
+function sbNumUnread(state = 0, action) {
+  switch (action.type) {
+    case SB_CHANNELS_RECEIVED: {
+      const { id, channels } = action;
+      return channels
+        .filter(channel => channel.lastMessage)
+        .reduce((numUnread, channel) => {
+          const { cachedReadReceiptStatus } = channel;
+          const timeRead = cachedReadReceiptStatus[id];
+          return numUnread + (timeRead ? 0 : 1);
+        }, 0);
+    }
+    case SB_MESSAGE_RECEIVED:
+      return state + 1;
+    case SB_MESSAGE_READ:
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   dashboardTabInView,
   token,
@@ -254,4 +277,5 @@ export default combineReducers({
   sbChannelsByOtherUserId,
   sbMessagesByOtherUserId,
   sbIsSending,
+  sbNumUnread,
 });
