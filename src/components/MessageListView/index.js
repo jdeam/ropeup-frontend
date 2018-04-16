@@ -1,6 +1,6 @@
 import React from 'react';
 import MessageListItem from './MessageListItem';
-import FontAwesome from 'react-fontawesome';
+import { ClipLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './MessageList.css';
@@ -28,7 +28,10 @@ const MessageList = ({ sbUser, channels, isFetching }) => {
   return isFetching ? (
     <div className="messagelist-empty-container">
       <div className="messagelist-empty-message messagelist-spinner">
-        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+        <ClipLoader
+          color={'#5BCDB3'}
+          size={100}
+        />
       </div>
     </div>
   ) : channels.length ? (

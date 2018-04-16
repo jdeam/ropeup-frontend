@@ -1,6 +1,6 @@
 import React from 'react';
 import MatchListItem from './MatchListItem';
-import FontAwesome from 'react-fontawesome';
+import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { switchDashboardTab } from '../../actions';
 import { connect } from 'react-redux';
@@ -21,7 +21,10 @@ const MatchList = ({
   return isFetching ? (
     <div className="matchlist-empty-container">
       <div className="matchlist-empty-message matchlist-spinner">
-        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+        <ClipLoader
+          color={'#5BCDB3'}
+          size={100}
+        />
       </div>
     </div>
   ) : matches.length ? (

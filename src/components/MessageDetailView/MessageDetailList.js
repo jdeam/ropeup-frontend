@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MessageDetailListItem from './MessageDetailListItem';
 import MessageDetailSchedule from './MessageDetailSchedule';
-import { PulseLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import './MessageDetail.css';
 
@@ -38,7 +38,7 @@ class MessageDetailList extends Component {
         { typingStatuses[otherUser.id] ? (
           <div className="messagedetail-is-other">
             <div className="messagedetail-message messagedetail-other-message">
-              <PulseLoader
+              <BeatLoader
                 color={'#4A4A4A'}
                 margin={'2px'}
                 size={4}

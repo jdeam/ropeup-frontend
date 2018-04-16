@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
 import { sbMarkAsRead } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -50,7 +51,15 @@ const MessageListItem = ({
               <div className={ `messagelist-chat-content-message ${
                 readStatus ? "messagelist-is-unread" : "messagelist-is-read"
               }` }>
-                { typingStatuses[otherUser.userId] ? '...' : message }
+                { typingStatuses[otherUser.userId] ? (
+                  <BeatLoader
+                    color={'#4A4A4A'}
+                    margin={'2px'}
+                    size={4}
+                  />
+                ) : (
+                  message
+                ) }
               </div>
             </div>
           </div>

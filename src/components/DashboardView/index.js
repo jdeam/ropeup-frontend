@@ -1,7 +1,7 @@
 import React from 'react';
 import DashboardImage from './DashboardImage';
 import DashboardTabs from './DashboardTabs';
-import FontAwesome from 'react-fontawesome';
+import { ClipLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import './Dashboard.css';
 
@@ -11,7 +11,10 @@ const Dashboard = ({ user, isFetching, tabInView }) => {
   return isFetching ? (
     <div className="dashboard-empty-container">
       <div className="dashboard-empty-message">
-        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+        <ClipLoader
+          color={'#5BCDB3'}
+          size={100}
+        />
       </div>
     </div>
   ) : (

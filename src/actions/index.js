@@ -226,7 +226,7 @@ export function sbSendMessage(channel, otherUserId, text) {
 
 export const SB_MESSAGE_RECEIVED = 'SB_MESSAGE_RECEIVED';
 export const SB_TYPING_STATUS_UPDATED = 'SB_TYPING_STATUS_UPDATED';
-export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
+function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
   const { sbUser } = getState();
   const sb = SendBird.getInstance();
   const channelHandler = new sb.ChannelHandler();
@@ -255,7 +255,7 @@ export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
   sb.addChannelHandler(channelUrl, channelHandler);
 }
 
-export function sbRegisterAllChannelHandlers() {
+function sbRegisterAllChannelHandlers() {
   return (dispatch, getState) => {
     const { sbChannels } = getState();
     const activeChannels = sbChannels.filter(channel => channel.lastMessage);

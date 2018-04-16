@@ -3,7 +3,7 @@ import MatchImage from './MatchImage';
 import MatchNavButtons from './MatchNavButtons';
 import MatchSchedule from './MatchSchedule';
 import MatchContent from './MatchContent';
-import FontAwesome from 'react-fontawesome';
+import { ClipLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import './MatchDetail.css';
@@ -16,13 +16,16 @@ const MatchDetail = ({
   match,
 }) => {
   window.scrollTo(0, 0);
-  
+
   const matchingUser = matchesById[match.params.id];
 
   return isFetching ? (
     <div className="matchdetail-empty-container">
       <div className="matchdetail-empty-message">
-        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+        <ClipLoader
+          color={'#5BCDB3'}
+          size={100}
+        />
       </div>
     </div>
   ) : matchingUser ? (

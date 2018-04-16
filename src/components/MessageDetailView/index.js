@@ -2,7 +2,7 @@ import React from 'react';
 import MessageDetailHeader from './MessageDetailHeader';
 import MessageDetailList from './MessageDetailList';
 import MessageDetailInput from './MessageDetailInput';
-import FontAwesome from 'react-fontawesome';
+import { ClipLoader } from 'react-spinners';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './MessageDetail.css';
@@ -16,14 +16,17 @@ const MessageDetail = ({
   history,
 }) => {
   window.scrollTo(0, 0);
-  
+
   const { id } = match.params;
   const channelInView = channelsByOtherUserId[id];
 
   return isFetching ? (
     <div className="messagedetail-empty-container">
       <div className="messagedetail-empty-message">
-        <FontAwesome className="fa-4x fa-spin" name="spinner" />
+        <ClipLoader
+          color={'#5BCDB3'}
+          size={100}
+        />
       </div>
     </div>
   ) : channelInView ? (
