@@ -256,6 +256,8 @@ function sbNumUnread(state = 0, action) {
       return state + 1;
     case SB_MESSAGE_READ:
       return state - 1;
+    case SB_LOGOUT_SUCCESS:
+      return 0;
     default:
       return state;
   }

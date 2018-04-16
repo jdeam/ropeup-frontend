@@ -6,7 +6,10 @@ import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 class MessageDetailInput extends Component {
-  state = { content: '' };
+  state = {
+    content: '',
+    isTyping: false,
+  };
 
   sendMessage = async (e) => {
     e.preventDefault();
@@ -15,7 +18,21 @@ class MessageDetailInput extends Component {
     const { channel, otherUserId, sbSendMessage } = this.props;
     await sbSendMessage(channel, otherUserId, content);
     this.setState({ content: '' });
-  }
+    this.updateTypingStatus();
+  };
+
+  updateTypingStatus = () => {
+    const { content, isTyping } = this.state;
+    const { channel } = this.props;
+    if (content && !isTyping) {
+      this.setState({ isTyping: true });
+      channel.startTyping();
+    }
+    if (!content && isTyping) {
+      this.setState({ isTyping: false });
+      channel.endTyping();
+    }
+  };
 
   render() {
     return (
@@ -29,7 +46,10 @@ class MessageDetailInput extends Component {
             type="text"
             placeholder="Aa"
             value={ this.state.content }
-            onChange={ (e) => this.setState({ content: e.target.value }) }
+            onChange={ (e) => {
+              this.setState({ content: e.target.value });
+              this.updateTypingStatus();
+            } }
           />
         </div>
         <a

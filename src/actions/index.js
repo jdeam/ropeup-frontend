@@ -250,9 +250,9 @@ export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
         return member.userId !== sbUser.userId;
       }).userId;
 
-      const typing = channel.isTyping();
-      console.log(otherUserId, typing);
-      // dispatch({ type: SB_TYPING_STATUS_UPDATED, typing });
+      const isTyping = channel.isTyping();
+      console.log(otherUserId, isTyping);
+      // dispatch({ type: SB_TYPING_STATUS_UPDATED, otherUserId, isTyping });
     }
   };
 
