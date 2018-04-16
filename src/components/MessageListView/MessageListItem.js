@@ -11,7 +11,7 @@ const MessageListItem = ({ channel, sbUser }) => {
   const readStatus = channel.cachedReadReceiptStatus[sbUser.userId];
 
   let { message } = channel.lastMessage;
-  if (message.length > 28) message = `${message.slice(0, 28)} ...`;
+  if (message.length > 27) message = `${message.slice(0, 27)} ...`;
 
   return (
     <Fragment>

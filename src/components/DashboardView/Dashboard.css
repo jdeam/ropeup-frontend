@@ -192,3 +192,8 @@
 .grade-tag {
   width: 6.7rem;
 }
+
+.is-medium {
+  padding-left: 0.6rem !important;
+  padding-right: 0.6rem !important;
+}
