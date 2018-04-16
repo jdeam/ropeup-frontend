@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import './Dashboard.css';
 
 const Dashboard = ({ user, isFetching, tabInView }) => {
+  window.scrollTo(0, 0);
+
   return isFetching ? (
     <div className="dashboard-empty-container">
       <div className="dashboard-empty-message">

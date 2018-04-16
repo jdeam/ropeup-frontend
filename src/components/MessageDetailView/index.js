@@ -15,6 +15,8 @@ const MessageDetail = ({
   match,
   history,
 }) => {
+  window.scrollTo(0, 0);
+  
   const { id } = match.params;
   const channelInView = channelsByOtherUserId[id];
 

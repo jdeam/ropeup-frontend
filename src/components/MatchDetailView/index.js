@@ -15,6 +15,8 @@ const MatchDetail = ({
   isFetching,
   match,
 }) => {
+  window.scrollTo(0, 0);
+  
   const matchingUser = matchesById[match.params.id];
 
   return isFetching ? (

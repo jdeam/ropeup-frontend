@@ -13,6 +13,7 @@ const MatchList = ({
   isFetching,
   switchDashboardTab
 }) => {
+  window.scrollTo(0, 0);
   const matchEls =  matches.map((match, i) => {
     return <MatchListItem key={ i } zip={ user.zip } match={ match } />
   });
