@@ -135,7 +135,8 @@ export function fetchAllUserInfo() {
     await dispatch(fetchSchedule());
     await dispatch(sbGetChannels());
     await dispatch(fetchMatches());
-    dispatch(sbGetMessages());
+    await dispatch(sbGetMessages());
+    dispatch(registerAllChannelHandlers());
   };
 }
 
@@ -224,18 +225,43 @@ export function sbSendMessage(channel, otherUserId, text) {
 }
 
 export const SB_MESSAGE_RECEIVED = 'SB_MESSAGE_RECEIVED';
-export const SB_READ_RECEIPT_UPDATED = 'SB_READ_RECEIPT_UPDATED';
 export const SB_TYPING_STATUS_UPDATED = 'SB_TYPING_STATUS_UPDATED';
-export function registerChannelHandler(channelUrl, dispatch) {
+export function registerChannelHandler(channelUrl, dispatch, getState) {
+  const { sbUser } = getState();
   const sb = SendBird.getInstance();
   const channelHandler = new sb.ChannelHandler();
 
   channelHandler.onMessageReceived = (channel, message) => {
     if (channel.url === channelUrl) {
-      console.log(message);
-      // dispatch({ type: SB_MESSAGE_RECEIVED, message });
+      const { members } = channel;
+      const otherUserId = members.find(member => {
+        return member.userId !== sbUser.userId;
+      }).userId;
+      dispatch({ type: SB_MESSAGE_RECEIVED, otherUserId, message });
+    }
+  };
+  channelHandler.onTypingStatusUpdated = (channel) => {
+    if (channel.url === channelUrl) {
+      const { members } = channel;
+      const otherUserId = members.find(member => {
+        return member.userId !== sbUser.userId;
+      }).userId;
+
+      const typing = channel.isTyping();
+      console.log(otherUserId, typing);
+      // dispatch({ type: SB_TYPING_STATUS_UPDATED, typing });
     }
   };
 
   sb.addChannelHandler(channelUrl, channelHandler);
+}
+
+export function registerAllChannelHandlers() {
+  return (dispatch, getState) => {
+    const { sbChannels } = getState();
+    const activeChannels = sbChannels.filter(channel => channel.lastMessage);
+    activeChannels.forEach(channel => {
+      registerChannelHandler(channel.url, dispatch, getState);
+    });
+  };
 }

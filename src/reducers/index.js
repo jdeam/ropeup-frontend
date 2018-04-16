@@ -27,6 +27,7 @@ import {
   SB_MESSAGES_RECEIVED,
   SB_SENDING_MESSAGE,
   SB_MESSAGE_SENT,
+  SB_MESSAGE_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -186,13 +187,13 @@ function sbChannels(state = [], action) {
 function sbChannelsByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      return action.channels.reduce((byUserId, channel) => {
+      return action.channels.reduce((byOtherUserId, channel) => {
         const { members } = channel;
-        const { userId } = members.find(member => {
-          return member.userId !== action.id.toString();
-        });
-        byUserId[userId] = channel;
-        return byUserId;
+        const otherUserId = members.find(member => {
+          return member.userId !== action.id;
+        }).userId;
+        byOtherUserId[otherUserId] = channel;
+        return byOtherUserId;
       }, {});
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: action.channel };
@@ -214,6 +215,11 @@ function sbMessagesByOtherUserId(state = {}, action) {
     }
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: [] };
+    case SB_MESSAGE_RECEIVED: {
+      const messageList = state[action.otherUserId];
+      const newMessageList = [...messageList, action.message];
+      return { ...state, [action.otherUserId]: newMessageList };
+    }
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
