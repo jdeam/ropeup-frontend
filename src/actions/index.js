@@ -9,6 +9,7 @@ import {
   sbFetchMessages,
   sbSendTextMessage,
 } from '../sendbirdActions';
+import SendBird from 'sendbird';
 const BaseURL = process.env.REACT_APP_BASE_URL;
 
 export const DASHBOARD_TAB_SWITCHED = 'DASHBOARD_TAB_SWITCHED';
@@ -142,7 +143,7 @@ export function sbLogin() {
     const nickname = `${first_name} ${last_name[0]}.`;
     const loggedInUser = await sbConnect(id, nickname, img_url);
     dispatch({ type: SB_LOGIN_SUCCESS, loggedInUser });
-  }
+  };
 }
 
 export const SB_IMAGE_UPDATED = 'SB_IMAGE_UPDATED';
@@ -171,8 +172,9 @@ export function sbGetChannels() {
     const { sbUser } = getState();
     if (!sbUser.userId) return;
     const channels = await sbFetchChannels();
+    console.log(channels);
     dispatch({ type: SB_CHANNELS_RECEIVED, id: sbUser.userId, channels });
-  }
+  };
 }
 
 export const SB_CHANNEL_CREATED = 'SB_CHANNEL_CREATED';
@@ -213,4 +215,31 @@ export function sbSendMessage(channel, otherUserId, text) {
     const message = await sbSendTextMessage(channel, text);
     dispatch({ type: SB_MESSAGE_SENT, otherUserId, message });
   };
+}
+
+export const SB_MESSAGE_RECEIVED = 'SB_MESSAGE_RECEIVED';
+export const SB_READ_RECEIPT_UPDATED = 'SB_READ_RECEIPT_UPDATED';
+export const SB_TYPING_STATUS_UPDATED = 'SB_TYPING_STATUS_UPDATED';
+export function registerChannelHandler(channelUrl, dispatch) {
+  const sb = SendBird.getInstance();
+  const channelHandler = new sb.ChannelHandler();
+
+  channelHandler.onMessageReceived = (channel, message) => {
+    if (channel.url === channelUrl) {
+      dispatch({ type: SB_MESSAGE_RECEIVED, message });
+    }
+  };
+  channelHandler.onReadReceiptUpdated = (channel) => {
+    if (channel.url === channelUrl) {
+      dispatch({ type: SB_READ_RECEIPT_UPDATED })
+    }
+  };
+  channelHandler.onTypingStatusUpdated = (channel) => {
+    if (channel.url === channelUrl) {
+      const typing = channel.isTyping();
+      dispatch({ type: SB_TYPING_STATUS_UPDATED, typing });
+    }
+  };
+
+  sb.addChannelHandler(channelUrl, channelHandler);
 }

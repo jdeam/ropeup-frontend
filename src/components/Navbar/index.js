@@ -12,7 +12,6 @@ const Navbar = ({ channels, sbUser, location }) => {
     const readStatus = cachedReadReceiptStatus[sbUser.userId];
     return numUnread + (readStatus ? 0 : 1);
   }, 0);
-  console.log(numUnreadMessages);
 
   return (pathname !== "/login" && pathname !== "/signup") ? (
     <div className="navbar-top-container">
