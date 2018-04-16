@@ -277,8 +277,8 @@ function sbTypingStatusByOtherUserId(state = {}, action) {
     }
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: false };
-    // case SB_MESSAGE_RECEIVED:
-
+    case SB_MESSAGE_RECEIVED:
+      return { ...state, [action.otherUserId]: false };
     case SB_TYPING_STATUS_UPDATED:
       return { ...state, [action.otherUserId]: action.isTyping };
     case SB_LOGOUT_SUCCESS:
