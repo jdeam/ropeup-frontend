@@ -25,7 +25,8 @@ class MessageDetailList extends Component {
   };
 
   render() {
-    const { userSchedule, otherUser } = this.props;
+    const { userSchedule, otherUser, typingStatuses } = this.props;
+    // console.log(typingStatuses[otherUser.id]);
     return (
       <div className="messagedetail-messagelist">
         <MessageDetailSchedule
@@ -34,6 +35,15 @@ class MessageDetailList extends Component {
         />
         <div className="messagedetail-divider"></div>
         { this.createMessageEls() }
+        { typingStatuses[otherUser.id] ? (
+          <div className="messagedetail-is-other">
+            <div className="messagedetail-message messagedetail-other-message">
+              ...
+            </div>
+          </div>
+        ) : (
+          <div className="messagedetail-blank"></div>
+        ) }
         <div ref={ (el) => { this.messagesEnd = el; } }>
         </div>
       </div>
@@ -44,6 +54,7 @@ class MessageDetailList extends Component {
 const mapStateToProps = (state) => ({
   userSchedule: state.schedule,
   sbUser: state.sbUser,
+  typingStatuses: state.sbTypingStatusByOtherUserId,
 });
 
 export default connect(

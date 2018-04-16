@@ -221,8 +221,6 @@ export function sbSendMessage(channel, otherUserId, text) {
     dispatch({ type: SB_SENDING_MESSAGE });
     const message = await sbSendTextMessage(channel, text);
     dispatch({ type: SB_MESSAGE_SENT, otherUserId, message });
-    channel.markAsRead();
-    channel.refresh();
   };
 }
 
@@ -242,7 +240,6 @@ export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
       dispatch({ type: SB_MESSAGE_RECEIVED, otherUserId, message });
     }
   };
-
   channelHandler.onTypingStatusUpdated = (channel) => {
     if (channel.url === channelUrl) {
       const { members } = channel;
@@ -251,8 +248,7 @@ export function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
       }).userId;
 
       const isTyping = channel.isTyping();
-      console.log(otherUserId, isTyping);
-      // dispatch({ type: SB_TYPING_STATUS_UPDATED, otherUserId, isTyping });
+      dispatch({ type: SB_TYPING_STATUS_UPDATED, otherUserId, isTyping });
     }
   };
 
@@ -272,13 +268,10 @@ export function sbRegisterAllChannelHandlers() {
 export const SB_MESSAGE_READ = 'SB_MESSAGE_READ';
 export function sbMarkAsRead(channel) {
   return (dispatch, getState) => {
-    const { sbUser } = getState();
-    const { cachedReadReceiptStatus } = channel;
-    const timeRead = cachedReadReceiptStatus[sbUser.userId];
-    if (!timeRead) {
+    const { unreadMessageCount } = channel;
+    if (unreadMessageCount) {
       dispatch({ type: SB_MESSAGE_READ });
       channel.markAsRead();
-      channel.refresh();
     }
   };
 }

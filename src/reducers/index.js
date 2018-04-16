@@ -29,6 +29,7 @@ import {
   SB_MESSAGE_SENT,
   SB_MESSAGE_RECEIVED,
   SB_MESSAGE_READ,
+  SB_TYPING_STATUS_UPDATED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -243,13 +244,11 @@ function sbIsSending(state = false, action) {
 function sbNumUnread(state = 0, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED: {
-      const { id, channels } = action;
-      return channels
+      return action.channels
         .filter(channel => channel.lastMessage)
         .reduce((numUnread, channel) => {
-          const { cachedReadReceiptStatus } = channel;
-          const timeRead = cachedReadReceiptStatus[id];
-          return numUnread + (timeRead ? 0 : 1);
+          const { unreadMessageCount } = channel;
+          return numUnread + (unreadMessageCount ? 1 : 0);
         }, 0);
     }
     case SB_MESSAGE_RECEIVED:
@@ -258,6 +257,32 @@ function sbNumUnread(state = 0, action) {
       return state - 1;
     case SB_LOGOUT_SUCCESS:
       return 0;
+    default:
+      return state;
+  }
+}
+
+function sbTypingStatusByOtherUserId(state = {}, action) {
+  switch (action.type) {
+    case SB_CHANNELS_RECEIVED: {
+      const { channels, id } = action;
+      return channels.reduce((byOtherUserId, channel) => {
+        const { members } = channel;
+        const otherUserId = members.find(member => {
+          return member.userId !== id;
+        }).userId;
+        byOtherUserId[otherUserId] = channel.isTyping();
+        return byOtherUserId;
+      }, {});
+    }
+    case SB_CHANNEL_CREATED:
+      return { ...state, [action.otherUserId]: false };
+    // case SB_MESSAGE_RECEIVED:
+
+    case SB_TYPING_STATUS_UPDATED:
+      return { ...state, [action.otherUserId]: action.isTyping };
+    case SB_LOGOUT_SUCCESS:
+      return {};
     default:
       return state;
   }
@@ -280,4 +305,5 @@ export default combineReducers({
   sbMessagesByOtherUserId,
   sbIsSending,
   sbNumUnread,
+  sbTypingStatusByOtherUserId,
 });

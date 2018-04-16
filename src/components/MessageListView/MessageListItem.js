@@ -6,16 +6,20 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import './MessageList.css';
 
-const MessageListItem = ({ channel, sbUser, sbMarkAsRead }) => {
+const MessageListItem = ({
+  channel,
+  sbUser,
+  typingStatuses,
+  sbMarkAsRead
+}) => {
   const otherUser = channel.members.find(member => {
     return member.userId !== sbUser.userId;
   });
   const time = moment(channel.lastMessage.createdAt).format('h:mm a');
-  const readStatus = channel.cachedReadReceiptStatus[sbUser.userId];
+  const readStatus = channel.unreadMessageCount;
 
   let { message } = channel.lastMessage;
   if (message.length > 27) message = `${message.slice(0, 27)} ...`;
-  console.log(channel);
 
   return (
     <Fragment>
@@ -34,7 +38,7 @@ const MessageListItem = ({ channel, sbUser, sbMarkAsRead }) => {
             </div>
             <div className="messagelist-chat-content">
               <div className={ `messagelist-chat-content-top ${
-                readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+                readStatus ? "messagelist-is-unread" : "messagelist-is-read"
               }` }>
                 <div>
                   { otherUser.nickname }
@@ -44,9 +48,9 @@ const MessageListItem = ({ channel, sbUser, sbMarkAsRead }) => {
                 </div>
               </div>
               <div className={ `messagelist-chat-content-message ${
-                readStatus ? "messagelist-is-read" : "messagelist-is-unread"
+                readStatus ? "messagelist-is-unread" : "messagelist-is-read"
               }` }>
-                { message }
+                { typingStatuses[otherUser.userId] ? '...' : message }
               </div>
             </div>
           </div>
@@ -57,12 +61,16 @@ const MessageListItem = ({ channel, sbUser, sbMarkAsRead }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  typingStatuses: state.sbTypingStatusByOtherUserId,
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   sbMarkAsRead,
 }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MessageListItem);
 
