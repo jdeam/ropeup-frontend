@@ -279,7 +279,7 @@ export function sbMarkAsRead(channel) {
 export const SB_REFRESH_INTERVAL_SET = 'SB_REFRESH_INTERVAL_SET';
 function sbSetRefreshInterfal() {
   return (dispatch, getState) => {
-    const interval = setInterval(() => dispatch(sbRefresh()), 60000);
+    const interval = setInterval(() => dispatch(sbRefresh()), 15000);
     dispatch({ type: SB_REFRESH_INTERVAL_SET, interval });
   };
 }

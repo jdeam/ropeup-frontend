@@ -271,6 +271,11 @@ function sbNumUnread(state = 0, action) {
       return state + 1;
     case SB_MESSAGE_READ:
       return state - 1;
+    case SB_NEW_CHANNELS_RECEIVED:
+      return action.newChannels.reduce((numUnread, channel) => {
+        const { unreadMessageCount } = channel;
+        return numUnread + (unreadMessageCount ? 1 : 0);
+      }, 0);
     case SB_LOGOUT_SUCCESS:
       return 0;
     default:

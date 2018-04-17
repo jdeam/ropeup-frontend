@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && mv build/index.html build/200.html && surge build ropeup.surge.sh"
+    "deploy": "npm run build && mv build/index.html build/200.html && surge build rope-up.surge.sh"
   },
   "devDependencies": {
     "puppeteer": "^1.3.0"
