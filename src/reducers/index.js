@@ -32,12 +32,12 @@ import {
   SB_TYPING_STATUS_UPDATED,
 } from '../actions';
 
-function dashboardTabInView(state = 'edit', action) {
+function dashboardTabInView(state = 'settings', action) {
   switch (action.type) {
     case DASHBOARD_TAB_SWITCHED:
       return action.tab;
     case DASHBOARD_TAB_RESET:
-      return 'edit';
+      return 'settings';
     default:
       return state;
   }

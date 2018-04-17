@@ -11,6 +11,7 @@ const DashboardSettings = ({ isActive, user, logout }) => {
       <div className="dashboard-form">
         <Link
           to="/"
+          id="logout"
           className="button dashboard-logout-button"
           onClick={ logout }
         >
