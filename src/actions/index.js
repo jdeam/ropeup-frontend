@@ -138,6 +138,7 @@ export function fetchAllUserInfo() {
     await dispatch(fetchMatches());
     await dispatch(sbGetMessages());
     dispatch(sbRegisterAllChannelHandlers());
+    // dispatch(sbSetRefreshInterfal());
   };
 }
 
@@ -275,3 +276,27 @@ export function sbMarkAsRead(channel) {
     }
   };
 }
+
+export const SB_REFRESH_INTERVAL_SET = 'SB_REFRESH_INTERVAL_SET';
+export const SB_REFRESH_INTERVAL_CLEARED = 'SB_REFRESH_INTERVAL_CLEARED';
+// function sbSetRefreshInterfal() {
+//   return (dispatch, getState) => {
+//     const interval = setInterval(sbRefresh(), 5000);
+//     dispatch({ type: SB_REFRESH_INTERVAL_SET, interval });
+//   };
+// }
+//
+// function sbRefresh() {
+//   return (dispatch, getState) => {
+//     console.log(dispatch, getState);
+    // const { sbChannelsByOtherUserId, sbUser } = getState();
+    // const channels = await sbFetchChannels();
+    // const newChannels = channels.filter(channel => {
+    //   const { members } = channel;
+    //   const otherUserId = members.find(member => {
+    //     return member.userId !== sbUser.userId;
+    //   }).userId;
+    //   return !Object.keys(sbChannelsByOtherUserId).includes(otherUserId);
+    // });
+//   };
+// }

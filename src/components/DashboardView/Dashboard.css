@@ -89,19 +89,6 @@
   font-weight: 500;
 }
 
-.is-white {
-  border: 1px solid #5BCDB3;
-}
-
-.is-light {
-  border: 1px solid #5BCDB3;
-  color: #7A7A7A !important;
-}
-
-.is-dark {
-  border: 1px solid #363636;
-}
-
 .dashboard-grade-select {
   width: 5.7rem;
 }
@@ -197,4 +184,21 @@
 
 .select:after {
   border-color: #5BCDB3 !important;
+}
+
+.grade-tag-is-white {
+  color: white !important;
+}
+
+.grade-tag-is-light {
+  color: #7A7A7A !important;
+}
+
+.is-white {
+  border: 1px solid #5BCDB3;
+}
+
+.is-light {
+  border: 1px solid #5BCDB3;
+  color: #7A7A7A !important;
 }

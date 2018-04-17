@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FontAwesome from 'react-fontawesome';
 import { fetchUser, fetchMatches, clearMatches } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -138,28 +139,32 @@ class DashboardEdit extends Component {
             <div className="dashboard-form-label">
               I like to
             </div>
-            <div className="tags dashboard-grade-tags">
+            <div className={
+              `tags dashboard-grade-tags ${
+                this.state.isEditing ? 'grade-tag-is-white' : 'grade-tag-is-light'
+            }` }>
               <span
                 className={
-                  `tag grade-tag is-medium is-rounded ${this.state.tr ?
-                  'is-dark' : this.state.isEditing ? 'is-white' : 'is-light'}`
+                  `tag grade-tag is-medium is-rounded ${this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
                   this.setState({ tr: !this.state.tr }) : null
                 }
               >
-                Toprope
+                { this.state.tr ? <FontAwesome name="check" /> : <span></span> }
+                &nbsp;Toprope&nbsp;
               </span>
               <span
                 className={
-                  `tag grade-tag is-medium is-rounded ${this.state.lead ?
-                  'is-dark' : this.state.isEditing ? 'is-white' : 'is-light'}`
+                  `tag grade-tag is-medium is-rounded ${this.state.isEditing ?
+                    'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
                   this.setState({ lead: !this.state.lead }) : null
                 }
               >
-                Lead
+                { this.state.lead ? <FontAwesome name="check" /> : <span></span> }
+                &nbsp;Lead&nbsp;
               </span>
             </div>
           </div>

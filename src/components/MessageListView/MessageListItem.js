@@ -21,7 +21,8 @@ const MessageListItem = ({
   const isUnread = channel.unreadMessageCount;
 
   let { message } = channel.lastMessage;
-  if (message.length > 25) message = `${message.slice(0, 25)} ...`;
+  if (isUnread && message.length > 27) message = `${message.slice(0, 27)}...`;
+  else if (message.length > 29) message = `${message.slice(0, 29)}...`;
 
   return (
     <Fragment>

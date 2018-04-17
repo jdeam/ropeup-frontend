@@ -30,6 +30,8 @@ import {
   SB_MESSAGE_RECEIVED,
   SB_MESSAGE_READ,
   SB_TYPING_STATUS_UPDATED,
+  SB_REFRESH_INTERVAL_SET,
+  SB_REFRESH_INTERVAL_CLEARED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -288,6 +290,17 @@ function sbTypingStatusByOtherUserId(state = {}, action) {
   }
 }
 
+function sbRefreshInterval(state = null, action) {
+  switch (action.type) {
+    case SB_REFRESH_INTERVAL_SET:
+      return action.interval;
+    case SB_REFRESH_INTERVAL_CLEARED:
+      return null;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   dashboardTabInView,
   token,
@@ -306,4 +319,5 @@ export default combineReducers({
   sbIsSending,
   sbNumUnread,
   sbTypingStatusByOtherUserId,
+  sbRefreshInterval,
 });
