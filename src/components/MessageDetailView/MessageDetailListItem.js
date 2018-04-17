@@ -4,7 +4,7 @@ import './MessageDetail.css';
 
 class MessageDetailListItem extends Component {
   state = {
-    tsHidden: false
+    tsHidden: true,
   };
 
   toggleTimestamp = () => {
