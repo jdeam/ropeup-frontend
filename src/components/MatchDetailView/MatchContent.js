@@ -1,5 +1,5 @@
 import React from 'react';
-import grades from '../../util/grades';
+import { grades } from '../../util/climbing';
 import './MatchDetail.css';
 
 const MatchContent = ({ match }) => {
@@ -12,12 +12,12 @@ const MatchContent = ({ match }) => {
     <div className="matchdetail-content-container">
       <div className="matchdetail-content">
         <div className="matchdetail-content-header">
-          <div className="matchdetail-about-header">About { match.first_name }</div>
+          <div className="matchdetail-about-header">About { match.username }</div>
           <div className="matchdetail-year">Climbing since { match.start_year }</div>
         </div>
         <div className="matchdetail-about-content">{ match.about }</div>
         <div className="matchdetail-climbs-at">Climbs at&nbsp;
-          <span className="matchdetail-gyms">{ match.gyms }</span>
+          <span className="matchdetail-gym">{ match.gym }</span>
         </div>
         <div className="matchdetail-interests">
           { interests }&nbsp;

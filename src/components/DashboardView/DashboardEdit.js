@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { fetchUser, fetchMatches, clearMatches } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { gyms } from '../../util/climbing';
+import zipcodes from 'zipcodes';
 import axios from 'axios';
 import './Dashboard.css';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -13,7 +15,7 @@ class DashboardEdit extends Component {
     zip: '',
     dob: '',
     start_year: '',
-    gyms: '',
+    gym: '',
     tr: false,
     lead: false,
     grade_low: 0,
@@ -31,7 +33,7 @@ class DashboardEdit extends Component {
         zip: this.props.user.zip || '',
         dob: this.props.user.dob || '',
         start_year: this.props.user.start_year || '',
-        gyms: this.props.user.gyms || '',
+        gym: this.props.user.gym || '',
         tr: this.props.user.tr || false,
         lead: this.props.user.lead || false,
         grade_low: this.props.user.grade_low || 0,
@@ -40,6 +42,22 @@ class DashboardEdit extends Component {
       });
     }
   };
+
+  populateGymSelect = () => {
+    const { user } = this.props;
+    const radiusInMiles = 20;
+    return gyms.filter(gym => {
+        return zipcodes.distance(user.zip, gym.zip) < radiusInMiles;
+      })
+      .sort((gymA, gymB) => {
+        const distA = zipcodes.distance(user.zip, gymA.zip);
+        const distB = zipcodes.distance(user.zip, gymB.zip);
+        return distA - distB;
+      })
+      .map((gym, i) => {
+        return <option key={ i } value={ gym.id }>{ gym.name }</option>
+      });
+  }
 
   submitEdits = async () => {
     const { isEditing, isSubmitting, ...editBody } = this.state;
@@ -122,14 +140,15 @@ class DashboardEdit extends Component {
               I climb at
             </div>
             <div className="dashboard-gym-input">
-              <input
-                className="input is-primary"
-                type="text"
-                placeholder="gym(s)"
-                disabled={ !this.state.isEditing }
-                value={ this.state.gyms }
-                onChange={ (e) => this.setState({ gyms: e.target.value }) }
-              />
+              <div className="select is-primary">
+                <select
+                  disabled={ !this.state.isEditing }
+                  value={ this.state.gym }
+                  onChange={ (e) => this.setState({ gym: parseInt(e.target.value, 10) }) }
+                >
+                  { this.populateGymSelect() }
+                </select>
+              </div>
             </div>
           </div>
           <div className="dashboard-form-item">

@@ -22,7 +22,7 @@ const MessageDetailHeader = ({ otherUser, history }) => {
           className="messagedetail-header-top-right"
         >
           <div className="messagedetail-header-name">
-            { otherUser.first_name }
+            { otherUser.username }
           </div>
           <div className="messagedetail-header-profile-link">
             View profile

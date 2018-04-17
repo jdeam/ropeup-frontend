@@ -20,7 +20,7 @@ const MatchImage = ({ match, zip }) => {
       <div className="matchdetail-name">
         <div>
           <span className="title is-4">
-            { `${match.first_name}, ${age}` }
+            { `${match.username}, ${age}` }
           </span>
         </div>
         <div className="matchdetail-location">

@@ -146,10 +146,9 @@ export const SB_FETCHING_CANCELED = 'SB_FETCHING_CANCELED';
 export function sbLogin() {
   return async (dispatch, getState) => {
     const { user } = getState();
-    const { id, first_name, last_name, img_url } = user;
+    const { id, username, img_url } = user;
     if (!id) return;
-    const nickname = `${first_name} ${last_name[0]}.`;
-    const loggedInUser = await sbConnect(id, nickname, img_url);
+    const loggedInUser = await sbConnect(id, username, img_url);
     dispatch({ type: SB_LOGIN_SUCCESS, loggedInUser });
   };
 }

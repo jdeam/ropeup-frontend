@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import zipcodes from 'zipcodes';
-import grades from '../../util/grades';
+import { grades } from '../../util/climbing';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './MatchList.css';
 
 const MatchListItem = ({ match, zip }) => {
-  const name = `${match.first_name} ${match.last_name[0]}.`;
+  const name = match.username;
   const age = moment().diff(match.dob, 'years', false);
   const distance = zipcodes.distance(zip, match.zip);
   const matchRating = `${(match.matchRating * 100).toFixed(0)}% Match`;

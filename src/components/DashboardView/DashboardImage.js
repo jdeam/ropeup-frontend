@@ -84,7 +84,7 @@ class DashboardImage extends Component {
           )
         }
         <div className="title is-4 dashboard-image-name">
-          { `${user.first_name}${this.getUserAge()}` }
+          { `${user.username}${this.getUserAge()}` }
         </div>
       </div>
     );

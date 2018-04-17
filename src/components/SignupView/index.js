@@ -10,8 +10,7 @@ const BaseURL = process.env.REACT_APP_BASE_URL;
 
 class Signup extends Component {
   state = {
-    first_name: '',
-    last_name: '',
+    username: '',
     email: '',
     password: '',
     isSigningUp: false,
@@ -20,8 +19,7 @@ class Signup extends Component {
   signup = async () => {
     const { isSigningUp, ...signupBody } = this.state;
     if (
-      signupBody.first_name &&
-      signupBody.last_name &&
+      signupBody.username &&
       signupBody.email &&
       signupBody.password
     ) {
@@ -52,23 +50,9 @@ class Signup extends Component {
               <input
                 className="input is-primary"
                 type="text"
-                placeholder="First name"
-                value={ this.state.first_name }
-                onChange={ (e) => this.setState({ first_name: e.target.value }) }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="user" />
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input is-primary"
-                type="text"
-                placeholder="Last name"
-                value={ this.state.last_name }
-                onChange={ (e) => this.setState({ last_name: e.target.value }) }
+                placeholder="User"
+                value={ this.state.username }
+                onChange={ (e) => this.setState({ username: e.target.value }) }
               />
               <span className="icon is-small is-left">
                 <FontAwesome name="user" />

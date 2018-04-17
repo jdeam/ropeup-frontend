@@ -31,7 +31,7 @@ const MatchNavButtons = ({
             }
           } }
         >
-         <span>{ `Message ${matchingUser.first_name}` }</span>
+         <span>{ `Message ${matchingUser.username}` }</span>
          <span className="icon">
            <FontAwesome name="comment" />
          </span>
