@@ -31,7 +31,7 @@ import {
   SB_MESSAGE_READ,
   SB_TYPING_STATUS_UPDATED,
   SB_REFRESH_INTERVAL_SET,
-  SB_REFRESH_INTERVAL_CLEARED,
+  SB_NEW_CHANNELS_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -181,6 +181,8 @@ function sbChannels(state = [], action) {
       return action.channels;
     case SB_CHANNEL_CREATED:
       return [action.channel, ...state];
+    case SB_NEW_CHANNELS_RECEIVED:
+      return [...action.newChannels, ...state];
     case SB_LOGOUT_SUCCESS:
       return [];
     default:
@@ -202,6 +204,18 @@ function sbChannelsByOtherUserId(state = {}, action) {
       }, {});
     case SB_CHANNEL_CREATED:
       return { ...state, [action.otherUserId]: action.channel };
+    case SB_NEW_CHANNELS_RECEIVED: {
+      const { newChannels, id } = action;
+      const newChannelsByOtherUserId = newChannels.reduce((byOtherUserId, channel) => {
+        const { members } = channel;
+        const otherUserId = members.find(member => {
+          return member.userId !== id;
+        });
+        byOtherUserId[otherUserId] = channel;
+        return byOtherUserId;
+      }, {});
+      return { ...state, ...newChannelsByOtherUserId };
+    }
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -294,7 +308,7 @@ function sbRefreshInterval(state = null, action) {
   switch (action.type) {
     case SB_REFRESH_INTERVAL_SET:
       return action.interval;
-    case SB_REFRESH_INTERVAL_CLEARED:
+    case SB_LOGOUT_SUCCESS:
       return null;
     default:
       return state;

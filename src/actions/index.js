@@ -138,7 +138,8 @@ export function fetchAllUserInfo() {
     await dispatch(fetchMatches());
     await dispatch(sbGetMessages());
     dispatch(sbRegisterAllChannelHandlers());
-    // dispatch(sbSetRefreshInterfal());
+    //REMOVE BELOW IF SHIT BLOWS UP
+    dispatch(sbSetRefreshInterfal());
   };
 }
 
@@ -171,7 +172,7 @@ export const SB_LOGOUT_SUCCESS = 'SB_LOGOUT_SUCCESS';
 export function sbLogout() {
   return async (dispatch) => {
     await sbDisconnect();
-    dispatch({type: SB_LOGOUT_SUCCESS });
+    dispatch({ type: SB_LOGOUT_SUCCESS });
   };
 }
 
@@ -195,7 +196,7 @@ export function sbAddChannel(otherUserId) {
 }
 
 export const SB_MESSAGES_RECEIVED = 'SB_MESSAGES_RECEIVED';
-export function sbGetMessages(channels) {
+export function sbGetMessages() {
   return async (dispatch, getState) => {
     const { sbChannels, sbUser } = getState();
     if (!sbUser.userId) return dispatch({ type: SB_FETCHING_CANCELED });
@@ -259,8 +260,7 @@ function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
 function sbRegisterAllChannelHandlers() {
   return (dispatch, getState) => {
     const { sbChannels } = getState();
-    const activeChannels = sbChannels.filter(channel => channel.lastMessage);
-    activeChannels.forEach(channel => {
+    sbChannels.forEach(channel => {
       sbRegisterChannelHandler(channel.url, dispatch, getState);
     });
   };
@@ -278,25 +278,31 @@ export function sbMarkAsRead(channel) {
 }
 
 export const SB_REFRESH_INTERVAL_SET = 'SB_REFRESH_INTERVAL_SET';
-export const SB_REFRESH_INTERVAL_CLEARED = 'SB_REFRESH_INTERVAL_CLEARED';
-// function sbSetRefreshInterfal() {
-//   return (dispatch, getState) => {
-//     const interval = setInterval(sbRefresh(), 5000);
-//     dispatch({ type: SB_REFRESH_INTERVAL_SET, interval });
-//   };
-// }
-//
-// function sbRefresh() {
-//   return (dispatch, getState) => {
-//     console.log(dispatch, getState);
-    // const { sbChannelsByOtherUserId, sbUser } = getState();
-    // const channels = await sbFetchChannels();
-    // const newChannels = channels.filter(channel => {
-    //   const { members } = channel;
-    //   const otherUserId = members.find(member => {
-    //     return member.userId !== sbUser.userId;
-    //   }).userId;
-    //   return !Object.keys(sbChannelsByOtherUserId).includes(otherUserId);
-    // });
-//   };
-// }
+function sbSetRefreshInterfal() {
+  return (dispatch, getState) => {
+    const interval = setInterval(() => dispatch(sbRefresh()), 15000);
+    dispatch({ type: SB_REFRESH_INTERVAL_SET, interval });
+  };
+}
+
+export const SB_NEW_CHANNELS_RECEIVED = 'SB_NEW_CHANNELS_RECEIVED';
+function sbRefresh() {
+  return async (dispatch, getState) => {
+    const { sbChannelsByOtherUserId, sbUser } = getState();
+    const channels = await sbFetchChannels();
+    const newChannels = channels.filter(channel => {
+      const { members } = channel;
+      const otherUserId = members.find(member => {
+        return member.userId !== sbUser.userId;
+      }).userId;
+      return !Object.keys(sbChannelsByOtherUserId).includes(otherUserId);
+    });
+    if (!newChannels.length) return console.log('No new channels.');
+    console.log(newChannels);
+    dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
+    dispatch(sbGetMessages());
+    newChannels.forEach(channel => {
+      sbRegisterChannelHandler(channel.url, dispatch, getState)
+    });
+  };
+}
