@@ -6,7 +6,6 @@ import FontAwesome from 'react-fontawesome';
 import { updateImgUrl, sbAddUserImage } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
 import './Dashboard.css';
 
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -47,12 +46,6 @@ class DashboardImage extends Component {
     }
   };
 
-  getUserAge = () => {
-    const { user } = this.props;
-    if (!user.dob) return '';
-    return `, ${moment().diff(user.dob, 'years', false)}`;
-  };
-
   render() {
     const { user } = this.props;
 
@@ -84,7 +77,7 @@ class DashboardImage extends Component {
           )
         }
         <div className="title is-4 dashboard-image-name">
-          { `${user.username}${this.getUserAge()}` }
+          { user.username }
         </div>
       </div>
     );

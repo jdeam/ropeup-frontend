@@ -124,3 +124,7 @@
   font-weight: 300;
   font-style: italic;
 }
+
+.matchlist-empty-links a {
+  color: #5BCDB3;
+}

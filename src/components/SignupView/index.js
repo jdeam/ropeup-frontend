@@ -50,12 +50,12 @@ class Signup extends Component {
               <input
                 className="input is-primary"
                 type="text"
-                placeholder="User"
+                placeholder="Username"
                 value={ this.state.username }
                 onChange={ (e) => this.setState({ username: e.target.value }) }
               />
               <span className="icon is-small is-left">
-                <FontAwesome name="user" />
+                <FontAwesome name="user-circle" />
               </span>
             </p>
           </div>
