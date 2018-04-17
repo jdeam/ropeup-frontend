@@ -309,6 +309,7 @@ function sbRefreshInterval(state = null, action) {
     case SB_REFRESH_INTERVAL_SET:
       return action.interval;
     case SB_LOGOUT_SUCCESS:
+      clearInterval(state);
       return null;
     default:
       return state;

@@ -138,8 +138,6 @@ export function fetchAllUserInfo() {
     await dispatch(fetchMatches());
     await dispatch(sbGetMessages());
     dispatch(sbRegisterAllChannelHandlers());
-    //REMOVE BELOW IF SHIT BLOWS UP
-    dispatch(sbSetRefreshInterfal());
   };
 }
 
@@ -153,6 +151,7 @@ export function sbLogin() {
     if (!id) return;
     const loggedInUser = await sbConnect(id, username, img_url);
     dispatch({ type: SB_LOGIN_SUCCESS, loggedInUser });
+    dispatch(sbSetRefreshInterfal());
   };
 }
 
