@@ -299,7 +299,21 @@ function sbRefresh() {
     if (!newChannels.length) return console.log('No new channels.');
     console.log(newChannels);
     dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
-    dispatch(sbGetMessages());
+
+    const newChannelProms = newChannels.map(channel => {
+      return sbFetchMessages(channel);
+    });
+    const newMessages = await Promise.all(newChannelProms);
+    const newMessagesByOtherUserId = newMessages.reduce((byId, messageList, i) => {
+      const { members } = newChannels[i];
+      const otherUserId = members.find(member => {
+        return member.userId !== sbUser.userId;
+      }).userId;
+      byId[otherUserId] = messageList;
+      return byId;
+    }, {});
+    dispatch({ type: SB_NEW_MESSAGES_RECEIVED, newMessagesByOtherUserId });
+
     newChannels.forEach(channel => {
       sbRegisterChannelHandler(channel.url, dispatch, getState)
     });

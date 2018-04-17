@@ -239,6 +239,8 @@ function sbMessagesByOtherUserId(state = {}, action) {
       const newMessageList = [...messageList, action.message];
       return { ...state, [action.otherUserId]: newMessageList };
     }
+    case SB_NEW_MESSAGES_RECEIVED:
+      return { ...state, ...action.newMessagesByOtherUserId };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
