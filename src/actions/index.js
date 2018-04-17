@@ -295,7 +295,7 @@ function sbRefresh() {
       const otherUserId = members.find(member => {
         return member.userId !== sbUser.userId;
       }).userId;
-      return !Object.keys(sbChannelsByOtherUserId).includes(otherUserId);
+      return !(Object.keys(sbChannelsByOtherUserId).includes(otherUserId));
     });
     if (!newChannels.length) return console.log('No new channels.');
     dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
