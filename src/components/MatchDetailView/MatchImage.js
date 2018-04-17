@@ -1,11 +1,9 @@
 import React from 'react';
-import moment from 'moment';
 import zipcodes from 'zipcodes';
 import FontAwesome from 'react-fontawesome';
 import './MatchDetail.css';
 
 const MatchImage = ({ match, zip }) => {
-  const age = moment().diff(match.dob, 'years', false);
   const distance = zipcodes.distance(zip, match.zip);
 
   return (
@@ -20,7 +18,7 @@ const MatchImage = ({ match, zip }) => {
       <div className="matchdetail-name">
         <div>
           <span className="title is-4">
-            { `${match.username}, ${age}` }
+            { match.username }
           </span>
         </div>
         <div className="matchdetail-location">

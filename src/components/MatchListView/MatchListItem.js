@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import zipcodes from 'zipcodes';
 import { grades } from '../../util/climbing';
 import FontAwesome from 'react-fontawesome';
@@ -8,7 +7,6 @@ import './MatchList.css';
 
 const MatchListItem = ({ match, zip }) => {
   const name = match.username;
-  const age = moment().diff(match.dob, 'years', false);
   const distance = zipcodes.distance(zip, match.zip);
   const matchRating = `${(match.matchRating * 100).toFixed(0)}% Match`;
   const interests = <span className="tag is-rounded is-dark">{
@@ -34,8 +32,6 @@ const MatchListItem = ({ match, zip }) => {
             <div className="matchlist-details">
               <div className="title is-5">
                 { name }
-              </div>
-              <div className="matchlist-age">&nbsp;{ age }
               </div>
             </div>
             <div className="matchlist-location">

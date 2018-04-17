@@ -61,7 +61,7 @@
 }
 
 .dashboard-form-item {
-  margin: 0.3rem;
+  margin: 0.25rem 0.3rem 0.25rem 0.3rem;
   display: flex;
   align-items: center;
 }
@@ -73,10 +73,6 @@
 
 .dashboard-zip-input {
   width: 4.3rem;
-}
-
-.dashboard-birthday-input {
-  width: 9.4rem;
 }
 
 .dashboard-gym-input {
@@ -115,19 +111,19 @@
 }
 
 .textarea {
-  min-height: 5.5rem !important;
+  min-height: 5.6rem !important;
 }
 
 .dashboard-edit-buttons {
   width: 50%;
-  margin: 0.25rem;
+  margin: 0.5rem;
   display: flex;
   align-items: center;
 }
 
 .dashboard-edit-info-button {
   width: 48%;
-  margin: 0.35rem;
+  margin-top: 0.5rem;
 }
 
 .dashboard-divider {
@@ -186,8 +182,8 @@
 }
 
 .dashboard-logout-button {
-  width: 50%;
-  margin-top: 14.7rem;
+  width: 48%;
+  margin-top: 14.6rem;
 }
 
 .grade-tag {

@@ -13,7 +13,6 @@ class DashboardEdit extends Component {
     isEditing: false,
     isSubmitting: false,
     zip: '',
-    dob: '',
     start_year: '',
     gym: '',
     tr: false,
@@ -31,7 +30,6 @@ class DashboardEdit extends Component {
     if (this.props.user) {
       this.setState({
         zip: this.props.user.zip || '',
-        dob: this.props.user.dob || '',
         start_year: this.props.user.start_year || '',
         gym: this.props.user.gym || '',
         tr: this.props.user.tr || false,
@@ -102,21 +100,6 @@ class DashboardEdit extends Component {
                 disabled={ !this.state.isEditing }
                 value={ this.state.zip }
                 onChange={ (e) => this.setState({ zip: e.target.value }) }
-              />
-            </div>
-          </div>
-          <div className="dashboard-form-item">
-            <div className="dashboard-form-label">
-              My birthday is
-            </div>
-            <div className="dashboard-birthday-input">
-              <input
-                className="input"
-                type="date"
-                placeholder="mm/dd/yy"
-                disabled={ !this.state.isEditing }
-                value={ this.state.dob }
-                onChange={ (e) => this.setState({ dob: e.target.value }) }
               />
             </div>
           </div>

@@ -95,7 +95,8 @@ export function fetchMatches() {
       .filter(user => user.matchRating > 0)
       .sort((userA, userB) => {
         return userB.matchRating - userA.matchRating;
-      });
+      })
+      .slice(0, 50);
     dispatch({ type: MATCHES_RECEIVED, matches: matchesWithRating });
   };
 }
