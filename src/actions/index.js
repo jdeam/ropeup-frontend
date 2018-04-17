@@ -285,6 +285,7 @@ function sbSetRefreshInterfal() {
 }
 
 export const SB_NEW_CHANNELS_RECEIVED = 'SB_NEW_CHANNELS_RECEIVED';
+export const SB_NEW_MESSAGES_RECEIVED = 'SB_NEW_MESSAGES_RECEIVED';
 function sbRefresh() {
   return async (dispatch, getState) => {
     const { sbChannelsByOtherUserId, sbUser } = getState();
@@ -297,7 +298,6 @@ function sbRefresh() {
       return !Object.keys(sbChannelsByOtherUserId).includes(otherUserId);
     });
     if (!newChannels.length) return console.log('No new channels.');
-    console.log(newChannels);
     dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
 
     const newChannelProms = newChannels.map(channel => {

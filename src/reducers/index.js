@@ -32,6 +32,7 @@ import {
   SB_TYPING_STATUS_UPDATED,
   SB_REFRESH_INTERVAL_SET,
   SB_NEW_CHANNELS_RECEIVED,
+  SB_NEW_MESSAGES_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
