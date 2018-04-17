@@ -34,7 +34,7 @@ const MessageList = ({ sbUser, channels, isFetching }) => {
         />
       </div>
     </div>
-  ) : channels.length ? (
+  ) : activeChannels.length ? (
     <div className="messagelist-container">
       <div className="messagelist">
         <h1 className="messagelist-title">
@@ -56,7 +56,7 @@ const MessageList = ({ sbUser, channels, isFetching }) => {
         >
           matches
         </Link>&nbsp;
-        to meet climbers in your area who share your schedule.
+        to meet more climbers like you in your area.
       </div>
     </div>
   )

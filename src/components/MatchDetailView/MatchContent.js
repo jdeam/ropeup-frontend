@@ -1,8 +1,9 @@
 import React from 'react';
-import { grades } from '../../util/climbing';
+import { grades, gyms } from '../../util/climbing';
 import './MatchDetail.css';
 
 const MatchContent = ({ match }) => {
+  const gym = gyms.find(gym => gym.id === match.gym).name;
   const interests = <span className="tag is-rounded is-dark">{
     match.tr && match.lead ? 'Toprope & lead' :
     match.tr ? 'Toprope only' : 'Lead only'
@@ -17,7 +18,7 @@ const MatchContent = ({ match }) => {
         </div>
         <div className="matchdetail-about-content">{ match.about }</div>
         <div className="matchdetail-climbs-at">Climbs at&nbsp;
-          <span className="matchdetail-gym">{ match.gym }</span>
+          <span className="matchdetail-gym">{ gym }</span>
         </div>
         <div className="matchdetail-interests">
           { interests }&nbsp;

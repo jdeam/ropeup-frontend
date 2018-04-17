@@ -87,16 +87,11 @@
 .messagelist-chat-content-top {
   display: flex;
   justify-content: space-between;
-  line-height: 1.15rem;
+  line-height: 1.4rem;
 }
 
 .messagelist-chat-content-message {
   font-size: 0.95rem;
-}
-
-.messagelist-is-unread {
-  font-weight: 700;
-  color: #4A4A4A;
 }
 
 .messagelist-is-read {
@@ -110,4 +105,34 @@
   border-top: 1px solid #DBDBDB;
   margin-top: 0.1rem;
   margin-bottom: 0.1rem;
+}
+
+.name-unread {
+  font-weight: 600;
+  color: #0A0A0A;
+}
+
+.name-read {
+  font-weight: 500;
+  color: #4A4A4A;
+}
+
+.time-unread {
+  font-weight: 600;
+  color: #0A0A0A;
+}
+
+.time-read {
+  font-weight: 400;
+  color: gray;
+}
+
+.message-unread {
+  font-weight: 600;
+  color: #0A0A0A;
+}
+
+.message-read {
+  font-weight: 400;
+  color: gray;
 }

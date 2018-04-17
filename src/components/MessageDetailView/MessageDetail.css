@@ -162,14 +162,18 @@
 }
 
 .messagedetail-time-left {
-margin-left: 1.3rem;
+margin-left: 1rem;
 }
 
 .messagedetail-time-right {
   text-align: right;
-  margin-right: 1.3rem;
+  margin-right: 1rem;
 }
 
 .messagedetail-tag {
   border-color: #DBDBDB !important;
+}
+
+.messagedetail-timestamp-hidden {
+  display: none;
 }

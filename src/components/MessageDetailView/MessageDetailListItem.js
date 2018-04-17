@@ -1,31 +1,47 @@
-import React from 'react';
-import moment from 'moment';
+import React, { Component } from 'react';
+import { createSingleMessageTimestamp } from '../../util/timestamps';
 import './MessageDetail.css';
 
-const MessageDetailListItem = ({ message, sbUser }) => {
-  const isUser = message.sender.userId === sbUser.userId;
-  const time = moment(message.createdAt).format('M/D h:mm A');
+class MessageDetailListItem extends Component {
+  state = {
+    tsHidden: true
+  };
 
-  return (
-    <div className={ isUser ?
-      'messagedetail-is-user' :
-      'messagedetail-is-other' }
-    >
-      <div className={ `messagedetail-timestamp${
-        isUser ? ' messagedetail-time-right' :
-        ' messagedetail-time-left'
-      }` }>
-        { time }
+  toggleTimestamp = () => {
+    const { tsHidden } = this.state;
+    this.setState({ tsHidden: !tsHidden });
+  }
+
+  render() {
+    const { message, sbUser } = this.props;
+    const isUser = message.sender.userId === sbUser.userId;
+    const time = createSingleMessageTimestamp(message.createdAt);
+
+    return (
+      <div className={ isUser ?
+        'messagedetail-is-user' :
+        'messagedetail-is-other' }
+        >
+          <div className={ `messagedetail-timestamp${
+            this.state.tsHidden ? ' messagedetail-timestamp-hidden' :
+            isUser ? ' messagedetail-time-right' :
+            ' messagedetail-time-left'
+          }` }>
+          { time }
+        </div>
+        <div
+          onClick={ this.toggleTimestamp }
+          className=
+            { `messagedetail-message${
+              isUser ? ' messagedetail-user-message' :
+              ' messagedetail-other-message'
+            }` }
+        >
+          { message.message }
+        </div>
       </div>
-      <div className={ `messagedetail-message${
-        isUser ? ' messagedetail-user-message' :
-        ' messagedetail-other-message'
-      }` }
-      >
-        { message.message }
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default MessageDetailListItem;

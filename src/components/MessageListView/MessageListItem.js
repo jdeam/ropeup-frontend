@@ -4,7 +4,7 @@ import { BeatLoader } from 'react-spinners';
 import { sbMarkAsRead } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
+import { createLastMessageTimestamp } from '../../util/timestamps';
 import './MessageList.css';
 
 const MessageListItem = ({
@@ -16,11 +16,12 @@ const MessageListItem = ({
   const otherUser = channel.members.find(member => {
     return member.userId !== sbUser.userId;
   });
-  const time = moment(channel.lastMessage.createdAt).format('h:mm a');
-  const readStatus = channel.unreadMessageCount;
+  const isTyping = typingStatuses[otherUser.userId];
+  const time = createLastMessageTimestamp(channel.lastMessage.createdAt);
+  const isUnread = channel.unreadMessageCount;
 
   let { message } = channel.lastMessage;
-  if (message.length > 27) message = `${message.slice(0, 27)} ...`;
+  if (message.length > 25) message = `${message.slice(0, 25)} ...`;
 
   return (
     <Fragment>
@@ -38,20 +39,18 @@ const MessageListItem = ({
               />
             </div>
             <div className="messagelist-chat-content">
-              <div className={ `messagelist-chat-content-top ${
-                readStatus ? "messagelist-is-unread" : "messagelist-is-read"
-              }` }>
-                <div>
+              <div className="messagelist-chat-content-top">
+                <div className={ isUnread ? "name-unread" : "name-read" }>
                   { otherUser.nickname }
                 </div>
-                <div>
+                <div className={ isUnread ? "time-unread" : "time-read" }>
                   { time }
                 </div>
               </div>
               <div className={ `messagelist-chat-content-message ${
-                readStatus ? "messagelist-is-unread" : "messagelist-is-read"
+                isUnread ? "message-unread" : "message-read"
               }` }>
-                { typingStatuses[otherUser.userId] ? (
+                { isTyping ? (
                   <BeatLoader
                     color={'#4A4A4A'}
                     margin={'2px'}
@@ -82,14 +81,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MessageListItem);
-
-/*
-Laurianne58@gmail.com
-Fausto_Schmidt75@hotmail.com
-Emerald45@yahoo.com
-Kolby_Conn99@yahoo.com
-Wava71@yahoo.com
-Van.Bednar98@yahoo.com
-Filiberto52@yahoo.com
-Santiago60@hotmail.com
-*/
