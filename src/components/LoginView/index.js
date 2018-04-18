@@ -33,65 +33,74 @@ class Login extends Component {
   render() {
     return (
       <div className="login-container">
-        <form
-          className="login-form"
-          onSubmit={ (e) => {
-            e.preventDefault();
-            this.login();
-          } }
-        >
-          <div className="field">
-            <p className="control has-icons-left has-icons-right">
-              <input
-                className="input is-primary"
-                id="email"
-                type="email"
-                placeholder="Email"
-                value={ this.state.email }
-                onChange={
-                  (e) => this.setState({ email: e.target.value })
-                }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="envelope" />
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input is-primary"
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={ this.state.password }
-                onChange={
-                  (e) => this.setState({ password: e.target.value })
-                }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="lock" />
-              </span>
-            </p>
-          </div>
-          <div className="field login-buttons">
-            <p className="control">
-              <button
-                id="login"
-                className={ `button login-button is-inverted is-primary${
-                  this.state.isLoggingIn ? ' is-loading' : ''
-                }`}
-              >
-                Login
-              </button>
-            </p>
-            <p className="control">
-              <Link to="/signup" className="button is-text create-account-button">
-                Create an account
-              </Link>
-            </p>
-          </div>
-        </form>
+        <div className="login">
+          <h1 className="login-ropeup is-size-1">
+            RopeUp
+          </h1>
+          <figure className="image login-ropeup-logo">
+            <img
+              src="/images/ropeup-logo.svg" alt="" />
+          </figure>
+          <form
+            className="login-form"
+            onSubmit={ (e) => {
+              e.preventDefault();
+              this.login();
+            } }
+          >
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  className="input is-primary"
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={ this.state.email }
+                  onChange={
+                    (e) => this.setState({ email: e.target.value })
+                  }
+                />
+                <span className="icon is-small is-left">
+                  <FontAwesome name="envelope" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input is-primary"
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={ this.state.password }
+                  onChange={
+                    (e) => this.setState({ password: e.target.value })
+                  }
+                />
+                <span className="icon is-small is-left">
+                  <FontAwesome name="lock" />
+                </span>
+              </p>
+            </div>
+            <div className="field login-buttons">
+              <p className="control">
+                <button
+                  id="login"
+                  className={ `button login-button is-inverted is-primary${
+                    this.state.isLoggingIn ? ' is-loading' : ''
+                  }`}
+                >
+                  Login
+                </button>
+              </p>
+              <p className="control">
+                <Link to="/signup" className="button is-text create-account-button">
+                  Create an account
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
