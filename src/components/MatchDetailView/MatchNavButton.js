@@ -5,7 +5,7 @@ import { sbAddChannel } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-const MatchNavButtons = ({
+const MatchMessageButton = ({
   matchingUser,
   channelsByOtherUserId,
   sbAddChannel,
@@ -14,17 +14,8 @@ const MatchNavButtons = ({
     <div className="matchdetail-nav-container">
       <div className="matchdetail-nav">
         <Link
-          to="/matches"
-          className="button is-small matchdetail-button"
-        >
-         <span className="icon">
-           <FontAwesome name="chevron-circle-left" />
-         </span>
-         <span>Back to Matches</span>
-       </Link>
-        <Link
           to={ `/messages/${matchingUser.id}`}
-          className="button is-small is-primary matchdetail-button"
+          className="button is-primary is-rounded matchdetail-button"
           onClick={ () => {
             if(!channelsByOtherUserId[matchingUser.id]) {
               sbAddChannel(matchingUser.id);
@@ -52,4 +43,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MatchNavButtons);
+)(MatchMessageButton);

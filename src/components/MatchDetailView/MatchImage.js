@@ -1,32 +1,48 @@
-import React from 'react';
-import zipcodes from 'zipcodes';
+import React, { Fragment } from 'react';
 import FontAwesome from 'react-fontawesome';
 import './MatchDetail.css';
 
-const MatchImage = ({ match, zip }) => {
-  const distance = zipcodes.distance(zip, match.zip);
-
+const MatchImage = ({ zip, match, history }) => {
+  const rating = `${(match.matchRating*100).toFixed()}% Match`;
   return (
-    <div className="matchdetail-img-container">
-      <div className="image is-128x128">
-        <img
-          src={ match.img_url }
-          className="matchdetail-img"
-          alt=""
-        />
-      </div>
-      <div className="matchdetail-name">
-        <div>
-          <span className="title is-4">
-            { match.username }
-          </span>
+    <Fragment>
+      <div className="matchdetail-header-container">
+        <div className="matchdetail-header">
+          <div className="matchdetail-header-left">
+            <a
+              className="matchdetail-header-back-nav"
+              onClick={ () => history.goBack() }
+            >
+              <FontAwesome
+                className="fa-2x"
+                name="angle-left"
+              />
+            </a>
+          </div>
+          <div className="matchdetail-header-center">
+            <div className="matchdetail-name-rating">
+              <div className="matchdetail-name">
+                { match.username }
+              </div>
+              <div className="matchdetail-rating">
+                { rating }
+              </div>
+            </div>
+          </div>
+          <div className="matchdetail-header-right">
+          </div>
         </div>
-        <div className="matchdetail-location">
-          <FontAwesome name="map-marker" />&nbsp;
-          { distance ? `${distance} mi. away` : '<1 mi. away' }
+      </div>
+      <div className="matchdetail-img-container">
+        <div className="image matchdetail-img">
+          <img
+            src={ match.img_url }
+            className="match-image"
+            alt=""
+          />
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
 

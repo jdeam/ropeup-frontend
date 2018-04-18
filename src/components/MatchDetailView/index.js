@@ -1,6 +1,6 @@
 import React from 'react';
 import MatchImage from './MatchImage';
-import MatchNavButtons from './MatchNavButtons';
+import MatchMessageButton from './MatchNavButton';
 import MatchSchedule from './MatchSchedule';
 import MatchContent from './MatchContent';
 import { ClipLoader } from 'react-spinners';
@@ -14,6 +14,7 @@ const MatchDetail = ({
   matchesById,
   isFetching,
   match,
+  history,
 }) => {
   window.scrollTo(0, 0);
 
@@ -32,17 +33,18 @@ const MatchDetail = ({
     <div className="matchdetail-container">
       <div className="matchdetail">
         <MatchImage
+          history={ history }
           match={ matchingUser }
           zip={ user.zip }
         />
-        <MatchNavButtons matchingUser={ matchingUser } />
         <div className="matchdetail-divider"></div>
         <MatchSchedule
           userSchedule={ schedule }
           matchSchedule={ matchingUser.schedule }
         />
-        <div className="matchdetail-divider"></div>
+        <div className="matchdetail-divider-two"></div>
         <MatchContent match={ matchingUser } />
+        <MatchMessageButton matchingUser={ matchingUser } />
       </div>
     </div>
   ) : (

@@ -12,12 +12,10 @@ const MatchContent = ({ match }) => {
   return (
     <div className="matchdetail-content-container">
       <div className="matchdetail-content">
-        <div className="matchdetail-content-header">
-          <div className="matchdetail-about-header">About { match.username }</div>
-          <div className="matchdetail-year">Climbing since { match.start_year }</div>
+        <div className="content">
+          <p>{ match.about }</p>
         </div>
-        <div className="matchdetail-about-content">{ match.about }</div>
-        <div className="matchdetail-climbs-at">Climbs at&nbsp;
+        {/* <div className="matchdetail-climbs-at">Climbs at&nbsp;
           <span className="matchdetail-gym">{ gym }</span>
         </div>
         <div className="matchdetail-interests">
@@ -25,7 +23,7 @@ const MatchContent = ({ match }) => {
           <span className="matchdetail-grades">
             from { grades[match.grade_low] } to { grades[match.grade_high] }
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
