@@ -38,82 +38,91 @@ class Signup extends Component {
   render() {
     return (
       <div className="signup-container">
-        <form
-          className="signup-form"
-          onSubmit={ (e) => {
-            e.preventDefault();
-            this.signup();
-          } }
-        >
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input is-primary"
-                type="text"
-                placeholder="Username"
-                value={ this.state.username }
-                onChange={ (e) => this.setState({ username: e.target.value }) }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="user-circle" />
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input is-primary"
-                type="email"
-                placeholder="Email"
-                value={ this.state.email }
-                onChange={ (e) => this.setState({ email: e.target.value }) }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="envelope" />
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input is-primary"
-                type="password"
-                placeholder="Password"
-                value={ this.state.password }
-                onChange={ (e) => this.setState({ password: e.target.value }) }
-              />
-              <span className="icon is-small is-left">
-                <FontAwesome name="lock" />
-              </span>
-            </p>
-          </div>
-          <div className="field signup-buttons">
-            {
-              this.state.is_logging_in ? (
-                <p className="control">
-                  <button className="button is-primary is-loading">
-                    Loading
-                  </button>
-                </p>
-              ) : (
-                <p className="control">
-                  <button
-                    className={ `button signup-button is-primary${
-                      this.state.isSigningUp ? ' is-loading' : ''
-                    }`}
-                  >
-                    Sign up
-                  </button>
-                </p>
-              )
-            }
-            <p className="control">
-              <Link to="/login" className="button is-text is-size-7">
-                Already signed up? Login
-              </Link>
-            </p>
-          </div>
-        </form>
+        <div className="signup">
+          <figure className="image signup-ropeup-logo">
+            <img
+              src="/images/ropeup-logo.svg" alt="" />
+          </figure>
+          <form
+            className="signup-form"
+            onSubmit={ (e) => {
+              e.preventDefault();
+              this.signup();
+            } }
+          >
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input is-primary"
+                  type="text"
+                  placeholder="Username"
+                  value={ this.state.username }
+                  onChange={ (e) => this.setState({ username: e.target.value }) }
+                />
+                <span className="icon is-small is-left">
+                  <FontAwesome name="user-circle" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input is-primary"
+                  type="email"
+                  placeholder="Email"
+                  value={ this.state.email }
+                  onChange={ (e) => this.setState({ email: e.target.value }) }
+                />
+                <span className="icon is-small is-left">
+                  <FontAwesome name="envelope" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input is-primary"
+                  type="password"
+                  placeholder="Password"
+                  value={ this.state.password }
+                  onChange={ (e) => this.setState({ password: e.target.value }) }
+                />
+                <span className="icon is-small is-left">
+                  <FontAwesome name="lock" />
+                </span>
+              </p>
+            </div>
+            <div className="field signup-buttons">
+              {
+                this.state.is_logging_in ? (
+                  <p className="control">
+                    <button className="button is-primary is-loading">
+                      Loading
+                    </button>
+                  </p>
+                ) : (
+                  <p className="control">
+                    <button
+                      className={ `button signup-button is-inverted is-primary${
+                        this.state.isSigningUp ? ' is-loading' : ''
+                      }`}
+                    >
+                      Sign up
+                    </button>
+                  </p>
+                )
+              }
+              <p className="control">
+                <Link
+                  to="/login"
+                  className="button is-text is-size-7 goto-login-button"
+                >
+                  Already signed up? Login
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
