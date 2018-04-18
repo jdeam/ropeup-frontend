@@ -177,3 +177,9 @@ margin-left: 1rem;
 .messagedetail-timestamp-hidden {
   display: none;
 }
+
+.messagedetail-tags {
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+}

@@ -148,4 +148,6 @@
 
 .matchdetail-tag {
   border-color: #DBDBDB !important;
+  padding-left: 0.1 !important;
+  padding-right: 0.1 !important;
 }
