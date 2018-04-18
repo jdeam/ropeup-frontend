@@ -21,7 +21,7 @@ function scheduleItemsToWeek(scheduleItems) {
     .map(day => day.join(''));
 }
 
-export function calculateMatchRating(userSchedule, matchSchedule) {
+export function calculateScheduleMatch(userSchedule, matchSchedule) {
   const userScheduleString = scheduleItemsToWeek(userSchedule).join('');
   const matchScheduleString = scheduleItemsToWeek(matchSchedule).join('');
 

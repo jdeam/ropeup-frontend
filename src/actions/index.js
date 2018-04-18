@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { calculateMatchRating } from '../util/schedules';
+import { calculateScheduleMatch } from '../util/schedules';
+import { calculateTotalMatch } from '../util/matchRating';
 import {
   sbConnect,
   sbUpdateUser,
@@ -89,8 +90,12 @@ export function fetchMatches() {
     );
     const { users } = response.data;
     const matchesWithRating = users.map(user => {
-        user.matchRating = calculateMatchRating(schedule, user.schedule);
+        user.matchRating = calculateScheduleMatch(schedule, user.schedule);
         return user;
+      })
+      .map(match => {
+        match.matchRating = calculateTotalMatch(user, match);
+        return match;
       })
       .filter(user => user.matchRating > 0)
       .sort((userA, userB) => {
@@ -297,7 +302,7 @@ function sbRefresh() {
       }).userId;
       return !(Object.keys(sbChannelsByOtherUserId).includes(otherUserId));
     });
-    if (!newChannels.length) return console.log('No new channels.');
+    if (!newChannels.length) return;
     dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
 
     const newChannelProms = newChannels.map(channel => {
