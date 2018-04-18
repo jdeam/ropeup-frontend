@@ -11,7 +11,7 @@
   height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .welcome-form {
@@ -26,4 +26,14 @@
 
 .welcome-button {
   margin-left: 10.3rem;
+}
+
+.welcome-label {
+  color: #5BCDB3 !important;
+}
+
+.welcome-message {
+  color: #5BCDB3;
+  margin-bottom: 1.4rem;
+  font-weight: 500;
 }

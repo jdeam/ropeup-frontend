@@ -1,15 +1,74 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchUser, fetchMatches } from '../../actions';
+import axios from 'axios';
+import validZips from '../../util/validZips';
 import './Welcome.css';
+const BaseURL = process.env.REACT_APP_BASE_URL;
+
 
 class Welcome extends Component {
   state = {
     zip: '',
-    start_year: ''
+    start_year: '',
+    isDisabled: true,
+    isUpdating: false,
   };
 
-  updateUser = () => {
+  updateUser = async () => {
+   const { isDisabled, isUpdating, ...updateBody } = this.state;
+   const { token, user, history, fetchUser, fetchMatches } = this.props;
+   if (isDisabled) return;
+   this.setState({ isUpdating: true });
+   const response = await axios.patch(
+     `${BaseURL}/users/${user.id}`,
+     updateBody,
+     { headers: { token } }
+   );
+   if (response.status === 200) {
+     this.setState({ isUpdating: false });
+     await fetchUser();
+     fetchMatches();
+     history.push('/dashboard');
+   }
+  };
 
+  handleZipChange = async (e) => {
+    await this.setState({ zip: e.target.value });
+    this.updateDisabledStatus();
+  };
+
+  handleYearChange = async (e) => {
+    await this.setState({ start_year: e.target.value });
+    this.updateDisabledStatus();
+  };
+
+  validateZipInput = () => {
+    const { zip } = this.state;
+    return validZips.includes(zip);
+  };
+
+  validateYearInput = () => {
+    const { start_year } = this.state;
+    if (start_year.length !== 4) return false;
+    if (start_year.slice(0, 2) !== '19' && start_year.slice(0, 2) !== '20') return false;
+    if (parseInt(start_year, 10) > 2018) return false;
+    return true;
+  };
+
+  updateDisabledStatus = () => {
+    const { isDisabled } = this.state;
+    if (isDisabled) {
+      if (this.validateZipInput() && this.validateYearInput()) {
+        this.setState({ isDisabled: false });
+      }
+    } else {
+      if (!this.validateZipInput() || !this.validateYearInput()) {
+        this.setState({ isDisabled: true });
+      }
+    }
   };
 
   render() {
@@ -19,6 +78,9 @@ class Welcome extends Component {
           <h1 className="title is-2 welcome-title">
             Welcome to RopeUp
           </h1>
+          <h2 className="is-size-4 welcome-message">
+            Tell us a bit about yourself.
+          </h2>
           <form
             className="welcome-form"
             onSubmit={ (e) => {
@@ -27,15 +89,14 @@ class Welcome extends Component {
             } }
           >
             <div className="field">
+              <label className="label welcome-label">My ZIP code is ...</label>
               <p className="control has-icons-left has-icons-right">
                 <input
                   className="input is-primary"
                   type="number"
                   placeholder="ZIP"
                   value={ this.state.zip }
-                  onChange={
-                    (e) => this.setState({ zip: e.target.value })
-                  }
+                  onChange={ this.handleZipChange }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="globe" />
@@ -43,15 +104,14 @@ class Welcome extends Component {
               </p>
             </div>
             <div className="field">
+              <label className="label welcome-label">I started climbing in ...</label>
               <p className="control has-icons-left">
                 <input
                   className="input is-primary"
                   type="number"
                   placeholder="Year"
                   value={ this.state.start_year }
-                  onChange={
-                    (e) => this.setState({ start_year: e.target.value })
-                  }
+                  onChange={ this.handleYearChange }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="calendar" />
@@ -61,8 +121,9 @@ class Welcome extends Component {
             <div className="field continue-button">
               <p className="control">
                 <button
+                  disabled={ this.state.isDisabled }
                   className={ `button welcome-button is-primary${
-                    this.state.isLoggingIn ? ' is-loading' : ''
+                    this.state.isUpdating ? ' is-loading' : ''
                   }`}
                 >
                   Continue
@@ -76,4 +137,17 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+const mapStateToProps = (state) => ({
+  token: state.token,
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchUser,
+  fetchMatches,
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Welcome);

@@ -30,7 +30,7 @@ class Signup extends Component {
         localStorage.setItem('token', token);
         const { fetchAllUserInfo, history } = this.props;
         fetchAllUserInfo();
-        history.push('/dashboard');
+        history.push('/welcome');
       }
     }
   }
