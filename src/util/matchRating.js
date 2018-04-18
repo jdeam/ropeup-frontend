@@ -22,5 +22,5 @@ export function calculateTotalMatch(user, match) {
   matchYears = parseInt(matchYears, 10);
   if (Math.abs(userYears-matchYears) < 2) matchRating = (matchRating+1)/2.5;
 
-  return matchRating;
+  return matchRating < 1 ? matchRating : 0.99;
 }
