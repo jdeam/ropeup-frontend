@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
-import Welcome from './components/WelcomeView';
+// import Welcome from './components/WelcomeView';
 import Dashboard from './components/DashboardView';
 import MatchDetail from './components/MatchDetailView';
 import MatchList from './components/MatchListView';

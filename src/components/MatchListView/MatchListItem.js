@@ -30,7 +30,7 @@ const MatchListItem = ({ match, zip }) => {
           </div>
           <div className="matchlist-box-center">
             <div className="matchlist-details">
-              <div className="title is-5">
+              <div className="title is-4">
                 { name }
               </div>
             </div>
