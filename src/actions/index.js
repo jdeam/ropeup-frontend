@@ -36,9 +36,9 @@ export const USER_RECEIVED = 'USER_RECEIVED';
 export const FETCHING_USER_CANCELED ='FETCHING_USER_CANCELED';
 export function fetchUser() {
   return async (dispatch, getState) => {
-    const { token, fetchingUser } = getState();
+    const { token, isFetchingUser } = getState();
     if (!token) return dispatch({ type: FETCHING_USER_CANCELED });
-    if (!fetchingUser) dispatch({ type: FETCHING_USER });
+    if (!isFetchingUser) dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`,
       { headers: { token } }
@@ -60,11 +60,11 @@ export const SCHEDULE_RECEIVED = 'SCHEDULE_RECEIVED';
 export const FETCHING_SCHEDULE_CANCELED = 'FETCHING_SCHEDULE_CANCELED';
 export function fetchSchedule() {
   return async (dispatch, getState) => {
-    const { token, user, fetchingSchedule } = getState();
+    const { token, user, isFetchingSchedule } = getState();
     if (!token || !user.id) {
       return dispatch({ type: FETCHING_SCHEDULE_CANCELED });
     }
-    if (!fetchingSchedule) dispatch({ type: FETCHING_SCHEDULE });
+    if (!isFetchingSchedule) dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`,
       { headers: { token } }
@@ -79,11 +79,11 @@ export const MATCHES_RECEIVED = 'MATCHES_RECEIVED';
 export const FETCHING_MATCHES_CANCELED = 'FETCHING_MATCHES_CANCELED';
 export function fetchMatches() {
   return async (dispatch, getState) => {
-    const { token, user, schedule, fetchingMatches } = getState();
+    const { token, user, schedule, isFetchingMatches } = getState();
     if (!token || !user.zip || !schedule) {
       return dispatch({ type: FETCHING_MATCHES_CANCELED });
     }
-    if (!fetchingMatches) dispatch({ type: FETCHING_MATCHES });
+    if (!isFetchingMatches) dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`,
       { headers: { token } }

@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
+import { BounceLoader } from 'react-spinners';
 import { updateImgUrl, sbAddUserImage } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -68,10 +69,17 @@ class DashboardImage extends Component {
                 accept="image/*"
                 onDrop={ this.handleImageUpload }
               >
-                <FontAwesome
-                  className={ `fa-4x${ this.state.isUploading ? ' fa-spin': ''}` }
-                  name={ this.state.isUploading ? 'spinner' : 'cloud-upload' }
-                />
+                { this.state.isUploading ? (
+                  <BounceLoader
+                    color={'#5BCDB3'}
+                    size={126}
+                  />
+                ) : (
+                  <FontAwesome
+                    className="fa-4x dashboard-fa-cloud"
+                    name="cloud-upload"
+                  />
+                ) }
               </Dropzone>
             </div>
           )

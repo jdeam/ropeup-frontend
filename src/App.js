@@ -28,36 +28,29 @@ const App = ({ token, zip, year }) => {
             token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
           ) } />
           <Route path="/matches/:id" render={ (props) => (
-            token && year && zip ? <MatchDetail { ...props } /> :
-            token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
+            token ? <MatchDetail { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/matches" render={ (props) => (
-            token && year && zip ? <MatchList { ...props } /> :
-            token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
+            token ? <MatchList { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/messages/:id" render={ (props) => (
-            token && year && zip ? <MessageDetail { ...props } /> :
-            token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
+            token ? <MessageDetail { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/messages" render={ (props) => (
-            token && year && zip ? <MessageList { ...props } /> :
-            token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
+            token ? <MessageList { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/login" render={ (props) => (
-            token && year && zip ? <Redirect to="/dashboard" /> :
-            token ? <Redirect to="/welcome" />: <Login { ...props } />
+            token ? <Redirect to="/dashboard" /> : <Login { ...props } />
           ) } />
           <Route path="/signup" render={ (props) => (
-            token && year && zip ? <Redirect to="/dashboard" /> :
-            token ? <Redirect to="/welcome" />: <Signup { ...props } />
+            token ? <Redirect to="/dashboard" /> : <Signup { ...props } />
           ) } />
           <Route path="/welcome" render={ (props) => (
-            token && year && zip ? <Redirect to="/dashboard" /> : 
+            token && year && zip ? <Redirect to="/dashboard" /> :
             token ? <Welcome { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/" render={ () => (
-            token && year && zip ? <Redirect to="/dashboard" /> :
-            token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
+            token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
           ) } />
         </Switch>
       </div>

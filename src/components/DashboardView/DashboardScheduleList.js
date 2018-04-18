@@ -1,6 +1,6 @@
 import React from 'react';
 import ScheduleItem from './DashboardScheduleItem';
-import FontAwesome from 'react-fontawesome';
+import { BarLoader } from 'react-spinners';
 import './Dashboard.css';
 
 const DashboardScheduleList = ({ schedule, isFetching }) => {
@@ -11,7 +11,11 @@ const DashboardScheduleList = ({ schedule, isFetching }) => {
   return isFetching ? (
     <div className="dashboard-schedule-empty-container">
       <div className="dashboard-schedule-empty">
-        <FontAwesome className="fa-2x fa-spin" name="spinner" />
+        <BarLoader
+          color={'#5BCDB3'}
+          width={100}
+          height={4}
+        />
       </div>
     </div>
   ) : schedule.length ? (
