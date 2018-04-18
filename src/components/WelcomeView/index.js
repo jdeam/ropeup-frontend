@@ -3,6 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchUser, fetchMatches } from '../../actions';
+import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
 import validZips from '../../util/validZips';
 import './Welcome.css';
@@ -72,7 +73,16 @@ class Welcome extends Component {
   };
 
   render() {
-    return (
+    return this.props.isFetching ? (
+      <div className="welcome-empty-container">
+        <div className="welcome-empty-message">
+          <ClipLoader
+            color={'#5BCDB3'}
+            size={100}
+          />
+        </div>
+      </div>
+    ) : (
       <div className="welcome-container">
         <div className="welcome">
           <h1 className="title is-2 welcome-title">
@@ -140,6 +150,7 @@ class Welcome extends Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
+  isFetching: state.isFetchingUser,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

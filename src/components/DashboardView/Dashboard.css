@@ -206,3 +206,10 @@
 .dashboard-fa-cloud {
   color: #5BCDB3;
 }
+
+.dashboard-schedule-spinner {
+  height: 2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
