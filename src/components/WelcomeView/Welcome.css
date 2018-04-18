@@ -1,0 +1,29 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.welcome {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.welcome-form {
+  width: 80vw;
+  align-self: center;
+}
+
+.welcome-title {
+  color: #5BCDB3 !important;
+  font-family: 'Roboto', sans-serif;
+}
+
+.welcome-button {
+  margin-left: 10.3rem;
+}

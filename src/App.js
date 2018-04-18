@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Login from './components/LoginView';
 import Signup from './components/SignupView';
-// import Welcome from './components/WelcomeView';
+import Welcome from './components/WelcomeView';
 import Dashboard from './components/DashboardView';
 import MatchDetail from './components/MatchDetailView';
 import MatchList from './components/MatchListView';
@@ -44,9 +44,9 @@ const App = ({ token }) => {
           <Route path="/signup" render={ (props) => (
             token ? <Redirect to="/dashboard" /> : <Signup { ...props } />
           ) } />
-          {/* <Route path="/welcome" render={ (props) => (
-            token ? <Redirect to="/dashboard" /> : <Welcome { ...props } />
-          ) } /> */}
+          <Route path="/welcome" render={ (props) => (
+            <Welcome { ...props } />
+          ) } />
           <Route path="/" render={ () => (
             token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
           ) } />

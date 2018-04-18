@@ -7,7 +7,11 @@ import './Navbar.css';
 const Navbar = ({ numUnread, location }) => {
   const { pathname } = location;
 
-  return (pathname !== "/login" && pathname !== "/signup") ? (
+  return (
+    pathname !== "/login" &&
+    pathname !== "/signup" &&
+    pathname !== "/welcome"
+  ) ? (
     <Fragment>
       <div className="navbar-top-container">
         <div className="tabs is-centered is-fullwidth header-tabs">
