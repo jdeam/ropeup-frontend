@@ -93,11 +93,11 @@ export function fetchMatches() {
         user.matchRating = calculateScheduleMatch(schedule, user.schedule);
         return user;
       })
+      .filter(user => user.matchRating > 0)
       .map(match => {
         match.matchRating = calculateTotalMatch(user, match);
         return match;
       })
-      .filter(user => user.matchRating > 0)
       .sort((userA, userB) => {
         return userB.matchRating - userA.matchRating;
       })
