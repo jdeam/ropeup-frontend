@@ -8,7 +8,16 @@ import './MessageList.css';
 const MessageList = ({ sbUser, channels, isFetching }) => {
   window.scrollTo(0, 0);
 
-  const channelEls = channels.map((channel, i) => {
+  const activeChannels = channels.filter(channel => {
+      return channel.lastMessage;
+    })
+   .sort((channelA, channelB) => {
+     const aLastUpdatedAt = channelA.lastMessage.createdAt;
+     const bLastUpdatedAt = channelB.lastMessage.createdAt;
+     return bLastUpdatedAt - aLastUpdatedAt;
+   });
+
+  const channelEls = activeChannels.map((channel, i) => {
     return <MessageListItem
       key={ i }
       channel={ channel }
@@ -25,7 +34,7 @@ const MessageList = ({ sbUser, channels, isFetching }) => {
         />
       </div>
     </div>
-  ) : channels.length ? (
+  ) : activeChannels.length ? (
     <div className="messagelist-container">
       <div className="messagelist">
         <h1 className="messagelist-title">
