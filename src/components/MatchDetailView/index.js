@@ -41,8 +41,10 @@ const MatchDetail = ({
         <MatchSchedule
           userSchedule={ schedule }
           matchSchedule={ matchingUser.schedule }
+          matchGym={ matchingUser.gym }
+          userGym={ user.gym }
         />
-        <div className="matchdetail-divider-two"></div>
+        <div className="matchdetail-divider"></div>
         <MatchContent match={ matchingUser } />
         <MatchMessageButton matchingUser={ matchingUser } />
       </div>

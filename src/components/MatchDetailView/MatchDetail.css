@@ -13,7 +13,7 @@
 }
 
 .matchdetail-img-container {
-  height: 33vh;
+  height: 28vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,8 +21,8 @@
 }
 
 .matchdetail-img {
-  height: 176px;
-  width: 176px;
+  height: 150px;
+  width: 150px;
 }
 
 .match-image {
@@ -71,21 +71,25 @@
 .matchdetail-schedule-header {
   font-size: 0.8rem;
   font-weight: 400;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-style: italic;
+}
+
+.matchdetail-schedule-gym {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.matchdetail-is-same-gym {
+  color: #5BCDB3;
 }
 
 .matchdetail-divider {
   width: 100%;
   border-top: 1px solid #DBDBDB;
-  margin-top: 0.3rem;
-  margin-bottom: 0.6rem;
-}
-
-.matchdetail-divider-two {
-  width: 100%;
-  border-top: 1px solid #DBDBDB;
-  margin-top: 0.8rem;
+  margin-top: 0.6rem;
   margin-bottom: 0.6rem;
 }
 
@@ -96,53 +100,15 @@
 }
 
 .matchdetail-content {
-  width: 94%;
+  width: 90%;
 }
 
-.matchdetail-content-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.content {
+  margin-bottom: 0.8rem !important;
 }
 
-.matchdetail-about-header {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-
-.matchdetail-year {
-  font-size: 0.8rem;
-  font-style: italic;
-}
-
-.matchdetail-about-content {
-  font-size: 0.8rem;
-  margin-bottom: 0.3rem;
-  line-height: 150%;
-}
-
-.matchdetail-climbs-at {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-
-.matchdetail-gym {
-  font-weight: 400;
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-}
-
-.matchdetail-interests {
-  font-size: 0.8rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-.matchdetail-grades {
-  font-weight: 400;
+.matchdetail-about {
+  font-size: 0.9rem;
 }
 
 .matchdetail-empty-container {
@@ -163,8 +129,10 @@
 
 .matchdetail-tag {
   border-color: #DBDBDB !important;
-  padding-left: 0.1 !important;
-  padding-right: 0.1 !important;
+  padding-left: 0.3rem !important;
+  padding-right: 0.3rem !important;
+  margin-left: 0.15rem;
+  margin-right: 0.15rem;
 }
 
 .matchdetail-header-container {
@@ -222,4 +190,43 @@
   font-size: 0.8rem;
   color: #5BCDB3;
   font-weight: 600;
+}
+
+.matchdetail-schedule-tags {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.matchdetail-climberprofile {
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.climberprofile-start-year {
+  width: 33%;
+  border-right: 1px solid #DBDBDB;
+  height: 80%;
+  font-weight: 400;
+}
+
+.climberprofile-interests {
+  width: 33%;
+}
+
+.climberprofile-graderange {
+  width: 33%;
+  height: 80%;
+  border-left: 1px solid #DBDBDB;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
