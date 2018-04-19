@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import MessageDetailListItem from './MessageDetailListItem';
 import MessageDetailSchedule from './MessageDetailSchedule';
+import { sbMarkAsRead } from '../../actions';
 import { BeatLoader } from 'react-spinners';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './MessageDetail.css';
 
 class MessageDetailList extends Component {
@@ -11,7 +13,9 @@ class MessageDetailList extends Component {
   }
 
   componentDidUpdate() {
+    const { channelInView, sbMarkAsRead } = this.props;
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    sbMarkAsRead(channelInView);
   }
 
   createMessageEls = () => {
@@ -59,8 +63,14 @@ const mapStateToProps = (state) => ({
   userSchedule: state.schedule,
   sbUser: state.sbUser,
   typingStatuses: state.sbTypingStatusByOtherUserId,
+  channels: state.sbChannels,
 });
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  sbMarkAsRead,
+}, dispatch);
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MessageDetailList);

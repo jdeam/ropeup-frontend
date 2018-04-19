@@ -6,28 +6,26 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const MatchMessageButton = ({
-  matchingUser,
+  match,
   channelsByOtherUserId,
   sbAddChannel,
 }) => {
   return (
-    <div className="matchdetail-nav-container">
-      <div className="matchdetail-nav">
-        <Link
-          to={ `/messages/${matchingUser.id}`}
-          className="button is-primary is-rounded matchdetail-button"
-          onClick={ () => {
-            if(!channelsByOtherUserId[matchingUser.id]) {
-              sbAddChannel(matchingUser.id);
-            }
-          } }
-        >
-         <span>{ `Message ${matchingUser.username}` }</span>
-         <span className="icon">
-           <FontAwesome name="comment" />
-         </span>
-       </Link>
-      </div>
+    <div className="matchdetail-nav">
+      <Link
+        to={ `/messages/${match.id}`}
+        className="button is-primary is-rounded matchdetail-button"
+        onClick={ () => {
+          if(!channelsByOtherUserId[match.id]) {
+            sbAddChannel(match.id);
+          }
+        } }
+      >
+       <span>{ `Message ${match.username}` }</span>
+       <span className="icon">
+         <FontAwesome name="comment" />
+       </span>
+     </Link>
     </div>
   );
 };

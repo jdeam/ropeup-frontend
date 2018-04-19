@@ -45,7 +45,6 @@ const sbCreateGroupChannelListQuery = () => {
 
 export const sbFetchChannels = () => {
   const groupChannelListQuery = sbCreateGroupChannelListQuery();
-  groupChannelListQuery.includeEmpty = true;
   return new Promise((resolve, reject) => {
     groupChannelListQuery.next((channels, error) => {
       if (error) reject('No channels found.');

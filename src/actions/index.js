@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { calculateScheduleMatch } from '../util/schedules';
-import { calculateTotalMatch } from '../util/matchRating';
+// import { calculateTotalMatch } from '../util/matchRating';
 import {
   sbConnect,
   sbUpdateUser,
@@ -94,14 +94,13 @@ export function fetchMatches() {
         return user;
       })
       .filter(user => user.matchRating > 0)
-      .map(match => {
-        match.matchRating = calculateTotalMatch(user, match);
-        return match;
-      })
+      // .map(match => {
+      //   match.matchRating = calculateTotalMatch(user, match);
+      //   return match;
+      // })
       .sort((userA, userB) => {
         return userB.matchRating - userA.matchRating;
-      })
-      .slice(0, 50);
+      });
     dispatch({ type: MATCHES_RECEIVED, matches: matchesWithRating });
   };
 }
@@ -233,7 +232,7 @@ export function sbSendMessage(channel, otherUserId, text) {
 export const SB_MESSAGE_RECEIVED = 'SB_MESSAGE_RECEIVED';
 export const SB_TYPING_STATUS_UPDATED = 'SB_TYPING_STATUS_UPDATED';
 function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
-  const { sbUser } = getState();
+  const { sbUser, sbChannels } = getState();
   const sb = SendBird.getInstance();
   const channelHandler = new sb.ChannelHandler();
 
@@ -243,7 +242,7 @@ function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
       const otherUserId = members.find(member => {
         return member.userId !== sbUser.userId;
       }).userId;
-      dispatch({ type: SB_MESSAGE_RECEIVED, otherUserId, message });
+      dispatch({ type: SB_MESSAGE_RECEIVED, otherUserId, message, sbChannels });
     }
   };
   channelHandler.onTypingStatusUpdated = (channel) => {
@@ -272,19 +271,19 @@ function sbRegisterAllChannelHandlers() {
 
 export const SB_MESSAGE_READ = 'SB_MESSAGE_READ';
 export function sbMarkAsRead(channel) {
-  return (dispatch, getState) => {
-    const { unreadMessageCount } = channel;
-    if (unreadMessageCount) {
-      dispatch({ type: SB_MESSAGE_READ });
-      channel.markAsRead();
-    }
+  return async (dispatch, getState) => {
+    const { sbNumUnread } = getState();
+    if (!sbNumUnread) return;
+    if (!channel.unreadMessageCount) return;
+    channel.markAsRead();
+    dispatch({ type: SB_MESSAGE_READ });
   };
 }
 
 export const SB_REFRESH_INTERVAL_SET = 'SB_REFRESH_INTERVAL_SET';
 function sbSetRefreshInterfal() {
   return (dispatch, getState) => {
-    const interval = setInterval(() => dispatch(sbRefresh()), 15000);
+    const interval = setInterval(() => dispatch(sbRefresh()), 30000);
     dispatch({ type: SB_REFRESH_INTERVAL_SET, interval });
   };
 }
@@ -293,34 +292,38 @@ export const SB_NEW_CHANNELS_RECEIVED = 'SB_NEW_CHANNELS_RECEIVED';
 export const SB_NEW_MESSAGES_RECEIVED = 'SB_NEW_MESSAGES_RECEIVED';
 function sbRefresh() {
   return async (dispatch, getState) => {
-    const { sbChannelsByOtherUserId, sbUser } = getState();
-    const channels = await sbFetchChannels();
-    const newChannels = channels.filter(channel => {
-      const { members } = channel;
-      const otherUserId = members.find(member => {
-        return member.userId !== sbUser.userId;
-      }).userId;
-      return !(Object.keys(sbChannelsByOtherUserId).includes(otherUserId));
-    });
-    if (!newChannels.length) return;
-    dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
+    await dispatch(sbGetChannels());
+    await dispatch(sbGetMessages());
+    dispatch(sbRegisterAllChannelHandlers());
 
-    const newChannelProms = newChannels.map(channel => {
-      return sbFetchMessages(channel);
-    });
-    const newMessages = await Promise.all(newChannelProms);
-    const newMessagesByOtherUserId = newMessages.reduce((byId, messageList, i) => {
-      const { members } = newChannels[i];
-      const otherUserId = members.find(member => {
-        return member.userId !== sbUser.userId;
-      }).userId;
-      byId[otherUserId] = messageList;
-      return byId;
-    }, {});
-    dispatch({ type: SB_NEW_MESSAGES_RECEIVED, newMessagesByOtherUserId });
+    // const { sbChannelsByOtherUserId, sbUser } = getState();
+    // const channels = await sbFetchChannels();
+    // const newChannels = channels.filter(channel => {
+    //   const { members } = channel;
+    //   const otherUserId = members.find(member => {
+    //     return member.userId !== sbUser.userId;
+    //   }).userId;
+    //   return !(Object.keys(sbChannelsByOtherUserId).includes(otherUserId));
+    // });
+    // if (!newChannels.length) return;
+    // dispatch({ type: SB_NEW_CHANNELS_RECEIVED, newChannels, id: sbUser.userId });
 
-    newChannels.forEach(channel => {
-      sbRegisterChannelHandler(channel.url, dispatch, getState)
-    });
+    // const newChannelProms = newChannels.map(channel => {
+    //   return sbFetchMessages(channel);
+    // });
+    // const newMessages = await Promise.all(newChannelProms);
+    // const newMessagesByOtherUserId = newMessages.reduce((byId, messageList, i) => {
+    //   const { members } = newChannels[i];
+    //   const otherUserId = members.find(member => {
+    //     return member.userId !== sbUser.userId;
+    //   }).userId;
+    //   byId[otherUserId] = messageList;
+    //   return byId;
+    // }, {});
+    // dispatch({ type: SB_NEW_MESSAGES_RECEIVED, newMessagesByOtherUserId });
+
+    // newChannels.forEach(channel => {
+    //   sbRegisterChannelHandler(channel.url, dispatch, getState)
+    // });
   };
 }

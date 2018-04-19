@@ -122,9 +122,9 @@
   background-color: whitesmoke;
   border-radius: 16px;
   margin: 0.4rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   padding: 0.4rem 0.6rem 0.4rem 0.6rem;
-  line-height: 1.2rem;
+  line-height: 1.25rem;
 }
 
 .messagedetail-is-user {

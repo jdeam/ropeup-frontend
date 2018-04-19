@@ -39,6 +39,7 @@ const MessageDetail = ({
         <MessageDetailList
           messages={ messagesByOtherUserId[id] }
           otherUser={ matchesById[id] }
+          channelInView={ channelInView }
         />
       </div>
       <MessageDetailInput

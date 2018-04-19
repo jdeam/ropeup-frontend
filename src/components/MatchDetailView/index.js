@@ -1,6 +1,5 @@
 import React from 'react';
 import MatchImage from './MatchImage';
-import MatchMessageButton from './MatchNavButton';
 import MatchSchedule from './MatchSchedule';
 import MatchContent from './MatchContent';
 import { ClipLoader } from 'react-spinners';
@@ -46,7 +45,6 @@ const MatchDetail = ({
         />
         <div className="matchdetail-divider"></div>
         <MatchContent match={ matchingUser } />
-        <MatchMessageButton matchingUser={ matchingUser } />
       </div>
     </div>
   ) : (

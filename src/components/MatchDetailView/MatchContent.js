@@ -1,9 +1,10 @@
 import React from 'react';
+import MatchNavButton from './MatchNavButton';
 import { grades } from '../../util/climbing';
 import './MatchDetail.css';
 
 const MatchContent = ({ match }) => {
-  const interests = <span className="tag is-rounded is-dark">{
+  const interests = <span className="tag is-dark">{
     match.tr && match.lead ? 'TR & lead' :
     match.tr ? 'TR only' : 'Lead only'
   }</span>;
@@ -25,6 +26,7 @@ const MatchContent = ({ match }) => {
             { `${grades[match.grade_low]} - ${grades[match.grade_high]}` }
           </div>
         </div>
+        <MatchNavButton match={ match } />
       </div>
     </div>
   );

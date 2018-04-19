@@ -9,7 +9,7 @@ const MatchListItem = ({ match, zip }) => {
   const name = match.username;
   const distance = zipcodes.distance(zip, match.zip);
   const matchRating = `${(match.matchRating * 100).toFixed(0)}% Match`;
-  const interests = <span className="tag is-rounded is-dark">{
+  const interests = <span className="tag is-dark">{
     match.tr && match.lead ? 'TR & Lead' :
     match.tr ? 'TR only' : 'Lead only'
   }</span>;

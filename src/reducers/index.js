@@ -146,6 +146,8 @@ function matchesById(state = {}, action) {
   }
 }
 
+/////////
+
 function sbIsFetching(state = false, action) {
   switch (action.type) {
     case SB_FETCHING_STARTED:
@@ -182,6 +184,12 @@ function sbChannels(state = [], action) {
       return action.channels;
     case SB_CHANNEL_CREATED:
       return [action.channel, ...state];
+    case SB_MESSAGE_RECEIVED:
+      return [...state].sort((channelA, channelB) => {
+        const aLastUpdatedAt = channelA.lastMessage.createdAt;
+        const bLastUpdatedAt = channelB.lastMessage.createdAt;
+        return bLastUpdatedAt - aLastUpdatedAt;
+      });
     case SB_NEW_CHANNELS_RECEIVED:
       return [...action.newChannels, ...state];
     case SB_LOGOUT_SUCCESS:
@@ -263,22 +271,18 @@ function sbIsSending(state = false, action) {
 function sbNumUnread(state = 0, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED: {
-      return action.channels
-        .filter(channel => channel.lastMessage)
-        .reduce((numUnread, channel) => {
+      return action.channels.reduce((numUnread, channel) => {
           const { unreadMessageCount } = channel;
           return numUnread + (unreadMessageCount ? 1 : 0);
         }, 0);
     }
     case SB_MESSAGE_RECEIVED:
-      return state + 1;
+      return action.sbChannels.reduce((numUnread, channel) => {
+          const { unreadMessageCount } = channel;
+          return numUnread + (unreadMessageCount ? 1 : 0);
+        }, 0);
     case SB_MESSAGE_READ:
-      return state - 1;
-    case SB_NEW_CHANNELS_RECEIVED:
-      return action.newChannels.reduce((numUnread, channel) => {
-        const { unreadMessageCount } = channel;
-        return numUnread + (unreadMessageCount ? 1 : 0);
-      }, 0);
+      return state-1;
     case SB_LOGOUT_SUCCESS:
       return 0;
     default:

@@ -89,36 +89,6 @@ class DashboardEdit extends Component {
     return this.props.isActive ? (
       <div className="dashboard-form-container">
         <div className="dashboard-form">
-          {/* <div className="dashboard-form-item">
-            <div className="dashboard-form-label">
-              My ZIP code is
-            </div>
-            <div className="dashboard-zip-input">
-              <input
-                className="input"
-                type="text"
-                placeholder="ZIP"
-                disabled={ !this.state.isEditing }
-                value={ this.state.zip }
-                onChange={ (e) => this.setState({ zip: e.target.value }) }
-              />
-            </div>
-          </div>
-          <div className="dashboard-form-item">
-            <div className="dashboard-form-label">
-              I started climbing in
-            </div>
-            <div className="dashboard-year-input">
-              <input
-                className="input"
-                type="text"
-                placeholder="year"
-                disabled={ !this.state.isEditing }
-                value={ this.state.start_year }
-                onChange={ (e) => this.setState({ start_year: e.target.value }) }
-              />
-            </div>
-          </div> */}
           <div className="dashboard-form-item">
             <div className="dashboard-form-label">
               I climb at
@@ -145,7 +115,7 @@ class DashboardEdit extends Component {
             }` }>
               <span
                 className={
-                  `tag grade-tag is-medium is-rounded ${this.state.isEditing ? 'is-white' : 'is-light'}`
+                  `tag grade-tag is-medium ${this.state.isEditing ? 'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
                   this.setState({ tr: !this.state.tr }) : null
@@ -156,7 +126,7 @@ class DashboardEdit extends Component {
               </span>
               <span
                 className={
-                  `tag grade-tag is-medium is-rounded ${this.state.isEditing ?
+                  `tag grade-tag is-medium ${this.state.isEditing ?
                     'is-white' : 'is-light'}`
                 }
                 onClick={ () => this.state.isEditing ?
