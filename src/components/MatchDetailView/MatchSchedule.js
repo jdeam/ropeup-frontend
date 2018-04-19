@@ -26,7 +26,7 @@ const MatchSchedule = ({
         { scheduleItemEls }
       </div>
       <div className="matchdetail-schedule-gym">
-        ...at&nbsp;
+        at&nbsp;
         <span className={ isSameGym ? 'matchdetail-is-same-gym' : ''}>
           { gym }
         </span>
