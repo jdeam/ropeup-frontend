@@ -1,5 +1,5 @@
 import React from 'react';
-import { grades, gyms } from '../../util/climbing';
+import { grades } from '../../util/climbing';
 import './MatchDetail.css';
 
 const MatchContent = ({ match }) => {

@@ -156,7 +156,7 @@ export function sbLogin() {
     if (!id) return;
     const loggedInUser = await sbConnect(id, username, img_url);
     dispatch({ type: SB_LOGIN_SUCCESS, loggedInUser });
-    // dispatch(sbSetRefreshInterfal());
+    dispatch(sbSetRefreshInterfal());
   };
 }
 
