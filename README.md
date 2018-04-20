@@ -28,9 +28,16 @@ RopeUp was made in 2.5 weeks.
 
 ## Screenshots
 ### Login / Signup / Welcome views:
+![Login / signup / welcome views](screenshots/1-login-signup-welcome.gif)
 
-### Dashboard view:
+### Dashboard-Edit view:
+![Dashboard-edit view](screenshots/2-dashboard-edit.gif)
+
+### Dashboard-Schedule view:
+![Dashboard-schedule view](screenshots/3-dashboard-schedule.gif)
 
 ### Match list / detail views:
+![Match list/detail views](screenshots/4-match-list-detail.gif)
 
 ### Message list / detail views:
+![Message list/detail views](screenshots/5-message-detail-list.gif)
