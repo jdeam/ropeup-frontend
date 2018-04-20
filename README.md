@@ -31,9 +31,7 @@ RopeUp was made in 2.5 weeks.
 ![Login / signup / welcome views](screenshots/1-login-signup-welcome.gif)
 
 ### Dashboard-Edit view:
-<kbd>
 ![Dashboard-edit view](screenshots/2-dashboard-edit.gif)
-</kbd>
 
 ### Dashboard-Schedule view:
 ![Dashboard-schedule view](screenshots/3-dashboard-schedule.gif)
