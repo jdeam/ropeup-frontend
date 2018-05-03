@@ -1,6 +1,16 @@
-import { expect } from 'chai';
-import { calculateScheduleMatch, overlapSchedules } from './schedules';
-import { mockUserSchedule, mockMatchScheduleNone, mockMatchScheduleAll, mockMatchScheduleHalf } from './mockSchedules';
+import {
+  expect
+} from 'chai';
+import {
+  calculateScheduleMatch,
+  overlapSchedules
+} from './schedules';
+import {
+  mockUserSchedule,
+  mockMatchScheduleNone,
+  mockMatchScheduleAll,
+  mockMatchScheduleHalf
+} from './mockSchedules';
 
 describe("function calculateScheduleMatch tests", () => {
   it("should return 0 if schedules do not overlap at all", () => {
