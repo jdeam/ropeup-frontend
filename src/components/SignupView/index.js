@@ -13,10 +13,13 @@ class Signup extends Component {
     username: '',
     email: '',
     password: '',
+    signupDisabled: true,
     isSigningUp: false,
+    signupError: '',
   };
 
-  signup = async () => {
+  handleSignup = async (e) => {
+    e.preventDefault();
     const { isSigningUp, ...signupBody } = this.state;
     if (
       signupBody.username &&
@@ -24,16 +27,60 @@ class Signup extends Component {
       signupBody.password
     ) {
       this.setState({ isSigningUp: true });
-      const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
-      if (response.status === 200) {
-        const token = response.headers.auth.split(' ')[1];
-        localStorage.setItem('token', token);
-        const { fetchAllUserInfo, history } = this.props;
-        fetchAllUserInfo();
-        history.push('/welcome');
+      try {
+        const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
+        if (response.status === 200) {
+          const token = response.headers.auth.split(' ')[1];
+          localStorage.setItem('token', token);
+          const { fetchAllUserInfo, history } = this.props;
+          fetchAllUserInfo();
+          history.push('/welcome');
+        } 
+      } catch(e) {
+        this.setState({
+          signupDisabled: true,
+          isSigningUp: false,
+          signupError: e.response.data.message,
+        });
       }
     }
   }
+
+  handleFormFocus = () => {
+    if (this.state.signupError) {
+      this.setState({
+        username: '',
+        email: '',
+        password: '',
+        signupError: '',
+      });
+    } 
+  };
+
+  handleUsernameInput = async (e) => {
+    await this.setState({ username: e.target.value });
+    this.updateDisabledState();
+  };
+
+  handleEmailInput = async (e) => {
+    await this.setState({ email: e.target.value });
+    this.updateDisabledState();
+  };
+
+  handlePasswordInput = async (e) => {
+    await this.setState({ password: e.target.value });
+    this.updateDisabledState();
+  };
+
+  updateDisabledState = () => {
+    const { signupDisabled, username, email, password } = this.state;
+    if (signupDisabled && username && email && password) {
+      return this.setState({ signupDisabled: false });
+    }
+    if (!signupDisabled && (!username || !email || !password)) {
+      this.setState({ signupDisabled: true });
+    }
+  };
 
   render() {
     return (
@@ -45,19 +92,20 @@ class Signup extends Component {
           </figure>
           <form
             className="signup-form"
-            onSubmit={ (e) => {
-              e.preventDefault();
-              this.signup();
-            } }
+            onSubmit={ this.handleSignup }
           >
             <div className="field">
+            <p className="help is-danger">
+                { this.state.signupError }
+              </p>
               <p className="control has-icons-left">
                 <input
                   className="input is-primary"
                   type="text"
                   placeholder="Username"
                   value={ this.state.username }
-                  onChange={ (e) => this.setState({ username: e.target.value }) }
+                  onFocus={ this.handleFormFocus }
+                  onChange={ this.handleUsernameInput }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="user-circle" />
@@ -71,7 +119,8 @@ class Signup extends Component {
                   type="email"
                   placeholder="Email"
                   value={ this.state.email }
-                  onChange={ (e) => this.setState({ email: e.target.value }) }
+                  onFocus={ this.handleFormFocus }
+                  onChange={ this.handleEmailInput }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="envelope" />
@@ -85,7 +134,8 @@ class Signup extends Component {
                   type="password"
                   placeholder="Password"
                   value={ this.state.password }
-                  onChange={ (e) => this.setState({ password: e.target.value }) }
+                  onFocus={ this.handleFormFocus }
+                  onChange={ this.handlePasswordInput }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="lock" />
@@ -103,6 +153,7 @@ class Signup extends Component {
                 ) : (
                   <p className="control">
                     <button
+                    disabled={ this.state.signupDisabled }
                       className={ `button signup-button is-inverted is-primary${
                         this.state.isSigningUp ? ' is-loading' : ''
                       }`}

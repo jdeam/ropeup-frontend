@@ -16,7 +16,7 @@
 }
 
 .signup-form {
-  width: 80vw;
+  width: 16rem;
   align-self: center;
   margin-bottom: 2rem;
 }
@@ -36,7 +36,7 @@
 }
 
 .signup-button {
-  width: 30vw;
+  width: 6rem;
 }
 
 .goto-login-button {

@@ -12,23 +12,64 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
+    loginDisabled: true,
     isLoggingIn: false,
+    loginError: '',
   };
 
-  login = async () => {
+  handleLogin = async (e) => {
+    e.preventDefault();
     const { isLoggingIn, ...loginBody } = this.state;
     if (loginBody.email && loginBody.password) {
       this.setState({ isLoggingIn: true });
-      const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
-      if (response.status === 200) {
-        const token = response.headers.auth.split(' ')[1];
-        localStorage.setItem('token', token);
-        const { history, fetchAllUserInfo } = this.props;
-        fetchAllUserInfo();
-        history.push('/dashboard');
+      try {
+        const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
+        if (response.status === 200) {
+          const token = response.headers.auth.split(' ')[1];
+          localStorage.setItem('token', token);
+          const { history, fetchAllUserInfo } = this.props;
+          fetchAllUserInfo();
+          return history.push('/dashboard');
+        } 
+      } catch(e) {
+        this.setState({
+          loginDisabled: true,
+          isLoggingIn: false,
+          loginError: 'Your email and/or password is incorrect.',
+        });
       }
     }
   }
+
+  handleFormFocus = () => {
+    if (this.state.loginError) {
+      this.setState({
+        email: '',
+        password: '',
+        loginError: '',
+      });
+    } 
+  };
+
+  handleEmailInput = async (e) => {
+    await this.setState({ email: e.target.value });
+    this.updateDisabledState();
+  };
+
+  handlePasswordInput = async (e) => {
+    await this.setState({ password: e.target.value });
+    this.updateDisabledState();
+  };
+
+  updateDisabledState = () => {
+    const { loginDisabled, email, password } = this.state;
+    if (loginDisabled && email && password) {
+      return this.setState({ loginDisabled: false });
+    }
+    if (!loginDisabled && (!email || !password)) {
+      this.setState({ loginDisabled: true });
+    }
+  };
 
   render() {
     return (
@@ -43,12 +84,12 @@ class Login extends Component {
           </figure>
           <form
             className="login-form"
-            onSubmit={ (e) => {
-              e.preventDefault();
-              this.login();
-            } }
+            onSubmit={ this.handleLogin }
           >
             <div className="field">
+              <p className="help is-danger">
+                { this.state.loginError }
+              </p>
               <p className="control has-icons-left has-icons-right">
                 <input
                   className="input is-primary"
@@ -56,9 +97,8 @@ class Login extends Component {
                   type="email"
                   placeholder="Email"
                   value={ this.state.email }
-                  onChange={
-                    (e) => this.setState({ email: e.target.value })
-                  }
+                  onFocus={ this.handleFormFocus }
+                  onChange={ this.handleEmailInput }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="envelope" />
@@ -73,9 +113,8 @@ class Login extends Component {
                   type="password"
                   placeholder="Password"
                   value={ this.state.password }
-                  onChange={
-                    (e) => this.setState({ password: e.target.value })
-                  }
+                  onFocus={ this.handleFormFocus }
+                  onChange={ this.handlePasswordInput }
                 />
                 <span className="icon is-small is-left">
                   <FontAwesome name="lock" />
@@ -86,6 +125,7 @@ class Login extends Component {
               <p className="control">
                 <button
                   id="login"
+                  disabled={ this.state.loginDisabled}
                   className={ `button login-button is-inverted is-primary${
                     this.state.isLoggingIn ? ' is-loading' : ''
                   }`}

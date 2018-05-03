@@ -31,7 +31,7 @@
 }
 
 .login-form {
-  width: 80vw;
+  width: 16rem;
   align-self: center;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .login-button {
-  width: 30vw;
+  width: 6rem;
 }
 
 .create-account-button {

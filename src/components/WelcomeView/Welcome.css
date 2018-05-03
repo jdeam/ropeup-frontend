@@ -7,15 +7,18 @@
 }
 
 .welcome {
+  max-width: 16rem;
+  max-height: 28.4rem;
   width: 80%;
   height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 }
 
 .welcome-form {
-  width: 80vw;
+  width: 16rem;
   align-self: center;
 }
 

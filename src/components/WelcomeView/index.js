@@ -89,7 +89,7 @@ class Welcome extends Component {
             Welcome to RopeUp
           </h1>
           <h2 className="is-size-4 welcome-message">
-            Tell us a bit about yourself.
+            Tell us a bit about yourself
           </h2>
           <form
             className="welcome-form"

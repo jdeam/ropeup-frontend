@@ -1,4 +1,6 @@
-import { combineReducers } from 'redux';
+import {
+  combineReducers
+} from 'redux';
 import {
   DASHBOARD_TAB_SWITCHED,
   DASHBOARD_TAB_RESET,
@@ -30,9 +32,9 @@ import {
   SB_MESSAGE_RECEIVED,
   SB_MESSAGE_READ,
   SB_TYPING_STATUS_UPDATED,
-  SB_REFRESH_INTERVAL_SET,
-  SB_NEW_CHANNELS_RECEIVED,
-  SB_NEW_MESSAGES_RECEIVED,
+  // SB_REFRESH_INTERVAL_SET,
+  // SB_NEW_CHANNELS_RECEIVED,
+  // SB_NEW_MESSAGES_RECEIVED,
 } from '../actions';
 
 function dashboardTabInView(state = 'edit', action) {
@@ -58,7 +60,7 @@ function token(state = '', action) {
 }
 
 function isFetchingUser(state = false, action) {
-  switch(action.type) {
+  switch (action.type) {
     case FETCHING_USER:
       return true;
     case USER_RECEIVED:
@@ -75,7 +77,9 @@ function user(state = {}, action) {
     case USER_RECEIVED:
       return action.user;
     case USER_IMAGE_UPDATED:
-      return { ...state, img_url: action.img_url };
+      return { ...state,
+        img_url: action.img_url
+      };
     case USER_CLEARED:
       return {};
     default:
@@ -135,7 +139,9 @@ function matchesById(state = {}, action) {
   switch (action.type) {
     case MATCHES_RECEIVED:
       return action.matches.reduce((byId, match) => {
-        const { id } = match;
+        const {
+          id
+        } = match;
         byId[id] = match;
         return byId;
       }, {});
@@ -190,8 +196,8 @@ function sbChannels(state = [], action) {
         const bLastUpdatedAt = channelB.lastMessage.createdAt;
         return bLastUpdatedAt - aLastUpdatedAt;
       });
-    case SB_NEW_CHANNELS_RECEIVED:
-      return [...action.newChannels, ...state];
+    // case SB_NEW_CHANNELS_RECEIVED:
+    //   return [...action.newChannels, ...state];
     case SB_LOGOUT_SUCCESS:
       return [];
     default:
@@ -202,9 +208,14 @@ function sbChannels(state = [], action) {
 function sbChannelsByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      const { channels, id } = action;
+      const {
+        channels,
+        id
+      } = action;
       return channels.reduce((byOtherUserId, channel) => {
-        const { members } = channel;
+        const {
+          members
+        } = channel;
         const otherUserId = members.find(member => {
           return member.userId !== id;
         }).userId;
@@ -212,19 +223,29 @@ function sbChannelsByOtherUserId(state = {}, action) {
         return byOtherUserId;
       }, {});
     case SB_CHANNEL_CREATED:
-      return { ...state, [action.otherUserId]: action.channel };
-    case SB_NEW_CHANNELS_RECEIVED: {
-      const { newChannels, id } = action;
-      const newChannelsByOtherUserId = newChannels.reduce((byOtherUserId, channel) => {
-        const { members } = channel;
-        const otherUserId = members.find(member => {
-          return member.userId !== id;
-        });
-        byOtherUserId[otherUserId] = channel;
-        return byOtherUserId;
-      }, {});
-      return { ...state, ...newChannelsByOtherUserId };
-    }
+      return { ...state,
+        [action.otherUserId]: action.channel
+      };
+    // case SB_NEW_CHANNELS_RECEIVED:
+    //   {
+    //     const {
+    //       newChannels,
+    //       id
+    //     } = action;
+    //     const newChannelsByOtherUserId = newChannels.reduce((byOtherUserId, channel) => {
+    //       const {
+    //         members
+    //       } = channel;
+    //       const otherUserId = members.find(member => {
+    //         return member.userId !== id;
+    //       });
+    //       byOtherUserId[otherUserId] = channel;
+    //       return byOtherUserId;
+    //     }, {});
+    //     return { ...state,
+    //       ...newChannelsByOtherUserId
+    //     };
+    //   }
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -236,20 +257,30 @@ function sbMessagesByOtherUserId(state = {}, action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
       return action.messagesByOtherUserId;
-    case SB_MESSAGE_SENT: {
-      const messageList = state[action.otherUserId];
-      const newMessageList = [...messageList, action.message];
-      return { ...state, [action.otherUserId]: newMessageList };
-    }
+    case SB_MESSAGE_SENT:
+      {
+        const messageList = state[action.otherUserId];
+        const newMessageList = [...messageList, action.message];
+        return { ...state,
+          [action.otherUserId]: newMessageList
+        };
+      }
     case SB_CHANNEL_CREATED:
-      return { ...state, [action.otherUserId]: [] };
-    case SB_MESSAGE_RECEIVED: {
-      const messageList = state[action.otherUserId] || [];
-      const newMessageList = [...messageList, action.message];
-      return { ...state, [action.otherUserId]: newMessageList };
-    }
-    case SB_NEW_MESSAGES_RECEIVED:
-      return { ...state, ...action.newMessagesByOtherUserId };
+      return { ...state,
+        [action.otherUserId]: []
+      };
+    case SB_MESSAGE_RECEIVED:
+      {
+        const messageList = state[action.otherUserId] || [];
+        const newMessageList = [...messageList, action.message];
+        return { ...state,
+          [action.otherUserId]: newMessageList
+        };
+      }
+    // case SB_NEW_MESSAGES_RECEIVED:
+    //   return { ...state,
+    //     ...action.newMessagesByOtherUserId
+    //   };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -270,19 +301,24 @@ function sbIsSending(state = false, action) {
 
 function sbNumUnread(state = 0, action) {
   switch (action.type) {
-    case SB_CHANNELS_RECEIVED: {
-      return action.channels.reduce((numUnread, channel) => {
-          const { unreadMessageCount } = channel;
+    case SB_CHANNELS_RECEIVED:
+      {
+        return action.channels.reduce((numUnread, channel) => {
+          const {
+            unreadMessageCount
+          } = channel;
           return numUnread + (unreadMessageCount ? 1 : 0);
         }, 0);
-    }
+      }
     case SB_MESSAGE_RECEIVED:
       return action.sbChannels.reduce((numUnread, channel) => {
-          const { unreadMessageCount } = channel;
-          return numUnread + (unreadMessageCount ? 1 : 0);
-        }, 0);
+        const {
+          unreadMessageCount
+        } = channel;
+        return numUnread + (unreadMessageCount ? 1 : 0);
+      }, 0);
     case SB_MESSAGE_READ:
-      return state-1;
+      return state - 1;
     case SB_LOGOUT_SUCCESS:
       return 0;
     default:
@@ -292,23 +328,35 @@ function sbNumUnread(state = 0, action) {
 
 function sbTypingStatusByOtherUserId(state = {}, action) {
   switch (action.type) {
-    case SB_CHANNELS_RECEIVED: {
-      const { channels, id } = action;
-      return channels.reduce((byOtherUserId, channel) => {
-        const { members } = channel;
-        const otherUserId = members.find(member => {
-          return member.userId !== id;
-        }).userId;
-        byOtherUserId[otherUserId] = channel.isTyping();
-        return byOtherUserId;
-      }, {});
-    }
+    case SB_CHANNELS_RECEIVED:
+      {
+        const {
+          channels,
+          id
+        } = action;
+        return channels.reduce((byOtherUserId, channel) => {
+          const {
+            members
+          } = channel;
+          const otherUserId = members.find(member => {
+            return member.userId !== id;
+          }).userId;
+          byOtherUserId[otherUserId] = channel.isTyping();
+          return byOtherUserId;
+        }, {});
+      }
     case SB_CHANNEL_CREATED:
-      return { ...state, [action.otherUserId]: false };
+      return { ...state,
+        [action.otherUserId]: false
+      };
     case SB_MESSAGE_RECEIVED:
-      return { ...state, [action.otherUserId]: false };
+      return { ...state,
+        [action.otherUserId]: false
+      };
     case SB_TYPING_STATUS_UPDATED:
-      return { ...state, [action.otherUserId]: action.isTyping };
+      return { ...state,
+        [action.otherUserId]: action.isTyping
+      };
     case SB_LOGOUT_SUCCESS:
       return {};
     default:
@@ -316,17 +364,17 @@ function sbTypingStatusByOtherUserId(state = {}, action) {
   }
 }
 
-function sbRefreshInterval(state = null, action) {
-  switch (action.type) {
-    case SB_REFRESH_INTERVAL_SET:
-      return action.interval;
-    case SB_LOGOUT_SUCCESS:
-      clearInterval(state);
-      return null;
-    default:
-      return state;
-  }
-}
+// function sbRefreshInterval(state = null, action) {
+//   switch (action.type) {
+//     case SB_REFRESH_INTERVAL_SET:
+//       return action.interval;
+//     case SB_LOGOUT_SUCCESS:
+//       clearInterval(state);
+//       return null;
+//     default:
+//       return state;
+//   }
+// }
 
 export default combineReducers({
   dashboardTabInView,
@@ -346,5 +394,5 @@ export default combineReducers({
   sbIsSending,
   sbNumUnread,
   sbTypingStatusByOtherUserId,
-  sbRefreshInterval,
+  // sbRefreshInterval,
 });
