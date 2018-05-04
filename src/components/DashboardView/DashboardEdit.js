@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import grades from '../../util/grades';
 import { fetchUser } from '../../actions/user';
 import { fetchMatches, clearMatches } from '../../actions/matches';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { gyms } from '../../util/climbing';
-import zipcodes from 'zipcodes';
 import axios from 'axios';
 import './Dashboard.css';
 const BaseURL = process.env.REACT_APP_BASE_URL;
@@ -16,7 +15,7 @@ class DashboardEdit extends Component {
     isSubmitting: false,
     zip: '',
     start_year: '',
-    gym: '',
+    gym: 0,
     tr: false,
     lead: false,
     grade_low: 0,
@@ -33,7 +32,7 @@ class DashboardEdit extends Component {
       this.setState({
         zip: this.props.user.zip || '',
         start_year: this.props.user.start_year || '',
-        gym: this.props.user.gym || '',
+        gym: this.props.user.gym || 0,
         tr: this.props.user.tr || false,
         lead: this.props.user.lead || false,
         grade_low: this.props.user.grade_low || 0,
@@ -44,20 +43,27 @@ class DashboardEdit extends Component {
   };
 
   populateGymSelect = () => {
-    const { user } = this.props;
-    const radiusInMiles = 20;
-    return gyms.filter(gym => {
-        return zipcodes.distance(user.zip, gym.zip) < radiusInMiles;
-      })
-      .sort((gymA, gymB) => {
-        const distA = zipcodes.distance(user.zip, gymA.zip);
-        const distB = zipcodes.distance(user.zip, gymB.zip);
-        return distA - distB;
-      })
-      .map((gym, i) => {
-        return <option key={ i } value={ gym.id }>{ gym.name }</option>
-      });
-  }
+    const { gyms } = this.props;
+    const defaultOption = (
+      <option key={0} value={0} disabled>
+        Select a gym
+      </option>
+    );
+    const gymEls = gyms.map((gym, i) => {
+      return (
+        <option key={ i+1 } value={ gym.id }>
+          { gym.name }
+        </option>
+      );
+    });
+    return [defaultOption, gymEls];
+  };
+
+  populateGradeSelect = () => {
+    return grades.map((grade, i) => {
+      return <option key={i} value={i}>{ grade }</option>
+    });
+  };
 
   submitEdits = async () => {
     const { isEditing, isSubmitting, ...editBody } = this.state;
@@ -251,6 +257,8 @@ const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
   matches: state.matches,
+  gyms: state.nearbyGyms,
+  isFetchingGyms: state.isFetchingGyms,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

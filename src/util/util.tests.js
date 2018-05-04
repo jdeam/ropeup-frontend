@@ -9,7 +9,9 @@ import {
   mockUserSchedule,
   mockMatchScheduleNone,
   mockMatchScheduleAll,
-  mockMatchScheduleHalf
+  mockMatchScheduleHalf,
+  mockMatchScheduleQuarter,
+  expectedOverlap
 } from './mockSchedules';
 
 describe("function calculateScheduleMatch tests", () => {
@@ -39,7 +41,7 @@ describe("function overlapSchedules tests", () => {
     expect(overlapSchedules(mockUserSchedule, mockMatchScheduleHalf)).to.deep.equal(mockMatchScheduleHalf);
   });
 
-  // it("should return a new schedule with just the overlapping times", () => {
-  //   expect(overlapSchedules(mockUserSchedule, mockMatchScheduleQuarter)).to.deep.equal();
-  // });
+  it("should return a new schedule with just the overlapping times", () => {
+    expect(overlapSchedules(mockUserSchedule, mockMatchScheduleQuarter)).to.deep.equal(expectedOverlap);
+  });
 });

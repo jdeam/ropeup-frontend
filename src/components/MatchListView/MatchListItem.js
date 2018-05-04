@@ -1,6 +1,6 @@
 import React from 'react';
 import zipcodes from 'zipcodes';
-import { grades } from '../../util/climbing';
+import grades from '../../util/grades';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import './MatchList.css';

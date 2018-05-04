@@ -11,6 +11,8 @@ export default combineReducers({
   user: user.user,
   isFetchingSchedule: user.isFetchingSchedule,
   schedule: user.schedule,
+  isFetchingGyms: user.isFetchingGyms,
+  nearbyGyms: user.nearbyGyms,
   isFetchingMatches: matches.isFetchingMatches,
   matches: matches.matches,
   matchesById: matches.matchesById,

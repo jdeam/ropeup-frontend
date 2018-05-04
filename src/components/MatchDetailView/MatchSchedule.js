@@ -1,7 +1,6 @@
 import React from 'react';
 import MatchScheduleItem from './MatchScheduleItem';
 import { overlapSchedules } from '../../util/schedules';
-import { gyms } from '../../util/climbing';
 import './MatchDetail.css';
 
 const MatchSchedule = ({
@@ -10,7 +9,6 @@ const MatchSchedule = ({
   matchGym,
   userGym
 }) => {
-  const gym = gyms.find(gym => gym.id === matchGym).name;
   const isSameGym = (userGym === matchGym);
   const scheduleItems = overlapSchedules(userSchedule, matchSchedule);
   const scheduleItemEls = scheduleItems.map((item, i) => {
@@ -28,7 +26,7 @@ const MatchSchedule = ({
       <div className="matchdetail-schedule-gym">
         at&nbsp;
         <span className={ isSameGym ? 'matchdetail-is-same-gym' : ''}>
-          { gym }
+          { matchGym }
         </span>
       </div>
     </div>

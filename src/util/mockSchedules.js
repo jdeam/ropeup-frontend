@@ -93,22 +93,45 @@ export const mockMatchScheduleHalf = [
 export const mockMatchScheduleQuarter = [
   {
     "day": 3,
-    "start": 1,
+    "start": 3,
+    "end": 9
+  },
+  {
+    "day": 4,
+    "start": 11,
+    "end": 16
+  },
+  {
+    "day": 5,
+    "start": 7,
+    "end": 11
+  },
+  {
+    "day": 6,
+    "start": 6,
+    "end": 10
+  }
+];
+
+export const expectedOverlap = [
+  {
+    "day": 3,
+    "start": 3,
     "end": 6
   },
   {
     "day": 4,
-    "start": 9,
+    "start": 11,
     "end": 14
   },
   {
     "day": 5,
-    "start": 5,
+    "start": 7,
     "end": 9
   },
   {
     "day": 6,
-    "start": 4,
+    "start": 6,
     "end": 8
   }
 ];

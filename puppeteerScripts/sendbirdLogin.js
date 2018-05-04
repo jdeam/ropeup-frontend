@@ -1,4 +1,4 @@
-const users = require('./usersWithUsernames.json');
+const users = require('./users.json');
 const puppeteer = require('puppeteer');
 
 const scrape = async (user) => {

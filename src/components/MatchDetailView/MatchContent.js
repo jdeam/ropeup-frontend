@@ -1,6 +1,6 @@
 import React from 'react';
 import MatchNavButton from './MatchNavButton';
-import { grades } from '../../util/climbing';
+import grades from '../../util/grades';
 import './MatchDetail.css';
 
 const MatchContent = ({ match }) => {

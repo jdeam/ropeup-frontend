@@ -8,30 +8,16 @@ export const USER_CLEARED = 'USER_CLEARED';
 
 export function fetchUser() {
   return async (dispatch, getState) => {
-    const {
-      token,
-      isFetchingUser
-    } = getState();
-    if (!token) return dispatch({
-      type: FETCHING_USER_CANCELED
-    });
-    if (!isFetchingUser) dispatch({
-      type: FETCHING_USER
-    });
+    const { token, isFetchingUser } = getState();
+    if (!token) return dispatch({ type: FETCHING_USER_CANCELED });
+    if (!isFetchingUser) dispatch({ type: FETCHING_USER });
     const response = await axios.get(
       `${BaseURL}/users/`, {
-        headers: {
-          token
-        }
+        headers: { token }
       }
     );
-    const {
-      user
-    } = response.data;
-    dispatch({
-      type: USER_RECEIVED,
-      user
-    });
+    const { user } = response.data;
+    dispatch({ type: USER_RECEIVED, user });
   };
 }
 
@@ -39,10 +25,7 @@ export const USER_IMAGE_UPDATED = 'USER_IMAGE_UPDATED';
 
 export function updateImgUrl(img_url) {
   return (dispatch) => {
-    dispatch({
-      type: USER_IMAGE_UPDATED,
-      img_url
-    });
+    dispatch({ type: USER_IMAGE_UPDATED, img_url });
   };
 }
 
@@ -56,29 +39,51 @@ export function fetchSchedule() {
     const {
       token,
       user,
-      isFetchingSchedule
+      isFetchingSchedule,
     } = getState();
-    if (!token || !user.id) {
-      return dispatch({
-        type: FETCHING_SCHEDULE_CANCELED
-      });
-    }
+    if (!token || !user.id) return dispatch({
+      type: FETCHING_SCHEDULE_CANCELED
+    });
     if (!isFetchingSchedule) dispatch({
       type: FETCHING_SCHEDULE
     });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`, {
-        headers: {
-          token
-        }
+        headers: { token }
       }
     );
-    const {
-      schedule
-    } = response.data;
-    dispatch({
-      type: SCHEDULE_RECEIVED,
-      schedule
-    });
+    const { schedule } = response.data;
+    dispatch({ type: SCHEDULE_RECEIVED, schedule });
   };
+}
+
+export const FETCHING_GYMS = 'FETCHING_GYMS';
+export const GYMS_RECEIVED = 'GYMS_RECEIVED';
+export const FETCHING_GYMS_CANCELED = 'FETCHING_GYMS_CANCELED';
+export const GYMS_CLEARED = 'GYMS_CLEARED';
+
+export function fetchGyms() {
+  return async(dispatch, getState) => {
+    const {
+      token,
+      user,
+      isFetchingGyms,
+    } = getState();
+    if (!token || !user.id) return dispatch({
+      type: FETCHING_GYMS_CANCELED
+    });
+    if (!isFetchingGyms) dispatch({
+      type: FETCHING_GYMS
+    });
+    const response = await axios.get(
+      `${BaseURL}/gyms`, {
+        headers: { token }
+      }
+    );
+    const { gyms } = response.data;
+    dispatch({
+      type: GYMS_RECEIVED,
+      gyms
+    });
+  }
 }

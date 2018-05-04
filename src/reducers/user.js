@@ -8,6 +8,10 @@ import {
   FETCHING_SCHEDULE_CANCELED,
   SCHEDULE_RECEIVED,
   SCHEDULE_CLEARED,
+  FETCHING_GYMS,
+  FETCHING_GYMS_CANCELED,
+  GYMS_RECEIVED,
+  GYMS_CLEARED,
 } from '../actions/user';
 
 export function isFetchingUser(state = false, action) {
@@ -56,6 +60,30 @@ export function schedule(state = [], action) {
     case SCHEDULE_RECEIVED:
       return action.schedule;
     case SCHEDULE_CLEARED:
+      return [];
+    default:
+      return state;
+  }
+}
+
+export function isFetchingGyms(state = false, action) {
+  switch (action.type) {
+    case FETCHING_GYMS:
+      return true;
+    case GYMS_RECEIVED:
+      return false;
+    case FETCHING_GYMS_CANCELED:
+      return false;
+    default:
+      return state;
+  }
+}
+
+export function nearbyGyms(state =[], action) {
+  switch (action.type) {
+    case GYMS_RECEIVED:
+      return action.gyms;
+    case GYMS_CLEARED:
       return [];
     default:
       return state;

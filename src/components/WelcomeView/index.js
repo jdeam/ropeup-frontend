@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser } from '../../actions/user';
+import { fetchUser, fetchGyms } from '../../actions/user';
 import { fetchMatches } from '../../actions/matches';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
@@ -20,8 +20,15 @@ class Welcome extends Component {
   };
 
   updateUser = async () => {
-   const { isDisabled, isUpdating, ...updateBody } = this.state;
-   const { token, user, history, fetchUser, fetchMatches } = this.props;
+    const { isDisabled, isUpdating, ...updateBody } = this.state;
+    const { 
+      token, 
+      user, 
+      history, 
+      fetchUser, 
+      fetchGyms, 
+      fetchMatches 
+    } = this.props;
    if (isDisabled) return;
    this.setState({ isUpdating: true });
    const response = await axios.patch(
@@ -32,6 +39,7 @@ class Welcome extends Component {
    if (response.status === 200) {
      this.setState({ isUpdating: false });
      await fetchUser();
+     fetchGyms();
      fetchMatches();
      history.push('/dashboard');
    }
@@ -157,6 +165,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
   fetchMatches,
+  fetchGyms,
 }, dispatch);
 
 export default connect(
