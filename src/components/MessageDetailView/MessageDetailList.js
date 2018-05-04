@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MessageDetailListItem from './MessageDetailListItem';
 import MessageDetailSchedule from './MessageDetailSchedule';
-import { sbMarkAsRead } from '../../actions';
+import { sbMarkAsRead } from '../../actions/sendbird';
 import { BeatLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

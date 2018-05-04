@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { sbSendMessage } from '../../actions';
+import { sbSendMessage } from '../../actions/sendbird';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './MessageDetail.css';

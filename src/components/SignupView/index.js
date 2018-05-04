@@ -29,18 +29,16 @@ class Signup extends Component {
       this.setState({ isSigningUp: true });
       try {
         const response = await axios.post(`${BaseURL}/auth/signup`, signupBody);
-        if (response.status === 200) {
-          const token = response.headers.auth.split(' ')[1];
-          localStorage.setItem('token', token);
-          const { fetchAllUserInfo, history } = this.props;
-          fetchAllUserInfo();
-          history.push('/welcome');
-        } 
-      } catch(e) {
+        const token = response.headers.auth.split(' ')[1];
+        localStorage.setItem('token', token);
+        const { fetchAllUserInfo, history } = this.props;
+        fetchAllUserInfo();
+        history.push('/welcome');
+      } catch(err) {
         this.setState({
           signupDisabled: true,
           isSigningUp: false,
-          signupError: e.response.data.message,
+          signupError: err.response.data.message,
         });
       }
     }
@@ -95,9 +93,7 @@ class Signup extends Component {
             onSubmit={ this.handleSignup }
           >
             <div className="field">
-            <p className="help is-danger">
-                { this.state.signupError }
-              </p>
+              <p className="help is-danger">{ this.state.signupError }</p>
               <p className="control has-icons-left">
                 <input
                   className="input is-primary"
@@ -143,26 +139,16 @@ class Signup extends Component {
               </p>
             </div>
             <div className="field signup-buttons">
-              {
-                this.state.is_logging_in ? (
-                  <p className="control">
-                    <button className="button is-primary is-loading">
-                      Loading
-                    </button>
-                  </p>
-                ) : (
-                  <p className="control">
-                    <button
-                    disabled={ this.state.signupDisabled }
-                      className={ `button signup-button is-inverted is-primary${
-                        this.state.isSigningUp ? ' is-loading' : ''
-                      }`}
-                    >
-                      Sign up
-                    </button>
-                  </p>
-                )
-              }
+              <p className="control">
+                <button
+                disabled={ this.state.signupDisabled }
+                  className={ `button signup-button is-inverted is-primary${
+                    this.state.isSigningUp ? ' is-loading' : ''
+                  }`}
+                >
+                  Sign up
+                </button>
+              </p>
               <p className="control">
                 <Link
                   to="/login"

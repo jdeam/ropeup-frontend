@@ -24,14 +24,12 @@ class Login extends Component {
       this.setState({ isLoggingIn: true });
       try {
         const response = await axios.post(`${BaseURL}/auth/login`, loginBody);
-        if (response.status === 200) {
-          const token = response.headers.auth.split(' ')[1];
-          localStorage.setItem('token', token);
-          const { history, fetchAllUserInfo } = this.props;
-          fetchAllUserInfo();
-          return history.push('/dashboard');
-        } 
-      } catch(e) {
+        const token = response.headers.auth.split(' ')[1];
+        localStorage.setItem('token', token);
+        const { history, fetchAllUserInfo } = this.props;
+        fetchAllUserInfo();
+        return history.push('/dashboard');
+      } catch(err) {
         this.setState({
           loginDisabled: true,
           isLoggingIn: false,
@@ -87,9 +85,7 @@ class Login extends Component {
             onSubmit={ this.handleLogin }
           >
             <div className="field">
-              <p className="help is-danger">
-                { this.state.loginError }
-              </p>
+              <p className="help is-danger">{ this.state.loginError }</p>
               <p className="control has-icons-left has-icons-right">
                 <input
                   className="input is-primary"
@@ -128,7 +124,7 @@ class Login extends Component {
                   disabled={ this.state.loginDisabled}
                   className={ `button login-button is-inverted is-primary${
                     this.state.isLoggingIn ? ' is-loading' : ''
-                  }`}
+                  }` }
                 >
                   Login
                 </button>

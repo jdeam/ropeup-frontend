@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import { sbMarkAsRead } from '../../actions';
+import { sbMarkAsRead } from '../../actions/sendbird';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createLastMessageTimestamp } from '../../util/timestamps';

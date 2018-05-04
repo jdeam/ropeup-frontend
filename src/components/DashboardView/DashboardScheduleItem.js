@@ -1,6 +1,7 @@
 import React from 'react';
 import { scheduleMap } from '../../util/schedules';
-import { fetchSchedule, fetchMatches } from '../../actions';
+import { fetchSchedule } from '../../actions/user';
+import { fetchMatches } from '../../actions/matches';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';

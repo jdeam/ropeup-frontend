@@ -3,7 +3,7 @@ import DashboardEdit from './DashboardEdit';
 import DashboardSchedule from './DashboardSchedule';
 import DashboardSettings from './DashboardSettings';
 import FontAwesome from 'react-fontawesome';
-import { switchDashboardTab } from '../../actions';
+import { switchDashboardTab } from '../../actions/window';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './Dashboard.css';

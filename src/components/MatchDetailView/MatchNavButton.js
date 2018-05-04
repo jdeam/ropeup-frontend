@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import { sbAddChannel } from '../../actions';
+import { sbAddChannel } from '../../actions/sendbird';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 

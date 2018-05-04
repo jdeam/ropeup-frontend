@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSchedule, fetchMatches } from '../../actions';
+import { fetchSchedule } from '../../actions/user';
+import { fetchMatches } from '../../actions/matches';
 import ScheduleList from './DashboardScheduleList';
 import axios from 'axios';
 import './Dashboard.css';

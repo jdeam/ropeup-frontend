@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { logout } from '../../actions';
+import { clearAllUserInfo } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './Dashboard.css';
 
-const DashboardSettings = ({ isActive, user, logout }) => {
+const DashboardSettings = ({ isActive, user, clearAllUserInfo }) => {
   return isActive ? (
     <div className="dashboard-form-container">
       <div className="dashboard-form">
@@ -13,7 +13,7 @@ const DashboardSettings = ({ isActive, user, logout }) => {
           to="/"
           id="logout"
           className="button dashboard-logout-button"
-          onClick={ logout }
+          onClick={ clearAllUserInfo }
         >
           Logout
         </Link>
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  logout,
+  clearAllUserInfo,
 }, dispatch)
 
 export default connect(

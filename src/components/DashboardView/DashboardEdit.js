@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { fetchUser, fetchMatches, clearMatches } from '../../actions';
+import { fetchUser } from '../../actions/user';
+import { fetchMatches, clearMatches } from '../../actions/matches';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { gyms } from '../../util/climbing';

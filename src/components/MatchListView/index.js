@@ -2,7 +2,7 @@ import React from 'react';
 import MatchListItem from './MatchListItem';
 import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
-import { switchDashboardTab } from '../../actions';
+import { switchDashboardTab } from '../../actions/window';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './MatchList.css';
@@ -49,7 +49,7 @@ const MatchList = ({
         >
           profile
         </Link>
-        &nbsp;and fill out your&nbsp;
+        &nbsp;and update your&nbsp;
         <Link
           to="/dashboard"
           onClick={ () => switchDashboardTab('schedule') }
