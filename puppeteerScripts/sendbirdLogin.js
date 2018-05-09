@@ -9,7 +9,7 @@ const scrape = async (user) => {
   await page.type('#password', 'test');
   await page.click('#login');
   await page.waitForNavigation();
-  await page.waitFor(3000);
+  await page.waitFor(6000);
   await page.click('#logout');
   browser.close();
 };

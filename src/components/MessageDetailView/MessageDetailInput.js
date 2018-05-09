@@ -15,8 +15,8 @@ class MessageDetailInput extends Component {
     e.preventDefault();
     const { content } = this.state;
     if (!content) return;
-    const { channel, otherUserId, sbSendMessage } = this.props;
-    await sbSendMessage(channel, otherUserId, content);
+    const { channel, otherUsername, sbSendMessage } = this.props;
+    await sbSendMessage(channel, otherUsername, content);
     this.setState({ content: '' });
     this.updateTypingStatus();
   };

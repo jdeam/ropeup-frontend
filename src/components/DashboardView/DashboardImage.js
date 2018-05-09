@@ -24,7 +24,7 @@ class DashboardImage extends Component {
     request.post(uploadUrl)
       .field('upload_preset', uploadPreset)
       .field('file', files[0])
-      .end(async (err, res) => {
+      .end((err, res) => {
         if (err) console.log(err);
         const { secure_url } = res.body;
         if (secure_url) {
@@ -53,38 +53,34 @@ class DashboardImage extends Component {
 
     return (
       <div className="dashboard-image-container">
-        {
-          user.img_url ? (
-            <div className="image is-128x128">
-              <img
-                src={ user.img_url }
-                className="dashboard-image"
-                alt=""
-              />
-            </div>
-          ) : (
-            <div className="image is-128x128">
-              <Dropzone
-                className="dashboard-dropzone"
-                multiple={ false }
-                accept="image/*"
-                onDrop={ this.handleImageUpload }
-              >
-                { this.state.isUploading ? (
-                  <BounceLoader
-                    color={'#5BCDB3'}
-                    size={126}
-                  />
-                ) : (
-                  <FontAwesome
-                    className="fa-4x dashboard-fa-cloud"
-                    name="cloud-upload"
-                  />
-                ) }
-              </Dropzone>
-            </div>
-          )
-        }
+        <div className="image is-128x128">
+          <Dropzone
+            className="dashboard-dropzone"
+            multiple={ false }
+            accept="image/*"
+            onDrop={ this.handleImageUpload }
+          >
+            { 
+              this.state.isUploading ? (
+                <BounceLoader
+                  color={'#5BCDB3'}
+                  size={126}
+                />
+              ) : user.img_url ? (
+                <img
+                  src={ user.img_url }
+                  className="dashboard-image"
+                  alt=""
+                />
+              ) : (
+                <FontAwesome
+                  className="fa-4x dashboard-fa-cloud"
+                  name="cloud-upload"
+                />
+              ) 
+            }
+          </Dropzone>
+        </div>
         <div className="title is-4 dashboard-image-name">
           { user.username }
         </div>

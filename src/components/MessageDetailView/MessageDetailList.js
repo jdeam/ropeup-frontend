@@ -62,7 +62,7 @@ class MessageDetailList extends Component {
 const mapStateToProps = (state) => ({
   userSchedule: state.schedule,
   sbUser: state.sbUser,
-  typingStatuses: state.sbTypingStatusByOtherUserId,
+  typingStatuses: state.sbTypingStatusByUsername,
   channels: state.sbChannels,
 });
 

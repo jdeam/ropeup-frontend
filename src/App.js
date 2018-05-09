@@ -27,13 +27,13 @@ const App = ({ token, zip, year }) => {
             token && year && zip ? <Dashboard { ...props } /> :
             token ? <Redirect to="/welcome" /> : <Redirect to="/login" />
           ) } />
-          <Route path="/matches/:id" render={ (props) => (
+          <Route path="/matches/:username" render={ (props) => (
             token ? <MatchDetail { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/matches" render={ (props) => (
             token ? <MatchList { ...props } /> : <Redirect to="/login" />
           ) } />
-          <Route path="/messages/:id" render={ (props) => (
+          <Route path="/messages/:username" render={ (props) => (
             token ? <MessageDetail { ...props } /> : <Redirect to="/login" />
           ) } />
           <Route path="/messages" render={ (props) => (

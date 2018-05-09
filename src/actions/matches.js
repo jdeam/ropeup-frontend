@@ -14,24 +14,16 @@ export function fetchMatches() {
       schedule,
       isFetchingMatches
     } = getState();
-    if (!token || !user.zip || !schedule) {
-      return dispatch({
-        type: FETCHING_MATCHES_CANCELED
-      });
+    if (!token || !user.zip || !schedule.length) {
+      return dispatch({ type: FETCHING_MATCHES_CANCELED });
     }
-    if (!isFetchingMatches) dispatch({
-      type: FETCHING_MATCHES
-    });
+    if (!isFetchingMatches) dispatch({ type: FETCHING_MATCHES });
     const response = await axios.get(
       `${BaseURL}/users?zip=${user.zip}`, {
-        headers: {
-          token
-        }
+        headers: { token }
       }
     );
-    const {
-      users
-    } = response.data;
+    const { users } = response.data;
     const matchesWithRating = users.map(user => {
         user.matchRating = calculateScheduleMatch(schedule, user.schedule);
         return user;

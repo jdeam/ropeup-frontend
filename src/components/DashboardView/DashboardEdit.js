@@ -15,7 +15,7 @@ class DashboardEdit extends Component {
     isSubmitting: false,
     zip: '',
     start_year: '',
-    gym: 0,
+    gym_id: 0,
     tr: false,
     lead: false,
     grade_low: 0,
@@ -32,7 +32,7 @@ class DashboardEdit extends Component {
       this.setState({
         zip: this.props.user.zip || '',
         start_year: this.props.user.start_year || '',
-        gym: this.props.user.gym || 0,
+        gym_id: this.props.user.gym_id || 0,
         tr: this.props.user.tr || false,
         lead: this.props.user.lead || false,
         grade_low: this.props.user.grade_low || 0,
@@ -104,8 +104,10 @@ class DashboardEdit extends Component {
               <div className="select is-primary">
                 <select
                   disabled={ !this.state.isEditing }
-                  value={ this.state.gym }
-                  onChange={ (e) => this.setState({ gym: parseInt(e.target.value, 10) }) }
+                  value={ this.state.gym_id }
+                  onChange={ (e) => {
+                    this.setState({ gym_id: parseInt(e.target.value, 10) })
+                  } }
                 >
                   { this.populateGymSelect() }
                 </select>
@@ -156,21 +158,7 @@ class DashboardEdit extends Component {
                   value={ this.state.grade_low }
                   onChange={ (e) => this.setState({ grade_low: parseInt(e.target.value, 10) }) }
                 >
-                  <option value={0}>5.7</option>
-                  <option value={1}>5.8</option>
-                  <option value={2}>5.9</option>
-                  <option value={3}>5.10a</option>
-                  <option value={4}>5.10b</option>
-                  <option value={5}>5.10c</option>
-                  <option value={6}>5.10d</option>
-                  <option value={7}>5.11a</option>
-                  <option value={8}>5.11b</option>
-                  <option value={9}>5.11c</option>
-                  <option value={10}>5.11d</option>
-                  <option value={11}>5.12a</option>
-                  <option value={12}>5.12b</option>
-                  <option value={13}>5.12c</option>
-                  <option value={14}>5.12d</option>
+                  { this.populateGradeSelect() }
                 </select>
               </div>
             </div>
@@ -184,21 +172,7 @@ class DashboardEdit extends Component {
                   value={ this.state.grade_high }
                   onChange={ (e) => this.setState({ grade_high: parseInt(e.target.value, 10) }) }
                 >
-                  <option value={0}>5.7</option>
-                  <option value={1}>5.8</option>
-                  <option value={2}>5.9</option>
-                  <option value={3}>5.10a</option>
-                  <option value={4}>5.10b</option>
-                  <option value={5}>5.10c</option>
-                  <option value={6}>5.10d</option>
-                  <option value={7}>5.11a</option>
-                  <option value={8}>5.11b</option>
-                  <option value={9}>5.11c</option>
-                  <option value={10}>5.11d</option>
-                  <option value={11}>5.12a</option>
-                  <option value={12}>5.12b</option>
-                  <option value={13}>5.12c</option>
-                  <option value={14}>5.12d</option>
+                  { this.populateGradeSelect() }
                 </select>
               </div>
             </div>
@@ -257,8 +231,8 @@ const mapStateToProps = (state) => ({
   token: state.token,
   user: state.user,
   matches: state.matches,
-  gyms: state.nearbyGyms,
-  isFetchingGyms: state.isFetchingGyms,
+  gyms: state.gyms,
+  gymsById: state.gymsById,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

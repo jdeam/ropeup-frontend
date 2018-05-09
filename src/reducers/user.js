@@ -79,12 +79,27 @@ export function isFetchingGyms(state = false, action) {
   }
 }
 
-export function nearbyGyms(state =[], action) {
+export function gyms(state =[], action) {
   switch (action.type) {
     case GYMS_RECEIVED:
       return action.gyms;
     case GYMS_CLEARED:
       return [];
+    default:
+      return state;
+  }
+}
+
+export function gymsById(state = {}, action) {
+  switch (action.type) {
+    case GYMS_RECEIVED:
+      return action.gyms.reduce((byId, gym) => {
+        const { id, ...rest } = gym;
+        byId[id] = rest;
+        return byId;
+      }, {});
+    case GYMS_CLEARED:
+      return {};
     default:
       return state;
   }

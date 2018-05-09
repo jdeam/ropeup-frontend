@@ -29,15 +29,13 @@ export function matches(state = [], action) {
   }
 }
 
-export function matchesById(state = {}, action) {
+export function matchesByUsername(state = {}, action) {
   switch (action.type) {
     case MATCHES_RECEIVED:
-      return action.matches.reduce((byId, match) => {
-        const {
-          id
-        } = match;
-        byId[id] = match;
-        return byId;
+      return action.matches.reduce((byUsername, match) => {
+        const { username } = match;
+        byUsername[username] = match;
+        return byUsername;
       }, {});
     case MATCHES_CLEARED:
       return {};

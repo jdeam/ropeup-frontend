@@ -12,7 +12,7 @@ import {
   SB_MESSAGE_RECEIVED,
   SB_MESSAGE_READ,
   SB_TYPING_STATUS_UPDATED,
-  // SB_REFRESH_INTERVAL_SET,
+  SB_REFRESH_INTERVAL_SET,
   // SB_NEW_CHANNELS_RECEIVED,
   // SB_NEW_MESSAGES_RECEIVED,
 } from '../actions/sendbird';
@@ -55,9 +55,9 @@ export function sbChannels(state = [], action) {
       return [action.channel, ...state];
     case SB_MESSAGE_RECEIVED:
       return [...state].sort((channelA, channelB) => {
-        const aLastUpdatedAt = channelA.lastMessage.createdAt;
-        const bLastUpdatedAt = channelB.lastMessage.createdAt;
-        return bLastUpdatedAt - aLastUpdatedAt;
+        const aSentAt = channelA.lastMessage.createdAt;
+        const bSentAt = channelB.lastMessage.createdAt;
+        return bSentAt - aSentAt;
       });
     // case SB_NEW_CHANNELS_RECEIVED:
     //   return [...action.newChannels, ...state];
@@ -68,26 +68,21 @@ export function sbChannels(state = [], action) {
   }
 }
 
-export function sbChannelsByOtherUserId(state = {}, action) {
+export function sbChannelsByUsername(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
-      const {
-        channels,
-        id
-      } = action;
-      return channels.reduce((byOtherUserId, channel) => {
-        const {
-          members
-        } = channel;
-        const otherUserId = members.find(member => {
-          return member.userId !== id;
+      const { channels, username } = action;
+      return channels.reduce((byUsername, channel) => {
+        const { members } = channel;
+        const otherUsername = members.find(member => {
+          return member.userId !== username;
         }).userId;
-        byOtherUserId[otherUserId] = channel;
-        return byOtherUserId;
+        byUsername[otherUsername] = channel;
+        return byUsername;
       }, {});
     case SB_CHANNEL_CREATED:
       return { ...state,
-        [action.otherUserId]: action.channel
+        [action.otherUsername]: action.channel
       };
     // case SB_NEW_CHANNELS_RECEIVED:
     //   {
@@ -116,28 +111,28 @@ export function sbChannelsByOtherUserId(state = {}, action) {
   }
 }
 
-export function sbMessagesByOtherUserId(state = {}, action) {
+export function sbMessagesByUsername(state = {}, action) {
   switch (action.type) {
     case SB_MESSAGES_RECEIVED:
-      return action.messagesByOtherUserId;
+      return action.messagesByUsername;
     case SB_MESSAGE_SENT:
       {
-        const messageList = state[action.otherUserId];
+        const messageList = state[action.otherUsername];
         const newMessageList = [...messageList, action.message];
         return { ...state,
-          [action.otherUserId]: newMessageList
+          [action.otherUsername]: newMessageList
         };
       }
     case SB_CHANNEL_CREATED:
       return { ...state,
-        [action.otherUserId]: []
+        [action.otherUsername]: []
       };
     case SB_MESSAGE_RECEIVED:
       {
-        const messageList = state[action.otherUserId] || [];
+        const messageList = state[action.otherUsername] || [];
         const newMessageList = [...messageList, action.message];
         return { ...state,
-          [action.otherUserId]: newMessageList
+          [action.otherUsername]: newMessageList
         };
       }
     // case SB_NEW_MESSAGES_RECEIVED:
@@ -175,9 +170,7 @@ export function sbNumUnread(state = 0, action) {
       }
     case SB_MESSAGE_RECEIVED:
       return action.sbChannels.reduce((numUnread, channel) => {
-        const {
-          unreadMessageCount
-        } = channel;
+        const { unreadMessageCount } = channel;
         return numUnread + (unreadMessageCount ? 1 : 0);
       }, 0);
     case SB_MESSAGE_READ:
@@ -189,23 +182,18 @@ export function sbNumUnread(state = 0, action) {
   }
 }
 
-export function sbTypingStatusByOtherUserId(state = {}, action) {
+export function sbTypingStatusByUsername(state = {}, action) {
   switch (action.type) {
     case SB_CHANNELS_RECEIVED:
       {
-        const {
-          channels,
-          id
-        } = action;
-        return channels.reduce((byOtherUserId, channel) => {
-          const {
-            members
-          } = channel;
-          const otherUserId = members.find(member => {
-            return member.userId !== id;
+        const { channels, username } = action;
+        return channels.reduce((byUsername, channel) => {
+          const { members } = channel;
+          const otherUsername = members.find(member => {
+            return member.userId !== username;
           }).userId;
-          byOtherUserId[otherUserId] = channel.isTyping();
-          return byOtherUserId;
+          byUsername[otherUsername] = channel.isTyping();
+          return byUsername;
         }, {});
       }
     case SB_CHANNEL_CREATED:
@@ -227,14 +215,14 @@ export function sbTypingStatusByOtherUserId(state = {}, action) {
   }
 }
 
-// export function sbRefreshInterval(state = null, action) {
-//   switch (action.type) {
-//     case SB_REFRESH_INTERVAL_SET:
-//       return action.interval;
-//     case SB_LOGOUT_SUCCESS:
-//       clearInterval(state);
-//       return null;
-//     default:
-//       return state;
-//   }
-// }
+export function sbRefreshInterval(state = null, action) {
+  switch (action.type) {
+    case SB_REFRESH_INTERVAL_SET:
+      return action.interval;
+    case SB_LOGOUT_SUCCESS:
+      clearInterval(state);
+      return null;
+    default:
+      return state;
+  }
+}

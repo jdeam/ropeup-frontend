@@ -70,6 +70,12 @@ class Signup extends Component {
     this.updateDisabledState();
   };
 
+  getButtonState = () => {
+    return `button signup-button is-inverted is-primary${
+      this.state.isSigningUp ? ' is-loading' : ''
+    }`;
+  };
+
   updateDisabledState = () => {
     const { signupDisabled, username, email, password } = this.state;
     if (signupDisabled && username && email && password) {
@@ -142,9 +148,7 @@ class Signup extends Component {
               <p className="control">
                 <button
                 disabled={ this.state.signupDisabled }
-                  className={ `button signup-button is-inverted is-primary${
-                    this.state.isSigningUp ? ' is-loading' : ''
-                  }`}
+                  className={ this.getButtonState() }
                 >
                   Sign up
                 </button>

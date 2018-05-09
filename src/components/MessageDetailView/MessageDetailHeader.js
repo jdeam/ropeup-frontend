@@ -18,7 +18,7 @@ const MessageDetailHeader = ({ otherUser, history }) => {
           &nbsp;Back
         </a>
         <Link
-          to={ `/matches/${otherUser.id}`}
+          to={ `/matches/${otherUser.username}`}
           className="messagedetail-header-top-right"
         >
           <div className="messagedetail-header-name">

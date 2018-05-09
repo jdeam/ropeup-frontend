@@ -71,7 +71,7 @@ const MessageListItem = ({
 };
 
 const mapStateToProps = (state) => ({
-  typingStatuses: state.sbTypingStatusByOtherUserId,
+  typingStatuses: state.sbTypingStatusByUsername,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

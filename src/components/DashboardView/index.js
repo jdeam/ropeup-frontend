@@ -33,7 +33,7 @@ const Dashboard = ({ user, isFetching, tabInView }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  isFetching: (state.isFetchingUser || state.isFetchingGyms),
+  isFetching: state.isFetchingUser || state.isFetchingGyms,
   tabInView: state.dashboardTabInView,
 });
 

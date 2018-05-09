@@ -2,14 +2,14 @@ import SendBird from 'sendbird';
 
 const APP_ID = process.env.REACT_APP_SENDBIRD_APP_ID;
 
-export const sbConnect = (userId, nickname, profileUrl) => {
+export const sbConnect = (username, profileUrl) => {
   return new Promise((resolve, reject) => {
     const sb = new SendBird({ appId: APP_ID });
-    sb.connect(userId, (user, error) => {
+    sb.connect(username, (user, error) => {
       if (error) {
         reject('Could not connect to Sendbird.');
       } else {
-        sb.updateCurrentUserInfo(nickname, profileUrl, (updatedUser, error) => {
+        sb.updateCurrentUserInfo(username, profileUrl, (updatedUser, error) => {
           if (error) reject('Could not update user info.');
           else resolve(updatedUser);
         });

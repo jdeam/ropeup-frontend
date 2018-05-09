@@ -7,17 +7,17 @@ import { connect } from 'react-redux';
 
 const MatchMessageButton = ({
   match,
-  channelsByOtherUserId,
+  channelsByUsername,
   sbAddChannel,
 }) => {
   return (
     <div className="matchdetail-nav">
       <Link
-        to={ `/messages/${match.id}`}
+        to={ `/messages/${match.username}`}
         className="button is-primary is-rounded matchdetail-button"
         onClick={ () => {
-          if(!channelsByOtherUserId[match.id]) {
-            sbAddChannel(match.id);
+          if(!channelsByUsername[match.username]) {
+            sbAddChannel(match.username);
           }
         } }
       >
@@ -31,7 +31,7 @@ const MatchMessageButton = ({
 };
 
 const mapStateToProps = (state) => ({
-  channelsByOtherUserId: state.sbChannelsByOtherUserId,
+  channelsByUsername: state.sbChannelsByUsername,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

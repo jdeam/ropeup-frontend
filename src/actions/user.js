@@ -17,7 +17,10 @@ export function fetchUser() {
       }
     );
     const { user } = response.data;
-    dispatch({ type: USER_RECEIVED, user });
+    const { schedule, gyms, ...rest } = user;
+    dispatch({ type: USER_RECEIVED, user: rest });
+    dispatch({ type: SCHEDULE_RECEIVED, schedule });
+    dispatch({ type: GYMS_RECEIVED, gyms });
   };
 }
 
@@ -44,9 +47,7 @@ export function fetchSchedule() {
     if (!token || !user.id) return dispatch({
       type: FETCHING_SCHEDULE_CANCELED
     });
-    if (!isFetchingSchedule) dispatch({
-      type: FETCHING_SCHEDULE
-    });
+    if (!isFetchingSchedule) dispatch({ type: FETCHING_SCHEDULE });
     const response = await axios.get(
       `${BaseURL}/users/${user.id}/schedule`, {
         headers: { token }
@@ -69,21 +70,14 @@ export function fetchGyms() {
       user,
       isFetchingGyms,
     } = getState();
-    if (!token || !user.id) return dispatch({
-      type: FETCHING_GYMS_CANCELED
-    });
-    if (!isFetchingGyms) dispatch({
-      type: FETCHING_GYMS
-    });
+    if (!token || !user.id) return dispatch({ type: FETCHING_GYMS_CANCELED });
+    if (!isFetchingGyms) dispatch({ type: FETCHING_GYMS });
     const response = await axios.get(
       `${BaseURL}/gyms`, {
         headers: { token }
       }
     );
     const { gyms } = response.data;
-    dispatch({
-      type: GYMS_RECEIVED,
-      gyms
-    });
+    dispatch({ type: GYMS_RECEIVED, gyms });
   }
 }

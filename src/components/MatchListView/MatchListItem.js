@@ -6,17 +6,24 @@ import { Link } from 'react-router-dom';
 import './MatchList.css';
 
 const MatchListItem = ({ match, zip }) => {
-  const name = match.username;
+  const { 
+    username, 
+    matchRating, 
+    tr, 
+    lead, 
+    grade_low, 
+    grade_high 
+  } = match;
   const distance = zipcodes.distance(zip, match.zip);
-  const matchRating = `${(match.matchRating * 100).toFixed(0)}% Match`;
+  const rating = `${(matchRating * 100).toFixed(0)}% Match`;
   const interests = <span className="tag is-dark">{
-    match.tr && match.lead ? 'TR & Lead' :
-    match.tr ? 'TR only' : 'Lead only'
+    tr && lead ? 'TR & Lead' :
+    tr ? 'TR only' : 'Lead only'
   }</span>;
-  const gradeRange = `${grades[match.grade_low]}-${grades[match.grade_high]}`;
+  const gradeRange = `${grades[grade_low]}-${grades[grade_high]}`;
 
   return (
-    <Link to={ `/matches/${match.id}` }>
+    <Link to={ `/matches/${username}` }>
       <div className="matchlist-box-container">
         <div className="matchlist-box">
           <div className="matchlist-box-left">
@@ -31,7 +38,7 @@ const MatchListItem = ({ match, zip }) => {
           <div className="matchlist-box-center">
             <div className="matchlist-details">
               <div className="title is-4">
-                { name }
+                { username }
               </div>
             </div>
             <div className="matchlist-location">
@@ -40,7 +47,7 @@ const MatchListItem = ({ match, zip }) => {
                 { distance ? `${distance} mi. away` : '<1 mi. away' }
               </small>
             </div>
-            <div className="is-size-7 matchlist-rating">{ matchRating }</div>
+            <div className="is-size-7 matchlist-rating">{ rating }</div>
           </div>
           <div className="matchlist-box-right">
             <div className="matchlist-graderange">

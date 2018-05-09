@@ -10,14 +10,14 @@ import './MatchDetail.css';
 const MatchDetail = ({
   user,
   schedule,
-  matchesById,
+  matchesByUsername,
   isFetching,
   match,
   history,
 }) => {
   window.scrollTo(0, 0);
 
-  const matchingUser = matchesById[match.params.id];
+  const matchingUser = matchesByUsername[match.params.username];
 
   return isFetching ? (
     <div className="matchdetail-empty-container">
@@ -40,8 +40,7 @@ const MatchDetail = ({
         <MatchSchedule
           userSchedule={ schedule }
           matchSchedule={ matchingUser.schedule }
-          matchGym={ matchingUser.gym }
-          userGym={ user.gym }
+          matchGym={ matchingUser.gym_id }
         />
         <div className="matchdetail-divider"></div>
         <MatchContent match={ matchingUser } />
@@ -55,7 +54,7 @@ const MatchDetail = ({
 const mapStateToProps = (state) => ({
   user: state.user,
   schedule: state.schedule,
-  matchesById: state.matchesById,
+  matchesByUsername: state.matchesByUsername,
   isFetching: state.isFetchingMatches,
 });
 

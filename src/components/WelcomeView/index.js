@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, fetchGyms } from '../../actions/user';
-import { fetchMatches } from '../../actions/matches';
+import { fetchUser } from '../../actions/user';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
 import validZips from '../../util/validZips';
 import './Welcome.css';
 const BaseURL = process.env.REACT_APP_BASE_URL;
-
 
 class Welcome extends Component {
   state = {
@@ -19,15 +17,14 @@ class Welcome extends Component {
     isUpdating: false,
   };
 
-  updateUser = async () => {
+  updateUser = async (e) => {
+    e.preventDefault();
     const { isDisabled, isUpdating, ...updateBody } = this.state;
     const { 
       token, 
       user, 
       history, 
       fetchUser, 
-      fetchGyms, 
-      fetchMatches 
     } = this.props;
    if (isDisabled) return;
    this.setState({ isUpdating: true });
@@ -38,9 +35,7 @@ class Welcome extends Component {
    );
    if (response.status === 200) {
      this.setState({ isUpdating: false });
-     await fetchUser();
-     fetchGyms();
-     fetchMatches();
+     fetchUser();
      history.push('/dashboard');
    }
   };
@@ -81,6 +76,12 @@ class Welcome extends Component {
     }
   };
 
+  getButtonClass = () => {
+    return `button welcome-button is-primary${
+      this.state.isUpdating ? ' is-loading' : ''
+    }`;
+  };
+
   render() {
     return this.props.isFetching ? (
       <div className="welcome-empty-container">
@@ -102,10 +103,7 @@ class Welcome extends Component {
           </h2>
           <form
             className="welcome-form"
-            onSubmit={ (e) => {
-              e.preventDefault();
-              this.updateUser();
-            } }
+            onSubmit={ this.updateUser }
           >
             <div className="field">
               <label className="label welcome-label">My ZIP code is ...</label>
@@ -141,9 +139,7 @@ class Welcome extends Component {
               <p className="control">
                 <button
                   disabled={ this.state.isDisabled }
-                  className={ `button welcome-button is-primary${
-                    this.state.isUpdating ? ' is-loading' : ''
-                  }`}
+                  className={ this.getButtonClass() }
                 >
                   Continue
                 </button>
@@ -164,8 +160,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
-  fetchMatches,
-  fetchGyms,
 }, dispatch);
 
 export default connect(

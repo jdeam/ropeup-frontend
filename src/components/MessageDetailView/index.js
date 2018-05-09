@@ -8,17 +8,17 @@ import { connect } from 'react-redux';
 import './MessageDetail.css';
 
 const MessageDetail = ({
-  channelsByOtherUserId,
-  messagesByOtherUserId,
-  matchesById,
+  channelsByUsername,
+  messagesByUsername,
+  matchesByUsername,
   isFetching,
   match,
   history,
 }) => {
   window.scrollTo(0, 0);
 
-  const { id } = match.params;
-  const channelInView = channelsByOtherUserId[id];
+  const { username } = match.params;
+  const channelInView = channelsByUsername[username];
 
   return isFetching ? (
     <div className="messagedetail-empty-container">
@@ -33,17 +33,17 @@ const MessageDetail = ({
     <div className="messagedetail-container">
       <div className="messagedetail">
         <MessageDetailHeader
-          otherUser={ matchesById[id] }
+          otherUser={ matchesByUsername[username] }
           history={ history }
         />
         <MessageDetailList
-          messages={ messagesByOtherUserId[id] }
-          otherUser={ matchesById[id] }
+          messages={ messagesByUsername[username] }
+          otherUser={ matchesByUsername[username] }
           channelInView={ channelInView }
         />
       </div>
       <MessageDetailInput
-        otherUserId={ id }
+        otherUsername={ username }
         channel={ channelInView }
       />
     </div>
@@ -53,9 +53,9 @@ const MessageDetail = ({
 };
 
 const mapStateToProps = (state) => ({
-  channelsByOtherUserId: state.sbChannelsByOtherUserId,
-  messagesByOtherUserId: state.sbMessagesByOtherUserId,
-  matchesById: state.matchesById,
+  channelsByUsername: state.sbChannelsByUsername,
+  messagesByUsername: state.sbMessagesByUsername,
+  matchesByUsername: state.matchesByUsername,
   isFetching: state.sbIsFetching,
 });
 

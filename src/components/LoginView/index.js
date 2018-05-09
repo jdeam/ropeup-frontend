@@ -59,6 +59,12 @@ class Login extends Component {
     this.updateDisabledState();
   };
 
+  getButtonState = () => {
+    return `button login-button is-inverted is-primary${
+      this.state.isLoggingIn ? ' is-loading' : ''
+    }` ;
+  };
+
   updateDisabledState = () => {
     const { loginDisabled, email, password } = this.state;
     if (loginDisabled && email && password) {
@@ -122,9 +128,7 @@ class Login extends Component {
                 <button
                   id="login"
                   disabled={ this.state.loginDisabled}
-                  className={ `button login-button is-inverted is-primary${
-                    this.state.isLoggingIn ? ' is-loading' : ''
-                  }` }
+                  className={ this.getButtonState() }
                 >
                   Login
                 </button>

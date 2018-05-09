@@ -1,19 +1,20 @@
 import React from 'react';
 import MatchScheduleItem from './MatchScheduleItem';
 import { overlapSchedules } from '../../util/schedules';
+import { connect } from 'react-redux';
 import './MatchDetail.css';
 
 const MatchSchedule = ({
   userSchedule,
   matchSchedule,
   matchGym,
-  userGym
+  gymsById,
 }) => {
-  const isSameGym = (userGym === matchGym);
   const scheduleItems = overlapSchedules(userSchedule, matchSchedule);
   const scheduleItemEls = scheduleItems.map((item, i) => {
     return <MatchScheduleItem key={ i } item={ item }/>
   });
+  const gym = gymsById[matchGym].name;
 
   return (
     <div className="matchdetail-schedule">
@@ -24,13 +25,16 @@ const MatchSchedule = ({
         { scheduleItemEls }
       </div>
       <div className="matchdetail-schedule-gym">
-        at&nbsp;
-        <span className={ isSameGym ? 'matchdetail-is-same-gym' : ''}>
-          { matchGym }
-        </span>
+        at&nbsp;{ gym }
       </div>
     </div>
   );
 };
 
-export default MatchSchedule;
+const mapStateToProps = (state) => ({
+  gymsById: state.gymsById,
+});
+
+export default connect(
+  mapStateToProps
+)(MatchSchedule);
