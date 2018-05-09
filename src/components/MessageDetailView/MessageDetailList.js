@@ -39,7 +39,7 @@ class MessageDetailList extends Component {
         />
         <div className="messagedetail-divider"></div>
         { this.createMessageEls() }
-        { typingStatuses[otherUser.id] ? (
+        { typingStatuses[otherUser.username] ? (
           <div className="messagedetail-is-other">
             <div className="messagedetail-message messagedetail-other-message">
               <BeatLoader

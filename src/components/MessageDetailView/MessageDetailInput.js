@@ -11,6 +11,11 @@ class MessageDetailInput extends Component {
     isTyping: false,
   };
 
+  handleTyping = (e) => {
+    this.setState({ content: e.target.value });
+    this.updateTypingStatus();
+  };
+
   sendMessage = async (e) => {
     e.preventDefault();
     const { content } = this.state;
@@ -34,6 +39,13 @@ class MessageDetailInput extends Component {
     }
   };
 
+  getButtonState = () => {
+    return `button is-rounded ${
+      this.state.content ? " is-primary" : "" } ${
+      this.props.isSending ? " is-loading" : ""
+    }`;
+  };
+
   render() {
     return (
       <form
@@ -46,17 +58,11 @@ class MessageDetailInput extends Component {
             type="text"
             placeholder="Aa"
             value={ this.state.content }
-            onChange={ (e) => {
-              this.setState({ content: e.target.value });
-              this.updateTypingStatus();
-            } }
+            onChange={ this.handleTyping }
           />
         </div>
         <a
-          className={ `button is-rounded ${
-            this.state.content ? " is-primary" : "" } ${
-            this.props.isSending ? " is-loading" : ""
-          }` }
+          className={ this.getButtonState() }
           disabled={ !this.state.content }
           onClick={ this.sendMessage }
         >

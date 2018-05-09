@@ -137,14 +137,14 @@ function sbRegisterChannelHandler(channelUrl, dispatch, getState) {
   channelHandler.onTypingStatusUpdated = (channel) => {
     if (channel.url === channelUrl) {
       const { members } = channel;
-      const otherUserId = members.find(member => {
+      const otherUsername = members.find(member => {
         return member.userId !== sbUser.userId;
       }).userId;
 
       const isTyping = channel.isTyping();
       dispatch({
         type: SB_TYPING_STATUS_UPDATED,
-        otherUserId,
+        otherUsername,
         isTyping
       });
     }

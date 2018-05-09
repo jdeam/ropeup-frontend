@@ -198,15 +198,15 @@ export function sbTypingStatusByUsername(state = {}, action) {
       }
     case SB_CHANNEL_CREATED:
       return { ...state,
-        [action.otherUserId]: false
+        [action.otherUsername]: false
       };
     case SB_MESSAGE_RECEIVED:
       return { ...state,
-        [action.otherUserId]: false
+        [action.otherUsername]: false
       };
     case SB_TYPING_STATUS_UPDATED:
       return { ...state,
-        [action.otherUserId]: action.isTyping
+        [action.otherUsername]: action.isTyping
       };
     case SB_LOGOUT_SUCCESS:
       return {};

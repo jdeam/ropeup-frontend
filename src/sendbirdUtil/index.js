@@ -57,8 +57,12 @@ export const sbFetchChannels = () => {
 export const sbCreateChannel = (recipientId) => {
   return new Promise((resolve, reject) => {
     const sb = SendBird.getInstance();
+    const nullArgs = [null, null, null, null];
     if (sb) {
-      sb.GroupChannel.createChannelWithUserIds([recipientId], true, null, null, null, null, (channel, error) => {
+      sb.GroupChannel.createChannelWithUserIds(
+        [recipientId], true, 
+        ...nullArgs, 
+        (channel, error) => {
         if (error) reject('Could not create channel.');
         else resolve(channel);
       });
