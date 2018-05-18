@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "mocha --compilers js:babel-core/register src/**/*.tests.js",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && mv build/index.html build/200.html && surge build ropeup.surge.sh"
+    "deploy": "npm run build && mv build/index.html build/200.html && surge build https://ropeup.surge.sh"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
