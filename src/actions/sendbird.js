@@ -194,7 +194,8 @@ function sbSetRefreshInterfal() {
 
 function sbRefresh() {
   return async (dispatch, getState) => {
-    console.log('Refreshing ...');
+    // 
+    
     // await dispatch(sbGetChannels());
     // await dispatch(sbGetMessages());
     // dispatch(sbRegisterAllChannelHandlers());
